@@ -1,6 +1,6 @@
 <template>
-    <v-main>
-        <v-banner>{{title}}</v-banner>
+    <v-container
+            app>
         <v-form
             ref="form"
             v-model="valid"
@@ -23,22 +23,22 @@
                 :disabled="!valid"
                 color="success"
                 class="mr-4"
-                @click="signUpRequest"
+                @click="loginRequest"
                 >
                 Submit
             </v-btn>
             
         </v-form>
-            <v-alert type="error" v-if="isAlert">
+            <!-- <v-alert type="error" v-if="isAlert">
                 Login failed.  Please try again.
-            </v-alert>
-    </v-main>
+            </v-alert> -->
+    </v-container>
 </template>
 
 <script>
-import { useLoginStore } from '@/stores/loginStore';
+import { useLoginStore } from '@/stores/clientStore';
 import { mapState, mapWritableState } from 'pinia';
-
+import cookie from 'vue-cookies'
 
     export default {
         name: 'LoginComponent',
@@ -64,7 +64,7 @@ import { mapState, mapWritableState } from 'pinia';
             ...mapState(useLoginStore,['title',]),
             ...mapWritableState(useLoginStore,['username','password']),
             //Getters
-            
+            ...mapState(useLoginStore,['userId']),
             //Actions
             ...mapState(useLoginStore,['loginRequest'])
         },
@@ -84,20 +84,21 @@ import { mapState, mapWritableState } from 'pinia';
         },
 
         
-        // mounted () {
-        //     const router = this.$router;
-        //     this.store = useLoginStore();
-        //     useLoginStore().$onAction(({name, after})=>{
-        //         if (name == "loginSuccess"){
-        //             after(()=>{
-        //                 router.push({path: '/users?'}); 
-        //             })
-        //         } 
-        //         else {
-        //           this.isAlert = true;
-        //           }
-        //     })
-        // },
+        mounted () {
+            const router = this.$router;
+            this.store = useLoginStore();
+            useLoginStore().$onAction(({name, after})=>{
+                if (name == "loginSuccess"){
+                        after(()=>{
+                        cookie.set('sessionToken', this.userId)
+                        router.push({path: '/user'}); 
+                        })
+                    } 
+                else {
+                    this.isAlert = true;
+                    }
+            })
+        },
         }
     
 </script>

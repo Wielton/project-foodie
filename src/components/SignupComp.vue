@@ -1,6 +1,5 @@
 <template>
-    <v-main>
-        <v-banner>{{title}}</v-banner>
+    
         <v-form
             ref="form"
             v-model="valid"
@@ -60,14 +59,12 @@
             </v-btn>
             
         </v-form>
-            <v-alert type="error" v-if="isAlert">
-                Login failed.  Please try again.
-            </v-alert>
-    </v-main>
+            
+    
 </template>
 
 <script>
-import { useLoginStore } from '@/stores/loginStore';
+import { useLoginStore } from '@/stores/clientStore';
 import { mapState, mapWritableState } from 'pinia';
 import cookie from 'vue-cookies';
 
@@ -137,7 +134,8 @@ import cookie from 'vue-cookies';
             useLoginStore().$onAction(({name, after})=>{
                 if (name == "signUpSuccess"){
                     after(()=>{
-                        cookie.set('sessionToken', this.username)
+                        
+                        cookie.set('sessionToken', this.userToken)
                         router.push({path: '/user:id'}); 
                     })
                 } 
@@ -145,7 +143,8 @@ import cookie from 'vue-cookies';
                     this.isAlert = true;
                 }
             })
-         },
+        },
+        
         }
     
 </script>

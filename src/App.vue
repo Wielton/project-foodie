@@ -1,18 +1,21 @@
 <template>
-  <v-app>
+  <v-app app>
+    
+    <TopNav/>
+    
     <v-main>
-      <router-view/>
+      <router-view></router-view>
     </v-main>
   </v-app>
 </template>
 
 <script>
-
-export default {
-  name: 'App',
-
-  data: () => ({
-    //
-  }),
-};
+import TopNav from './components/TopNav.vue'
+  export default {
+  components: { TopNav },
+    data: () => ({ 
+      
+      
+      }),
+  }
 </script>

@@ -8,13 +8,39 @@ export const useLoginStore = defineStore('login',{
         return {
             title: 'In the moodie for Foodie',
             isLoggedIn : false,
-            username: this.username,
-            password: this.password
+            user: []
             
         }
     },
     actions: {
-        loginRequest(){
+        signUpRequest() {
+            
+            axios.request({
+                url: process.env.VUE_APP_API_URL+"client",
+                method: "POST",
+                headers : {
+                    'x-api-key' : process.env.VUE_APP_API_KEY
+                    },
+                data : {
+                    email: this.email,
+                    username: this.username,
+                    firstName: this.firstName,
+                    lastName: this.lastName,
+                    password: this.password,
+                
+                    }
+            }).then((response)=>{
+                this.userId = response.clientId;
+                this.userToken = response.token;
+                this.signUpSuccess();
+            }).catch((error)=>{
+                console.log(error);
+                
+            })
+            
+            
+            },
+            loginRequest(){
                 axios.request({
                     url: process.env.VUE_APP_API_URL+"client",
                     method: "GET",
@@ -34,7 +60,9 @@ export const useLoginStore = defineStore('login',{
                     
                 })
             },
-            
+            signUpSuccess(){
+
+            },
             loginSuccess(){
 
             },

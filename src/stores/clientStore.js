@@ -1,20 +1,20 @@
 import { defineStore } from "pinia";
 import axios from 'axios';
-import cookies from 'vue-cookies';
 
 
-export const useLoginStore = defineStore('login',{
+
+export const useClientStore = defineStore('client',{
     state : ()=>{
         return {
             title: 'In the moodie for Foodie',
             isLoggedIn : false,
-            user: []
+            
             
         }
     },
     actions: {
+        // User sign up
         signUpRequest() {
-            
             axios.request({
                 url: process.env.VUE_APP_API_URL+"client",
                 method: "POST",
@@ -27,47 +27,110 @@ export const useLoginStore = defineStore('login',{
                     firstName: this.firstName,
                     lastName: this.lastName,
                     password: this.password,
-                
-                    }
+                    pictureUrl : this.pictureUrl
+                }
             }).then((response)=>{
-                this.userId = response.clientId;
                 this.userToken = response.token;
                 this.signUpSuccess();
             }).catch((error)=>{
                 console.log(error);
-                
-            })
-            
-            
+                })
             },
+            // User login
             loginRequest(){
                 axios.request({
-                    url: process.env.VUE_APP_API_URL+"client",
-                    method: "GET",
+                    url: process.env.VUE_APP_API_URL+"client-login",
+                    method: "POST",
                     headers : {
-                        token: this.userToken,
                         'x-api-key' : process.env.VUE_APP_API_KEY
                         },
                         data: {
-                            username: this.username,
+                            email: this.email,
                             password: this.password,
                         }
                 }).then((response)=>{
-                    console.log(response);
+                    this.userToken = response.token;
                     this.loginSuccess();
                 }).catch((error)=>{
                     console.log(error);
                     
                 })
             },
+            // user profile/account info
+            accountInfoRequest(){
+                axios.request({
+                    url: process.env.VUE_APP_API_URL+"client",
+                    method: "GET",
+                    headers : {
+                        token: this.$cookies.get('sessionToken'),
+                        'x-api-key' : process.env.VUE_APP_API_KEY
+                        },
+                        
+                }).then((response)=>{
+                    console.log(response);
+                }).catch((error)=>{
+                    console.log(error);
+                    
+                })
+            },
+            accountInfoChangeRequest(){
+                axios.request({
+                    url: process.env.VUE_APP_API_URL+"client",
+                    method: "PATCH",
+                    headers : {
+                        token: this.$cookies.get('sessionToken'),
+                        'x-api-key' : process.env.VUE_APP_API_KEY
+                        },
+                    data: {
+                        email : this.email,
+                        username : this.username,
+                        firstName : this.firstname,
+                        lastName : this.lastname,
+                        password : this.password,
+                        pictureUrl : this.pictureUrl
+                    }
+                }).then((response)=>{
+                    console.log(response);
+                }).catch((error)=>{
+                    console.log(error);
+                    
+                })
+            },
+
             signUpSuccess(){
 
             },
             loginSuccess(){
 
             },
-            logout(){
-                cookies.remove('sessionToken');
+            logoutRequest(){
+                axios.request({
+                    url: process.env.VUE_APP_API_URL+"client-login",
+                    method: "DELETE",
+                    headers: {
+                        'x-api-key' : process.env.VUE_APP_API_KEY,
+                        token: this.$cookies.get('sessionToken'),
+                    }
+                }).then((response)=>{
+                    console.log(response);
+                }).catch((error)=>{
+                    console.log(error);
+                })
+                
+            },
+            userDeleteRequest(){
+                axios.request({
+                    url: process.env.VUE_APP_API_URL+"client",
+                    method: "DELETE",
+                    headers: {
+                        token: this.$cookies.get('sessionToken'),
+                        'x-api-key' : process.env.VUE_APP_API_KEY
+                    }
+                }).then((response)=>{
+                    console.log(response);
+                }).catch((error)=>{
+                    console.log(error);
+                })
             }
         },
 

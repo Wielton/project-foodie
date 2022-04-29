@@ -1,8 +1,8 @@
 <template>
   <v-app app>
-    
-    <TopNav/>
-    
+    <div>
+    <TopNavBar/>
+    </div>
     <v-main>
       <router-view></router-view>
     </v-main>
@@ -10,9 +10,9 @@
 </template>
 
 <script>
-import TopNav from './components/TopNav.vue'
+import TopNavBar from './components/TopNav.vue'
   export default {
-  components: { TopNav },
+  components: { TopNavBar },
     data: () => ({ 
       
       

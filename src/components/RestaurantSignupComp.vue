@@ -1,37 +1,49 @@
 <template>
-    
-        
-       <v-form
+    <v-form
             ref="form"
             v-model="valid"
             lazy-validation
             >
             <v-text-field
-                v-model="email"
-                :rules="emailRules"
-                label="E-mail"
-                type="email"
+                v-model="name"
+                :rules="nameRules"
+                label="Name"
                 required
             ></v-text-field>
             
             <v-text-field
-                v-model="username"
-                :rules="usernameRules"
-                label="Username"
+                v-model="address"
+                :rules="addressRules"
+                label="Address"
                 required
             ></v-text-field>
             
             <v-text-field
-                v-model="firstName"
-                :rules="firstNameRules"
-                label="First Name"
+                v-model="bio"
+                :rules="bioRules"
+                label="Bio"
                 required
             ></v-text-field>
     
             <v-text-field
-                v-model="lastName"
-                :rules="lastNameRules"
-                label="Last Name"
+                v-model="cityName"
+                :rules="cityNameRules"
+                label="City Name"
+                required
+            ></v-text-field>
+
+            <v-text-field
+                v-model="email"
+                :rules="emailRules"
+                label="Email"
+                type="email"
+                required
+            ></v-text-field>
+    
+            <v-text-field
+                v-model="phoneNum"
+                :rules="phoneNumRules"
+                label="Phone Number"
                 required
             ></v-text-field>
             
@@ -47,7 +59,7 @@
             <v-text-field
                 v-model="passwordConfirm"
                 :counter="10"
-                :rules="passwordConfirmRules"
+                :rules="passwordConfirmRules.concat(passwordConfirmationRule)"
                 label="Confirm Password"
                 required
             ></v-text-field>
@@ -62,17 +74,19 @@
             </v-btn>
             
         </v-form>
+        
+       
     
 </template>
 
 <script>
-import { useClientStore } from '@/stores/clientStore';
+import { useRestaurantStore } from '@/stores/restaurantStore';
 import { mapState, mapWritableState } from 'pinia';
 
 
+
     export default {
-        
-            name: 'SignupComponent',
+        name: 'RestaurantSignupComponent',
         data(){
             return{
             store: undefined,
@@ -84,42 +98,46 @@ import { mapState, mapWritableState } from 'pinia';
                 v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
             ],
             
-            firstNameRules: [
-                v => !!v || 'First name is required...',
+            nameRules: [
+                v => !!v || 'Name is required...',
             ],
             
-            lastNameRules: [
-                v => !!v || 'Last name is required...',
+            addressRules: [
+                v => !!v || 'Address is required...',
             ],
             
-            usernameRules: [
-                v => !!v || 'Username name is required...',
+            bioRules: [
+                v => !!v || 'Bio is required...',
             ],
-            
+            phoneNumRules: [
+                v => !!v || 'Phone Number is required...',
+            ],
+            cityNameRules: [
+                v => !!v || 'City name is required...',
+            ],
             passwordRules: [
                 v => !!v || 'Password is required...',
                 v => (v && v.length <= 10) || 'Password must be less than 10 characters',
             ],
-            passwordConfirm: '',
+            
             passwordConfirmRules: [
                 v => !!v || 'Confirm password...',
-                v => (v && this.password === this.passwordConfirm) || 'Passwords must match'
             ],
             
 }
         },
-
-    
         
         computed: {
             //Initial 
-            ...mapState(useClientStore,['title',]),
-            ...mapWritableState(useClientStore,['email','username', 'firstName','lastName','password']),
+            ...mapState(useRestaurantStore,['title',]),
+            ...mapWritableState(useRestaurantStore,['email','username', 'firstName','lastName','password']),
             //Getters
             
             //Actions
-            ...mapState(useClientStore,['signUpRequest']),
-            
+            ...mapState(useRestaurantStore,['signUpRequest']),
+            passwordConfirmationRule(){
+            return()=>(this.password === this.passwordConfirm) || 'Passwords must match'
+        },
         },
         
         
@@ -139,12 +157,13 @@ import { mapState, mapWritableState } from 'pinia';
         
         mounted () {
             const router = this.$router;
-            this.store = useClientStore();
-            useClientStore().$onAction(({name, after})=>{
+            this.store = useRestaurantStore();
+            useRestaurantStore().$onAction(({name, after})=>{
                 if (name == "signUpSuccess"){
                     after(()=>{
-                        this.$cookies.set('sessionToken', this.userToken);
-                        router.push({path: '/user'}); 
+                        this.userId.push(this.users);
+                        this.$cookie.set('sessionToken', this.userToken)
+                        router.push({path: '/restaurantUser'}); 
                     })
                 } 
                 else {

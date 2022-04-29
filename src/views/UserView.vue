@@ -1,27 +1,40 @@
 <template>
 
-  
-    <v-container app>
-      <v-card>
-        <v-btn
+  <div app>
+    <v-btn
         color="success"
         class="mr-4"
-        @click="deleteUser">Delete</v-btn>
-      </v-card>
-    </v-container>
+        @click="userDeleteRequest">
+        Delete
+        </v-btn>
+        <v-spacer></v-spacer>
+        <v-card>
+          <v-card-title>Welcome {{username}}</v-card-title>
+        </v-card>
+  </div>
+    
+      
+        
+      
+    
   
 </template>
 <script>
-import { useLoginStore } from '@/stores/clientStore';
+import { useClientStore } from '@/stores/clientStore';
 import { mapState } from 'pinia';
-import cookie from 'vue-cookies'
+
 
     export default {
         
         data(){
             return{
             store: undefined,
-            
+            items: [
+          { title: 'Dashboard', icon: 'mdi-view-dashboard' },
+          { title: 'Photos', icon: 'mdi-image' },
+          { title: 'About', icon: 'mdi-help-box' },
+        ],
+    right: null,
             
 }
         },
@@ -30,18 +43,18 @@ import cookie from 'vue-cookies'
             //Initial 
             
             //Getters
-            ...mapState(useLoginStore,['userId']),
+            ...mapState(useClientStore,['username']),
             //Actions
-            ...mapState(useLoginStore,['logout'])
+            ...mapState(useClientStore,['userDeleteRequest'])
         },
         
   mounted () {
             const router = this.$router;
-            this.store = useLoginStore();
-            useLoginStore().$onAction(({name, after})=>{
+            this.store = useClientStore();
+            useClientStore().$onAction(({name, after})=>{
                 if (name == "deleteSuccess"){
                         after(()=>{
-                        cookie.remove('sessionToken', this.userId)
+                        this.$cookie.remove('sessionToken')
                         router.push({path: '/'}); 
                         })
                     } 

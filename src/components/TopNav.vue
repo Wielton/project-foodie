@@ -12,6 +12,7 @@
             Home
             </v-btn>
             <v-btn
+                
                 text
                 @click.stop="loginForm = !loginForm">
             Login
@@ -38,11 +39,11 @@
 
 
     export default {
-        
+        name: 'TopNavBar',
         data(){
             return{
-                drawer: null,
-                
+                drawer: false,
+                loginForm: false,
                 items: [
                     {title: 'Home', link: '/', icon: 'home'},
                     {title: 'Cart', link: 'cart', icon: 'shopping-cart'},

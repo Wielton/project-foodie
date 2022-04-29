@@ -1,15 +1,15 @@
 <template>
-    <v-container
-            app>
+    
         <v-form
             ref="form"
             v-model="valid"
             lazy-validation
             >
             <v-text-field
-                v-model="username"
-                :rules="usernameRules"
-                label="Username"
+                v-model="email"
+                :rules="emailRules"
+                label="Email"
+                type="email"
                 required
             ></v-text-field>
             <v-text-field
@@ -32,13 +32,13 @@
             <!-- <v-alert type="error" v-if="isAlert">
                 Login failed.  Please try again.
             </v-alert> -->
-    </v-container>
+    
 </template>
 
 <script>
-import { useLoginStore } from '@/stores/clientStore';
+import { useClientStore } from '@/stores/clientStore';
 import { mapState, mapWritableState } from 'pinia';
-import cookie from 'vue-cookies'
+
 
     export default {
         name: 'LoginComponent',
@@ -47,8 +47,9 @@ import cookie from 'vue-cookies'
             store: undefined,
             isAlert : false,
             valid: true,
-            usernameRules: [
-                v => !!v || 'Username name is required...',
+            emailRules: [
+                v => !!v || 'E-mail is required...',
+                v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
             ],
             passwordRules: [
                 v => !!v || 'Password is required...',
@@ -61,12 +62,12 @@ import cookie from 'vue-cookies'
         
         computed: {
             //Initial 
-            ...mapState(useLoginStore,['title',]),
-            ...mapWritableState(useLoginStore,['username','password']),
+            ...mapState(useClientStore,['title',]),
+            ...mapWritableState(useClientStore,['email','password']),
             //Getters
-            ...mapState(useLoginStore,['userId']),
+            ...mapState(useClientStore,['userId', 'userToken']),
             //Actions
-            ...mapState(useLoginStore,['loginRequest'])
+            ...mapState(useClientStore,['loginRequest'])
         },
         
         
@@ -86,11 +87,11 @@ import cookie from 'vue-cookies'
         
         mounted () {
             const router = this.$router;
-            this.store = useLoginStore();
-            useLoginStore().$onAction(({name, after})=>{
+            this.store = useClientStore();
+            useClientStore().$onAction(({name, after})=>{
                 if (name == "loginSuccess"){
                         after(()=>{
-                        cookie.set('sessionToken', this.userId)
+                        this.$cookies.set('sessionToken')
                         router.push({path: '/user'}); 
                         })
                     } 

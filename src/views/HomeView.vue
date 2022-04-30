@@ -1,6 +1,11 @@
 <template>
   <v-container app>
-        
+      
+        <h1>Foodie</h1>
+        <h1>Are you in the moodie?</h1>
+      
+      <v-spacer></v-spacer>
+
           <v-btn 
             elevation="2"
             @click="showSignUpForm = !showSignUpForm"
@@ -12,6 +17,7 @@
             elevation="2"
             @click="showLoginForm = !showLoginForm"
             >Login</v-btn>
+            
             <v-expand-transition>
               <v-card>
               <SignupComponent v-if="showSignUpForm"/>

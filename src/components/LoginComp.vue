@@ -38,7 +38,7 @@
 <script>
 import { useClientStore } from '@/stores/clientStore';
 import { mapState, mapWritableState } from 'pinia';
-
+import cookies from 'vue-cookies';
 
     export default {
         name: 'LoginComponent',
@@ -53,7 +53,6 @@ import { mapState, mapWritableState } from 'pinia';
             ],
             passwordRules: [
                 v => !!v || 'Password is required...',
-                v => (v && v.length <= 10) || 'Password must be less than 10 characters',
             ],
             
             
@@ -71,7 +70,17 @@ import { mapState, mapWritableState } from 'pinia';
         },
         
         
+        
         methods: {
+            setCookie() {
+                cookies.set('session', this.userToken);
+            },
+            deleteCookie(){
+                cookies.remove('testCookie');
+            },
+            printCookie(){
+                console.log(cookies.get('testCookie'));
+            },
         
         
         validate () {
@@ -83,7 +92,7 @@ import { mapState, mapWritableState } from 'pinia';
             // resetValidation () {
             // this.$refs.form.resetValidation()
         },
-
+        
         
         mounted () {
             const router = this.$router;
@@ -91,7 +100,7 @@ import { mapState, mapWritableState } from 'pinia';
             useClientStore().$onAction(({name, after})=>{
                 if (name == "loginSuccess"){
                         after(()=>{
-                        this.$cookies.set('sessionToken')
+                        this.setCookie();
                         router.push({path: '/user'}); 
                         })
                     } 

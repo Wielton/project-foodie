@@ -44,13 +44,13 @@
                 required
             ></v-text-field>
             
-            <v-text-field
+            <!-- <v-text-field
                 v-model="passwordConfirm"
                 :counter="10"
                 :rules="passwordConfirmRules"
                 label="Confirm Password"
                 required
-            ></v-text-field>
+            ></v-text-field> -->
 
             <v-btn
                 :disabled="!valid"
@@ -68,7 +68,7 @@
 <script>
 import { useClientStore } from '@/stores/clientStore';
 import { mapState, mapWritableState } from 'pinia';
-
+import cookies from 'vue-cookies';
 
     export default {
         
@@ -100,11 +100,11 @@ import { mapState, mapWritableState } from 'pinia';
                 v => !!v || 'Password is required...',
                 v => (v && v.length <= 10) || 'Password must be less than 10 characters',
             ],
-            passwordConfirm: '',
-            passwordConfirmRules: [
-                v => !!v || 'Confirm password...',
-                v => (v && this.password === this.passwordConfirm) || 'Passwords must match'
-            ],
+            // passwordConfirm: '',
+            // passwordConfirmRules: [
+            //     v => !!v || 'Confirm password...',
+            //     v => (v && this.password === this.passwordConfirm) || 'Passwords must match'
+            // ],
             
 }
         },
@@ -143,7 +143,7 @@ import { mapState, mapWritableState } from 'pinia';
             useClientStore().$onAction(({name, after})=>{
                 if (name == "signUpSuccess"){
                     after(()=>{
-                        this.$cookies.set('sessionToken', this.userToken);
+                        cookies.set('sessionToken', this.userToken);
                         router.push({path: '/user'}); 
                     })
                 } 

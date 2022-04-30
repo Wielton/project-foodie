@@ -19,7 +19,8 @@ export const useClientStore = defineStore('client',{
                 url: process.env.VUE_APP_API_URL+"client",
                 method: "POST",
                 headers : {
-                    'x-api-key' : process.env.VUE_APP_API_KEY
+                    'x-api-key' : process.env.VUE_APP_API_KEY,
+                    "Content-type": "application/json"
                     },
                 data : {
                     email: this.email,
@@ -27,9 +28,10 @@ export const useClientStore = defineStore('client',{
                     firstName: this.firstName,
                     lastName: this.lastName,
                     password: this.password,
-                    pictureUrl : this.pictureUrl
+                    // pictureUrl : this.pictureUrl
                 }
             }).then((response)=>{
+                console.log(response.token)
                 this.userToken = response.token;
                 this.signUpSuccess();
             }).catch((error)=>{
@@ -42,7 +44,8 @@ export const useClientStore = defineStore('client',{
                     url: process.env.VUE_APP_API_URL+"client-login",
                     method: "POST",
                     headers : {
-                        'x-api-key' : process.env.VUE_APP_API_KEY
+                        'x-api-key' : process.env.VUE_APP_API_KEY,
+                        "Content-type": "application/json"
                         },
                         data: {
                             email: this.email,
@@ -50,6 +53,7 @@ export const useClientStore = defineStore('client',{
                         }
                 }).then((response)=>{
                     this.userToken = response.token;
+                    console.log(response.token)
                     this.loginSuccess();
                 }).catch((error)=>{
                     console.log(error);
@@ -63,7 +67,8 @@ export const useClientStore = defineStore('client',{
                     method: "GET",
                     headers : {
                         token: this.$cookies.get('sessionToken'),
-                        'x-api-key' : process.env.VUE_APP_API_KEY
+                        'x-api-key' : process.env.VUE_APP_API_KEY,
+                        "Content-type": "application/json"
                         },
                         
                 }).then((response)=>{
@@ -79,7 +84,8 @@ export const useClientStore = defineStore('client',{
                     method: "PATCH",
                     headers : {
                         token: this.$cookies.get('sessionToken'),
-                        'x-api-key' : process.env.VUE_APP_API_KEY
+                        'x-api-key' : process.env.VUE_APP_API_KEY,
+                        "Content-type": "application/json"
                         },
                     data: {
                         email : this.email,
@@ -101,7 +107,7 @@ export const useClientStore = defineStore('client',{
 
             },
             loginSuccess(){
-
+                
             },
             logoutRequest(){
                 axios.request({
@@ -110,6 +116,7 @@ export const useClientStore = defineStore('client',{
                     headers: {
                         'x-api-key' : process.env.VUE_APP_API_KEY,
                         token: this.$cookies.get('sessionToken'),
+                        "Content-type": "application/json"
                     }
                 }).then((response)=>{
                     console.log(response);
@@ -124,7 +131,8 @@ export const useClientStore = defineStore('client',{
                     method: "DELETE",
                     headers: {
                         token: this.$cookies.get('sessionToken'),
-                        'x-api-key' : process.env.VUE_APP_API_KEY
+                        'x-api-key' : process.env.VUE_APP_API_KEY,
+                        "Content-type": "application/json"
                     }
                 }).then((response)=>{
                     console.log(response);

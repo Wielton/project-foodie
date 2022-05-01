@@ -55,57 +55,46 @@
                 type="password"
                 required
             ></v-text-field>
-            
-            <v-text-field
-                v-model="passwordConfirm"
-                :counter="10"
-                :rules="passwordConfirmRules.concat(passwordConfirmationRule)"
-                label="Confirm Password"
-                required
-            ></v-text-field>
 
             <v-btn
                 :disabled="!valid"
                 color="success"
                 class="mr-4"
-                @click="signUpRequest"
+                @click="restaurantSignUpRequest(name, address, bio, cityName, phoneNum, bannerUrl, profileUrl)"
                 >
                 Submit
             </v-btn>
-            
         </v-form>
-        
-       
-    
 </template>
 
 <script>
 import { useRestaurantStore } from '@/stores/restaurantStore';
 import { mapState, mapWritableState } from 'pinia';
-
+import {router} from '@/router';
 
 
     export default {
         name: 'RestaurantSignupComponent',
         data(){
             return{
-            store: undefined,
             isAlert : false,
             valid: true,
-            
+            isValidCity: false,
+            validCities: [
+                "Calgary", 'Edmonton', 'Vancouver', 'Surrey', 'Winnipeg', 'Brandon', 'Moncton', 'Fredericton', "St. John's", "Mount Pearl",
+                "Yellowknife", "Inuvik", "Halifax", "Sydney", "Iqaluit", "Arviat", "Toronto", "Ottawa", "Charlottetown", "Summerside", "Montreal",
+                "Quebec City", "Saskatoon", "Regina", "Whitehorse", "Dawson City"
+                ],
             emailRules: [
                 v => !!v || 'E-mail is required...',
                 v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-            ],
-            
+                ],
             nameRules: [
                 v => !!v || 'Name is required...',
             ],
-            
             addressRules: [
                 v => !!v || 'Address is required...',
             ],
-            
             bioRules: [
                 v => !!v || 'Bio is required...',
             ],
@@ -118,12 +107,7 @@ import { mapState, mapWritableState } from 'pinia';
             passwordRules: [
                 v => !!v || 'Password is required...',
                 v => (v && v.length <= 10) || 'Password must be less than 10 characters',
-            ],
-            
-            passwordConfirmRules: [
-                v => !!v || 'Confirm password...',
-            ],
-            
+            ],            
 }
         },
         
@@ -156,8 +140,7 @@ import { mapState, mapWritableState } from 'pinia';
 
         
         mounted () {
-            const router = this.$router;
-            this.store = useRestaurantStore();
+            
             useRestaurantStore().$onAction(({name, after})=>{
                 if (name == "signUpSuccess"){
                     after(()=>{

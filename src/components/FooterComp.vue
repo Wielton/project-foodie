@@ -27,7 +27,7 @@
             </v-card-text>
 
             <v-divider></v-divider>
-                <svg-icon type="mdi" :path="path"></svg-icon>
+            
             <v-card-text class="white--text">
                 {{ new Date().getFullYear() }} — <strong>WieltonWebDev</strong>
             </v-card-text>

@@ -1,10 +1,12 @@
 <template>
-    
+    <v-card app>
+        <v-card-title>{{title}}</v-card-title>
         <v-form
             ref="form"
             v-model="valid"
             lazy-validation
             >
+            
             <v-text-field
                 v-model="email"
                 :rules="emailRules"
@@ -14,8 +16,6 @@
             ></v-text-field>
             <v-text-field
                 v-model="password"
-                :counter="10"
-                :rules="passwordRules"
                 label="Password"
                 required
             ></v-text-field>
@@ -23,7 +23,7 @@
                 :disabled="!valid"
                 color="success"
                 class="mr-4"
-                @click="loginRequest"
+                @click="loginRequest(email,password)"
                 >
                 Submit
             </v-btn>
@@ -32,58 +32,31 @@
             <!-- <v-alert type="error" v-if="isAlert">
                 Login failed.  Please try again.
             </v-alert> -->
-    
+ </v-card>   
 </template>
 
 <script>
 import { useClientStore } from '@/stores/clientStore';
-import { mapState, mapWritableState } from 'pinia';
-import cookies from 'vue-cookies';
+import { mapActions, mapState } from 'pinia';
 
     export default {
         name: 'LoginComponent',
-        data(){
-            return{
-            store: undefined,
+        data: ()=>({
             isAlert : false,
             valid: true,
+            email: '',
+            password: '',
             emailRules: [
                 v => !!v || 'E-mail is required...',
                 v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-            ],
-            passwordRules: [
-                v => !!v || 'Password is required...',
-            ],
-            
-            
-}
-        },
-        
-        computed: {
-            //Initial 
-            ...mapState(useClientStore,['title',]),
-            ...mapWritableState(useClientStore,['email','password']),
-            //Getters
-            ...mapState(useClientStore,['userId', 'userToken']),
-            //Actions
-            ...mapState(useClientStore,['loginRequest'])
-        },
-        
-        
-        
+                ],
+            }),
+            computed: {
+                ...mapState(useClientStore,['title']),
+            },
         methods: {
-            setCookie() {
-                cookies.set('session', this.userToken);
-            },
-            deleteCookie(){
-                cookies.remove('testCookie');
-            },
-            printCookie(){
-                console.log(cookies.get('testCookie'));
-            },
-        
-        
-        validate () {
+            ...mapActions(useClientStore,['loginRequest']),
+            validate () {
             this.$refs.form.submit()
             },
             // reset () {
@@ -91,24 +64,16 @@ import cookies from 'vue-cookies';
             // },
             // resetValidation () {
             // this.$refs.form.resetValidation()
-        },
-        
-        
+            },
         mounted () {
-            const router = this.$router;
-            this.store = useClientStore();
             useClientStore().$onAction(({name, after})=>{
-                if (name == "loginSuccess"){
+                if (name == "loginFailed"){
                         after(()=>{
-                        this.setCookie();
-                        router.push({path: '/user'}); 
+                            this.isAlert = true;
                         })
                     } 
-                else {
-                    this.isAlert = true;
-                    }
-            })
-        },
-        }
+                })
+            },
+}
     
 </script>

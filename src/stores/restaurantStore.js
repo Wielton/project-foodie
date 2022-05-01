@@ -1,148 +1,137 @@
 import { defineStore } from "pinia";
 import axios from 'axios';
-
-
+import cookies from 'vue-cookies';
+import {router} from '@/router';
 
 export const useRestaurantStore = defineStore('restaurant',{
     state : ()=>{
         return {
             title: 'Restaurants',
-            isLoggedIn : false,
-            isValidCity: false,
-            validCities: ["Calgary", 'Edmonton', 'Vancouver', 'Surrey', 'Winnipeg', 'Brandon', 'Moncton', 'Fredericton', "St. John's", "Mount Pearl",
-            "Yellowknife", "Inuvik", "Halifax", "Sydney", "Iqaluit", "Arviat", "Toronto", "Ottawa", "Charlottetown", "Summerside", "Montreal",
-            "Quebec City", "Saskatoon", "Regina", "Whitehorse", "Dawson City"]
-            }
+            isLoggedIn : false
+        }
     },
     actions: {
         // User sign up
-        restaurantSignUpRequest() {
+        restaurantSignUpRequest(name,address,bio,cityName,phoneNum,bannerUrl,profileUrl,email,password){
             axios.request({
                 url: process.env.VUE_APP_API_URL+"restaurant",
                 method: "POST",
                 headers : {
-                    token: this.$cookies.set('sessionToken'),
                     'x-api-key' : process.env.VUE_APP_API_KEY
                     },
                 data : {
-                    name: this.name,
-                    address: this.address,
-                    bio: this.bio,
-                    cityName: this.cityName,
-                    email: this.email,
-                    password: this.password,
-                    phoneNum: this.phoneNum,
-                    bannerUrl: this.bannerUrl,
-                    profileUrl: this.profileUrl
+                    name,
+                    address,
+                    bio,
+                    cityName,
+                    email,
+                    password,
+                    phoneNum,
+                    bannerUrl,
+                    profileUrl
                 }
             }).then((response)=>{
-                this.userToken = response.token;
-                this.signUpSuccess();
+                cookies.set('sessionToken', response.token);
+                router.push('/restaurant-portal');
             }).catch((error)=>{
                 console.log(error);
                 })
             },
             // User login
-            restaurantLoginRequest(){
+            restaurantLoginRequest(email,password){
                 axios.request({
-                    url: process.env.VUE_APP_API_URL+"client-login",
+                    url: process.env.VUE_APP_API_URL+"restaurant-login",
                     method: "POST",
                     headers : {
                         'x-api-key' : process.env.VUE_APP_API_KEY
                         },
                         data: {
-                            email: this.email,
-                            password: this.password,
+                            email,
+                            password
                         }
                 }).then((response)=>{
-                    this.userToken = response.token;
-                    this.loginSuccess();
+                    cookies.set('sessionToken', response.token);
+                    router.push('/restaurant-portal');
                 }).catch((error)=>{
                     console.log(error);
                     
                 })
             },
             // user profile/account info
-            accountInfoRequest(){
+            restaurantPopulateRequest(){
                 axios.request({
-                    url: process.env.VUE_APP_API_URL+"client",
+                    url: process.env.VUE_APP_API_URL+"restaurant",
                     method: "GET",
                     headers : {
-                        token: this.$cookies.get('sessionToken'),
+                        token: cookies.get('sessionToken'),
                         'x-api-key' : process.env.VUE_APP_API_KEY
                         },
-                        
                 }).then((response)=>{
                     console.log(response);
+                    router.push('/restaurants');
                 }).catch((error)=>{
                     console.log(error);
                     
                 })
             },
-            accountInfoChangeRequest(){
+            restaurantInfoChangeRequest(name,address,bio,cityName,phoneNum,bannerUrl,profileUrl,email,password){
                 axios.request({
-                    url: process.env.VUE_APP_API_URL+"client",
+                    url: process.env.VUE_APP_API_URL+"restaurant",
                     method: "PATCH",
                     headers : {
-                        token: this.$cookies.get('sessionToken'),
+                        token: cookies.get('sessionToken'),
                         'x-api-key' : process.env.VUE_APP_API_KEY
                         },
                     data: {
-                        email : this.email,
-                        username : this.username,
-                        firstName : this.firstname,
-                        lastName : this.lastname,
-                        password : this.password,
-                        pictureUrl : this.pictureUrl
+                        name,
+                        address,
+                        bio,
+                        cityName,
+                        email,
+                        password,
+                        phoneNum,
+                        bannerUrl,
+                        profileUrl
                     }
                 }).then((response)=>{
                     console.log(response);
                 }).catch((error)=>{
                     console.log(error);
-                    
                 })
             },
-
-            signUpSuccess(){
-
-            },
-            loginSuccess(){
-
-            },
-            logoutRequest(){
+            restaurantLogoutRequest(){
                 axios.request({
-                    url: process.env.VUE_APP_API_URL+"client-login",
+                    url: process.env.VUE_APP_API_URL+"restaurant-login",
                     method: "DELETE",
                     headers: {
                         'x-api-key' : process.env.VUE_APP_API_KEY,
-                        token: this.$cookies.get('sessionToken'),
+                        token: cookies.get('sessionToken'),
                     }
                 }).then((response)=>{
                     console.log(response);
+                    router.push('/');
                 }).catch((error)=>{
                     console.log(error);
                 })
                 
             },
-            userDeleteRequest(){
+            restaurantDeleteRequest(){
                 axios.request({
-                    url: process.env.VUE_APP_API_URL+"client",
+                    url: process.env.VUE_APP_API_URL+"restaurant",
                     method: "DELETE",
                     headers: {
-                        token: this.$cookies.get('sessionToken'),
+                        token: cookies.get('sessionToken'),
                         'x-api-key' : process.env.VUE_APP_API_KEY
                     }
                 }).then((response)=>{
                     console.log(response);
+                    router.push('/');
                 }).catch((error)=>{
                     console.log(error);
                 })
             }
         },
 
-        getters: {
-            
-}
 
 
 })

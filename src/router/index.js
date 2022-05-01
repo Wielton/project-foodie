@@ -4,6 +4,7 @@ import HomeView from '../views/HomeView.vue'
 import UserView from '../views/UserView.vue'
 import CartView from '../views/CartView.vue'
 import ThankYouView from  '../views/ThankYouView.vue'
+import RestaurantsView from '../views/RestaurantsView.vue'
 
 Vue.use(VueRouter)
 
@@ -27,10 +28,15 @@ const routes = [
     path: '/thankyou/',
     name: 'thankyou',
     component: ThankYouView
+  },
+  {
+    path: '/restaurants/',
+    name: 'restaurants',
+    component: RestaurantsView
   }
 ]
 
-const router = new VueRouter({
+export const router = new VueRouter({
   routes
 })
 

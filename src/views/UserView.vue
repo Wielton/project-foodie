@@ -1,65 +1,91 @@
 <template>
-
-  <div app>
-    <v-btn
-        color="success"
-        class="mr-4"
-        @click="userDeleteRequest">
-        Delete
+    <v-card app>
+            
+        <v-card-title>Account</v-card-title>
+        
+        <v-spacer></v-spacer>
+    <v-card>    
+        <v-btn
+            color="success"
+            class="mr-4"
+            @click="userDeleteRequest">
+            Delete
         </v-btn>
         <v-spacer></v-spacer>
-        <v-card>
-          <v-card-title>Welcome {{username}}</v-card-title>
+        <v-btn
+            color="success"
+            class="mr-4"
+            @click="accountInfoChangeRequest">
+            Change Info
+        </v-btn>
+            <v-spacer></v-spacer>
+        <v-btn
+            color="success"
+            class="mr-4"
+            @click="logoutRequest">
+            Logout
+        </v-btn>
         </v-card>
-  </div>
-    
-      
-        
-      
-    
-  
+    </v-card>
 </template>
+
 <script>
 import { useClientStore } from '@/stores/clientStore';
-import { mapState } from 'pinia';
+import { mapActions, mapWritableState } from 'pinia';
 
 
     export default {
         
-        data(){
-            return{
+        name: 'SignupComponent',
+        data: ()=>({
             store: undefined,
-            items: [
-          { title: 'Dashboard', icon: 'mdi-view-dashboard' },
-          { title: 'Photos', icon: 'mdi-image' },
-          { title: 'About', icon: 'mdi-help-box' },
-        ],
-    right: null,
-            
-}
-        },
-        
+            }),
         computed: {
             //Initial 
-            
+            ...mapWritableState(useClientStore,['username', 'firstName','lastName','password', 'pictureUrl']),
             //Getters
-            ...mapState(useClientStore,['username']),
-            //Actions
-            ...mapState(useClientStore,['userDeleteRequest'])
+            
+            
+            
         },
         
-  mounted () {
+        
+        methods: {
+        //Actions
+            ...mapActions(useClientStore,['userDeleteRequest', 'accountInfoChangeRequest', 'logoutRequest']),
+        
+        validate () {
+            this.$refs.form.submit()
+            },
+            // reset () {
+            // this.$refs.form.reset()
+            // },
+            // resetValidation () {
+            // this.$refs.form.resetValidation()
+        },
+
+        
+        mounted () {
             const router = this.$router;
             this.store = useClientStore();
             useClientStore().$onAction(({name, after})=>{
-                if (name == "deleteSuccess"){
-                        after(()=>{
-                        this.$cookie.remove('sessionToken')
-                        router.push({path: '/'}); 
-                        })
-                    } 
-                
+                if (name == "signUpSuccess"){
+                    after(()=>{
+                        router.push({path: '/user'}); 
+                    })
+                } 
+                else if(name == "userDeleteRequest"){
+                    after(()=> {
+                        router.push({path: '/'})
+                    })
+                    
+                }else {
+                    this.isAlert = true;
+                }
             })
+            
         },
+        
         }
+    
 </script>

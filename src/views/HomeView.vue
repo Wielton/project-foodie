@@ -1,27 +1,38 @@
 <template>
-  <v-container app>
-      
+<v-container app>
+      <div>
+        <v-img src="https://www.creativefabrica.com/wp-content/uploads/2020/04/25/Delivery-Service-vector-illustration-Graphics-3951054-1-1-580x365.jpg">
+        </v-img>
         <h1>Foodie</h1>
-        <h1>Are you in the moodie?</h1>
-      
-      <v-spacer></v-spacer>
-  <v-form>
-    <v-container>
-      <v-row>
-        <v-col cols="12">
+        <h2>Are you in the moodie?</h2>
+        </div>
+        <v-spacer></v-spacer>
+        <v-toolbar
+        
+        max-width="500px">
           <v-text-field
             label="City search..."
           ></v-text-field>
-        </v-col>
-        <v-col>
-            <v-btn
+          <v-btn
               icon
               color="success"
               @click="searchByCity(cityName)"
             >
               <v-icon>mdi-magnify</v-icon>
             </v-btn>
-          </v-col>
+          </v-toolbar>
+  
+      
+        
+      
+      <v-spacer></v-spacer>
+  <v-form>
+    <v-container>
+      <v-row>
+        <v-col cols="12">
+          
+        </v-col>
+        
       </v-row>
     </v-container>
   </v-form>
@@ -47,13 +58,13 @@
       </v-row>
       <v-row>    
             <v-expand-transition>
-          <v-card>
+          <div>
             <SignupComponent v-if="showSignUpForm"/>
               
           <v-spacer></v-spacer>
           
           <LoginComponent v-if="showLoginForm"/>
-          </v-card>
+          </div>
           </v-expand-transition>
       </v-row>
     </v-container>
@@ -70,6 +81,7 @@ export default {
     components: {
         SignupComponent,
         LoginComponent,
+  
       },
     data(){
             return{

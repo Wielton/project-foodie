@@ -180,6 +180,8 @@ restaurantPopulateRequest(){
             },
     }).then((response)=>{
         console.log(response);
+        const restaurants = response.data;
+        console.log(restaurants);
     }).catch((error)=>{
         console.log(error);
         

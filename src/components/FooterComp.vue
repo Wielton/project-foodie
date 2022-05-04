@@ -1,60 +1,44 @@
 <template>
 <v-footer
-        
-        dark
-        padless
+    color="#fd7132"
+    padless
+    >
+    <v-row
+        justify="center"
+        no-gutters
         >
-        <v-card
-            flat
-            tile
-            class="indigo lighten-1 white--text text-center"
-            >
-            <v-card-text>
-                <v-btn
-                    v-for="icon in icons"
-                    :key="icon"
-                    class="mx-4 white--text"
-                    icon
-                    >
-                    <v-icon size="24px">
-                        {{ icon }}
-                    </v-icon>
-                </v-btn>
-            </v-card-text>
-
-            <v-card-text class="white--text pt-0">
-                Add a whole shitload of hrefs here
-            </v-card-text>
-
-            <v-divider></v-divider>
-            
-            <v-card-text class="white--text">
-                {{ new Date().getFullYear() }} — <strong>WieltonWebDev</strong>
-            </v-card-text>
-    </v-card>
+        <v-btn
+            v-for="link in links"
+            :key="link"
+            color="white"
+            text
+            rounded
+            class="my-2"
+        >
+        {{ link }}
+        </v-btn>
+        <v-col
+            class="#fd7132 py-4 text-center white--text"
+            cols="12"
+        >
+        {{ new Date().getFullYear() }} — <strong>WieltonWebDev</strong>
+        </v-col>
+        </v-row>
     </v-footer>
 </template>
 
 <script>
 
-import { mdiAccount } from '@mdi/js';
-    export default {
-        name: "FooterComponent",
-        components: {
-            
-        },
-        data() {
-            return {
-                path: mdiAccount,
-                icons: [
-        'mdi-facebook',
-        'mdi-twitter',
-        'mdi-linkedin',
-        'mdi-instagram',
-            ],
-                }
-            
-        }
-        
-    }
+export default {
+    data: () => ({
+        links: [
+            'Home',
+            'About Us',
+            'Team',
+            'Services',
+            'Blog',
+            'Contact Us',
+        ],
+    }),
+}
 </script>

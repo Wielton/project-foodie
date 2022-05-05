@@ -8,7 +8,7 @@
         <v-btn to="/" text>
             Home
         </v-btn>
-        <v-btn to="/restaurantsView"
+        <v-btn to="/restaurants"
                 text>
             Order
         </v-btn>

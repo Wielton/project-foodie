@@ -7,12 +7,13 @@ export const useRestaurantStore = defineStore('restaurant',{
     state : ()=>{
         return {
             title: 'Restaurants',
+            restaurantHomeTitle: 'Welcome',
             isLoggedIn : false
         }
     },
     actions: {
         // User sign up
-        restaurantSignUpRequest(name,address,bio,cityName,phoneNum,bannerUrl,profileUrl,email,password){
+        restaurantSignUpRequest(name,address,bio,city,phoneNum,bannerUrl,profileUrl,email,password){
             axios.request({
                 url: process.env.VUE_APP_API_URL+"restaurant",
                 method: "POST",
@@ -23,16 +24,16 @@ export const useRestaurantStore = defineStore('restaurant',{
                     name,
                     address,
                     bio,
-                    cityName,
-                    email,
-                    password,
+                    city,
                     phoneNum,
                     bannerUrl,
-                    profileUrl
+                    profileUrl,
+                    email,
+                    password
                 }
             }).then((response)=>{
                 cookies.set('sessionToken', response.token);
-                router.push('/restaurant-portal');
+                router.push('/restaurant-home/');
             }).catch((error)=>{
                 console.log(error);
                 })
@@ -57,24 +58,9 @@ export const useRestaurantStore = defineStore('restaurant',{
                     
                 })
             },
-            // user profile/account info
-            restaurantPopulateRequest(){
-                axios.request({
-                    url: process.env.VUE_APP_API_URL+"restaurant",
-                    method: "GET",
-                    headers : {
-                        token: cookies.get('sessionToken'),
-                        'x-api-key' : process.env.VUE_APP_API_KEY
-                        },
-                }).then((response)=>{
-                    console.log(response);
-                    router.push('/restaurants');
-                }).catch((error)=>{
-                    console.log(error);
-                    
-                })
-            },
-            restaurantInfoChangeRequest(name,address,bio,cityName,phoneNum,bannerUrl,profileUrl,email,password){
+            // Restaurant account/profile info
+            
+            restaurantInfoChangeRequest(name,address,bio,city,phoneNum,bannerUrl,profileUrl,email,password){
                 axios.request({
                     url: process.env.VUE_APP_API_URL+"restaurant",
                     method: "PATCH",
@@ -86,7 +72,7 @@ export const useRestaurantStore = defineStore('restaurant',{
                         name,
                         address,
                         bio,
-                        cityName,
+                        city,
                         email,
                         password,
                         phoneNum,

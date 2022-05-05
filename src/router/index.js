@@ -6,7 +6,7 @@ import CartView from '../views/CartView.vue'
 import ThankYouView from  '../views/ThankYouView.vue'
 import OrdersPortalView from '../views/OrderPortalView.vue'
 import RestaurantPortalView from '../views/RestaurantPortalView.vue'
-
+import RestaurantHomeView from '../views/RestaurantHomeView.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -39,7 +39,12 @@ const routes = [
     path: '/restaurant-portal/',
     name: 'restaurant-portal',
     component: RestaurantPortalView
-  }
+  },
+  {
+    path: '/restaurant-home/',
+    name: 'restaurant-home',
+    component: RestaurantHomeView
+  },
 ]
 
 export const router = new VueRouter({

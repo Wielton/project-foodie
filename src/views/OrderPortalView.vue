@@ -1,25 +1,22 @@
 <template>
-    <v-container app>
+
+    <div>
+        <h1>Restaurants</h1>
         <RestaurantList/>
-    </v-container>
+    </div>
 </template>
 
 <script>
-import RestaurantList from '@/components/RestaurantListComp.vue'
-    export default {
-  components: { RestaurantList },
-        name: "OrdersPortalView",
-        data: () => ({
-        loading: false,
-        selection: 1,
-    }),
+import RestaurantList from '@/components/RestaurantListComp.vue';
 
-        methods: {
-        reserve () {
-            this.loading = true
-            setTimeout(() => (this.loading = false), 2000)
+    export default {
+        components: { RestaurantList },
+        name: "OrdersPortalView",
+        
+        computed: {
+            
+            
         },
-    },
     }
 </script>
 

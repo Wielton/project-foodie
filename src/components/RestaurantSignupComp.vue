@@ -26,9 +26,9 @@
             ></v-text-field>
     
             <v-text-field
-                v-model="cityName"
-                :rules="cityNameRules"
-                label="City Name"
+                v-model="city"
+                :rules="cityRules"
+                label="City"
                 required
             ></v-text-field>
 
@@ -46,6 +46,16 @@
                 label="Phone Number"
                 required
             ></v-text-field>
+
+            <v-text-field
+                v-model="bannerUrl"
+                label="Banner URL"
+            ></v-text-field>
+    
+            <v-text-field
+                v-model="profileUrl"
+                label="Profile URL"
+            ></v-text-field>
             
             <v-text-field
                 v-model="password"
@@ -60,7 +70,7 @@
                 :disabled="!valid"
                 color="success"
                 class="mr-4"
-                @click="restaurantSignUpRequest(name, address, bio, cityName, phoneNum, bannerUrl, profileUrl)"
+                @click="restaurantSignUpRequest(name,address,bio,city,phoneNum,bannerUrl,profileUrl,email,password)"
                 >
                 Submit
             </v-btn>
@@ -69,8 +79,8 @@
 
 <script>
 import { useRestaurantStore } from '@/stores/restaurantStore';
-import { mapState, mapWritableState } from 'pinia';
-import {router} from '@/router';
+import { mapActions } from 'pinia';
+
 
 
     export default {
@@ -79,6 +89,15 @@ import {router} from '@/router';
             return{
             isAlert : false,
             valid: true,
+            name: '',
+            address: '',
+            bio: '',
+            city: '',
+            phoneNum: '',
+            email: '',
+            password: '',
+            bannerUrl: undefined,
+            profileUrl: undefined,
             isValidCity: false,
             validCities: [
                 "Calgary", 'Edmonton', 'Vancouver', 'Surrey', 'Winnipeg', 'Brandon', 'Moncton', 'Fredericton', "St. John's", "Mount Pearl",
@@ -101,7 +120,7 @@ import {router} from '@/router';
             phoneNumRules: [
                 v => !!v || 'Phone Number is required...',
             ],
-            cityNameRules: [
+            cityRules: [
                 v => !!v || 'City name is required...',
             ],
             passwordRules: [
@@ -113,20 +132,17 @@ import {router} from '@/router';
         
         computed: {
             //Initial 
-            ...mapState(useRestaurantStore,['title',]),
-            ...mapWritableState(useRestaurantStore,['email','username', 'firstName','lastName','password']),
+            
+            
             //Getters
             
             //Actions
-            ...mapState(useRestaurantStore,['signUpRequest']),
-            passwordConfirmationRule(){
-            return()=>(this.password === this.passwordConfirm) || 'Passwords must match'
-        },
+            
         },
         
         
         methods: {
-        
+        ...mapActions(useRestaurantStore,['restaurantSignUpRequest']),
         
         validate () {
             this.$refs.form.submit()
@@ -139,21 +155,7 @@ import {router} from '@/router';
         },
 
         
-        mounted () {
-            
-            useRestaurantStore().$onAction(({name, after})=>{
-                if (name == "signUpSuccess"){
-                    after(()=>{
-                        this.userId.push(this.users);
-                        this.$cookie.set('sessionToken', this.userToken)
-                        router.push({path: '/restaurantUser'}); 
-                    })
-                } 
-                else {
-                    this.isAlert = true;
-                }
-            })
-        },
+        
         
         }
     

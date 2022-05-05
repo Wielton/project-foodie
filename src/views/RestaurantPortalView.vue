@@ -1,9 +1,7 @@
 <template>
 <v-container app>
-        <div>
-            <TopNavBar/>
-        </div>
-        <h4>Restaurant Portal</h4>
+        
+        <h1>{{restaurantHomeTitle}}</h1>
         <v-spacer></v-spacer>
     <v-container>
         <v-row>
@@ -23,7 +21,9 @@
                 <v-card>
                     <RestaurantSignupComponent v-if="showSignUpForm"/>
                     </v-card>
-                        <v-spacer></v-spacer>
+                    </v-expand-transition>
+                        
+                        <v-expand-transition>
                         <v-card>
                     <RestaurantLoginComponent v-if="showLoginForm"/>
                 </v-card>
@@ -36,17 +36,21 @@
 <script>
 import RestaurantLoginComponent from '@/components/RestaurantLoginComp.vue';
 import RestaurantSignupComponent from '@/components/RestaurantSignupComp.vue';
-import TopNavBar from '@/components/TopNav.vue';
+import {useRestaurantStore} from '@/stores/restaurantStore';
+import {mapState} from 'pinia';
     export default {
         name: "RestaurantPortalView",
-        components: {RestaurantSignupComponent, RestaurantLoginComponent, TopNavBar},
+        components: {RestaurantSignupComponent, RestaurantLoginComponent},
         data() {
             return{
                 showLoginForm: false,
                 showSignUpForm: false,
             }
+        },
+        computed: {
+            ...mapState(useRestaurantStore,['restaurantHomeTitle']),
+        },
+        methods: {
         }
-        
-        
     }
 </script>

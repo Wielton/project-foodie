@@ -1,8 +1,8 @@
 <template>
 <v-container app>
       <div>
-        <v-img src="https://www.creativefabrica.com/wp-content/uploads/2020/04/25/Delivery-Service-vector-illustration-Graphics-3951054-1-1-580x365.jpg">
-        </v-img>
+        <!-- <v-img src="https://www.creativefabrica.com/wp-content/uploads/2020/04/25/Delivery-Service-vector-illustration-Graphics-3951054-1-1-580x365.jpg">
+        </v-img> -->
         <h1>Foodie</h1>
         <h2>Are you in the moodie?</h2>
         </div>

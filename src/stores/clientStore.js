@@ -10,6 +10,7 @@ export const useClientStore = defineStore('client',{
         return {
             title: 'In the moodie for Foodie',
             isLoggedIn : false,
+            
         }
     },
     actions: {
@@ -61,7 +62,7 @@ export const useClientStore = defineStore('client',{
                 }).then((response)=>{
                     cookies.set('sessionToken', response.data.token);
                     router.push('/restaurants');
-                    this.restaurantPopulateRequest();
+                    
                 }).catch((error)=>{
                     console.log(error);
                     this.loginFailed();
@@ -175,13 +176,12 @@ restaurantPopulateRequest(){
         url: process.env.VUE_APP_API_URL+"restaurant",
         method: "GET",
         headers : {
-            token: cookies.get('sessionToken'),
             'x-api-key' : process.env.VUE_APP_API_KEY
             },
     }).then((response)=>{
         console.log(response);
-        const restaurants = response.data;
-        console.log(restaurants);
+        this.restaurants = response.data;
+        console.log(this.restaurants);
     }).catch((error)=>{
         console.log(error);
         

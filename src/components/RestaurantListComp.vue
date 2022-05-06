@@ -1,58 +1,41 @@
 <template>
-
-<v-container>
-    <div>
-        <v-btn 
-            @click="restaurantPopulateRequest"
-        >Click</v-btn>
-        </div>
-        
-        <v-container
-            v-if="isClicked"
-            >
-            <v-row
-                no-gutters
-                style="height: 150px;"
+<div>
+    <h1>{{title}}</h1>
+    <v-btn @click="fetchRestaurants">Click</v-btn>
+        <ul>
+            <li v-for="restaurant in restaurants"
+                :key="restaurant.restaurantId"
+                
                 >
-                <v-col
-                    
-                    v-for="restaurant in restaurants"
-                    :key="restaurant.restaurantId"
-                    >
-                    <v-card
-                        class="pa-2"
-                        outlined
-                        >
+                <v-card>
                     <v-card-title>{{restaurant.name}}</v-card-title>
                     <v-card-subtitle>{{restaurant.bio}}</v-card-subtitle>
-                    <v-card-text>{{restaurant.address}}</v-card-text>
                 </v-card>
-            </v-col>
-        </v-row>
-    </v-container>
-</v-container>
+            </li>
+        </ul>
+</div>
 </template>
 
 <script>
-import {useClientStore} from '@/stores/clientStore';
-import {mapState,mapActions} from 'pinia';
+import { useGetRestaurantStore } from '@/stores/getRestaurantStore';
+import { mapState, mapActions } from 'pinia';
+
     export default {
         name: 'RestaurantList',
-        isClicked: false,
         data: () => ({
-            alignments: [
-                'start',
-                'center',
-                'end',
-            ],
+        
     }),
         computed:{
-            ...mapState(useClientStore,['restaurants']),
+            ...mapState(useGetRestaurantStore,['title']),
+            ...mapState(useGetRestaurantStore,['restaurants']),
+            
+            
             
         },
         methods: {
-            ...mapActions(useClientStore,['restaurantPopulateRequest'])
+            ...mapActions(useGetRestaurantStore,['fetchRestaurants'])
+        },
         
-        
-    }}
+    }
 </script>
+

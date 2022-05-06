@@ -8,10 +8,8 @@ axios.defaults.headers.common['Content-Type'] = "application/json";
 export const useClientStore = defineStore('client',{
     state : ()=>{
         return {
-            title: 'In the moodie for Foodie',
-            isLoggedIn : false,
-            
-        }
+            title: 'Are you in the moodie for Foodie?',
+            }
     },
     actions: {
 
@@ -170,22 +168,6 @@ export const useClientStore = defineStore('client',{
             },
 
 
-// Restaurant populating upon login or signUp
-restaurantPopulateRequest(){
-    axios.request({
-        url: process.env.VUE_APP_API_URL+"restaurant",
-        method: "GET",
-        headers : {
-            'x-api-key' : process.env.VUE_APP_API_KEY
-            },
-    }).then((response)=>{
-        console.log(response);
-        this.restaurants = response.data;
-        console.log(this.restaurants);
-    }).catch((error)=>{
-        console.log(error);
-        
-    })
-},
+
         },
 })

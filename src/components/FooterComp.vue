@@ -33,11 +33,9 @@ export default {
     data: () => ({
         links: [
             'Home',
-            'About Us',
-            'Team',
-            'Services',
-            'Blog',
-            'Contact Us',
+            'Restaurants',
+            'Account',
+            'Restaurant Portal',
         ],
     }),
 }

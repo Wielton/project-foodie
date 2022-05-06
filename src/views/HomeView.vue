@@ -3,8 +3,8 @@
       <div>
         <!-- <v-img src="https://www.creativefabrica.com/wp-content/uploads/2020/04/25/Delivery-Service-vector-illustration-Graphics-3951054-1-1-580x365.jpg">
         </v-img> -->
-        <h1>Foodie</h1>
-        <h2>Are you in the moodie?</h2>
+        <h1>{{title}}</h1>
+        
         </div>
         <v-spacer></v-spacer>
         <v-toolbar
@@ -16,7 +16,7 @@
           <v-btn
               icon
               color="success"
-              @click="searchByCity(cityName)"
+              
             >
               <v-icon>mdi-magnify</v-icon>
             </v-btn>
@@ -73,9 +73,10 @@
 </template>
 
 <script>
-import SignupComponent from '@/components/SignupComp'
-import LoginComponent from '@/components/LoginComp.vue'
-
+import SignupComponent from '@/components/SignupComp.vue';
+import LoginComponent from '@/components/LoginComp.vue';
+import { useClientStore } from '@/stores/clientStore';
+import { mapState } from 'pinia';
 export default {
     name: 'HomeView',
     components: {
@@ -83,6 +84,9 @@ export default {
         LoginComponent,
   
       },
+      computed: {
+              ...mapState(useClientStore, ['title'])
+              },
     data(){
             return{
             showLoginForm: false,
@@ -103,13 +107,9 @@ export default {
                 ],
             select: 'Select a city to search from...',
               }},
-            computed: {
-              
-              },
+            
             methods: {
-              validCitiesSelection(){
-
-              }
+              
               },
             
           

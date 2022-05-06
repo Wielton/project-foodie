@@ -2,7 +2,8 @@ import { defineStore } from "pinia";
 import axios from 'axios';
 import cookies from 'vue-cookies';
 import {router} from '@/router';
-
+axios.defaults.headers.common['x-api-key'] = process.env.VUE_APP_API_KEY;
+axios.defaults.headers.common['Content-Type'] = "application/json";
 export const useRestaurantStore = defineStore('restaurant',{
     state : ()=>{
         return {
@@ -18,7 +19,7 @@ export const useRestaurantStore = defineStore('restaurant',{
                 url: process.env.VUE_APP_API_URL+"restaurant",
                 method: "POST",
                 headers : {
-                    'x-api-key' : process.env.VUE_APP_API_KEY
+                    
                     },
                 data : {
                     name,
@@ -30,9 +31,10 @@ export const useRestaurantStore = defineStore('restaurant',{
                     profileUrl,
                     email,
                     password
-                }
+                }  
             }).then((response)=>{
-                cookies.set('sessionToken', response.token);
+
+                cookies.set('sessionToken', response.data.token);
                 router.push('/restaurant-home/');
             }).catch((error)=>{
                 console.log(error);
@@ -44,7 +46,7 @@ export const useRestaurantStore = defineStore('restaurant',{
                     url: process.env.VUE_APP_API_URL+"restaurant-login",
                     method: "POST",
                     headers : {
-                        'x-api-key' : process.env.VUE_APP_API_KEY
+                        
                         },
                         data: {
                             email,
@@ -66,7 +68,7 @@ export const useRestaurantStore = defineStore('restaurant',{
                     method: "PATCH",
                     headers : {
                         token: cookies.get('sessionToken'),
-                        'x-api-key' : process.env.VUE_APP_API_KEY
+                        
                         },
                     data: {
                         name,
@@ -90,8 +92,8 @@ export const useRestaurantStore = defineStore('restaurant',{
                     url: process.env.VUE_APP_API_URL+"restaurant-login",
                     method: "DELETE",
                     headers: {
-                        'x-api-key' : process.env.VUE_APP_API_KEY,
-                        token: cookies.get('sessionToken'),
+                        
+                        token: cookies.get('sessionToken')
                     }
                 }).then((response)=>{
                     console.log(response);
@@ -106,8 +108,8 @@ export const useRestaurantStore = defineStore('restaurant',{
                     url: process.env.VUE_APP_API_URL+"restaurant",
                     method: "DELETE",
                     headers: {
-                        token: cookies.get('sessionToken'),
-                        'x-api-key' : process.env.VUE_APP_API_KEY
+                        token: cookies.get('sessionToken')
+                        
                     }
                 }).then((response)=>{
                     console.log(response);

@@ -1,35 +1,35 @@
 <template>
 <div>
+    
     <v-card class="elevation-12">
+        <v-spacer></v-spacer>
         <v-card-actions>
             <v-btn
                 color="success"
                 class="mr-4"
                 @click="userDeleteRequest">
-            Delete</v-btn>
-
-        <v-spacer></v-spacer>
-        
-        <v-btn
-            color="success"
-            class="mr-4"
-            @click="accountInfoChangeRequest">
-            Change Info
-        </v-btn>
-            <v-spacer></v-spacer>
-        <v-btn
-            color="success"
-            class="mr-4"
-            @click="logoutRequest">
-            Logout
-        </v-btn>
-    </v-card-actions>
+                Delete
+            </v-btn>
+            <v-btn
+                color="success"
+                class="mr-4"
+                @click="accountInfoChangeRequest">
+                Change Info
+            </v-btn>
+            <v-btn
+                color="success"
+                class="mr-4"
+                @click="logoutRequest">
+                Logout
+            </v-btn>
+        </v-card-actions>
     </v-card>
-    <v-divider></v-divider>
+<v-divider></v-divider>
     <v-container fluid>
         <v-row>
             <v-col cols="4">
                 <v-subheader>Email</v-subheader>
+                
             </v-col>
             <v-col cols="8">
                 <v-text-field
@@ -101,10 +101,10 @@
             </v-col>
             <v-col cols="8">
                 <v-text-field
-                    v-model="profileUrl"
-                    type="password"
+                    v-model="pictureUrl"
+                    type="pictureUrl"
                     :append-icon="'mdi-pencil'"
-                    @click:append="accountInfoChangeRequest(password)"
+                    @click:append="accountInfoChangeRequest(pictureUrl)"
                     ></v-text-field>
             </v-col>
         </v-row>
@@ -114,7 +114,7 @@
 
 <script>
 import { useClientStore } from '@/stores/clientStore';
-import { mapActions, mapWritableState } from 'pinia';
+import { mapState,mapActions} from 'pinia';
 
 
     export default {
@@ -122,16 +122,28 @@ import { mapActions, mapWritableState } from 'pinia';
         name: 'SignupComponent',
         data: ()=>({
             store: undefined,
-            username: '',
-            password: '',
-            firstname: '',
-            lastname: '',
-            email: '',
-            profileUrl: '',
+            
+            emailRules: [
+                v => !!v || 'E-mail is required...',
+                v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+                ],
+            firstNameRules: [
+                v => !!v || 'First name is required...',
+                ],
+            lastNameRules: [
+                v => !!v || 'Last name is required...',
+                ],
+            usernameRules: [
+                v => !!v || 'Username name is required...',
+                ],
+            passwordRules: [
+                v => !!v || 'Password is required...',
+                v => (v && v.length <= 10) || 'Password must be less than 10 characters',
+                ],
             }),
         computed: {
             //Initial 
-            ...mapWritableState(useClientStore,['username', 'firstName','lastName','password', 'pictureUrl','email']),
+            ...mapState(useClientStore,['username','password','email','firstName','lastName','pictureUrl'])
             //Getters
             
             
@@ -141,7 +153,7 @@ import { mapActions, mapWritableState } from 'pinia';
         
         methods: {
         //Actions
-            ...mapActions(useClientStore,['userDeleteRequest', 'accountInfoChangeRequest', 'logoutRequest']),
+            ...mapActions(useClientStore,['userDeleteRequest', 'accountInfoChangeRequest', 'logoutRequest','accountInfoRequest']),
         
         validate () {
             this.$refs.form.submit()
@@ -152,15 +164,25 @@ import { mapActions, mapWritableState } from 'pinia';
             // resetValidation () {
             // this.$refs.form.resetValidation()
         },
-
+        beforeMount(){
+            this.accountInfoRequest
+        },
+        beforeUpdate(email,password,username,firstName,lastName,pictureUrl){
+            email,
+            password,
+            username,
+            firstName,
+            lastName,
+            pictureUrl
+        },
         
-        mounted () {
+        updated() {
             const router = this.$router;
             this.store = useClientStore();
             useClientStore().$onAction(({name, after})=>{
-                if (name == "signUpSuccess"){
+                if (name == "accountInfoChangedSuccess"){
                     after(()=>{
-                        router.push({path: '/user'}); 
+                        router.push({path: '/user-account/:clientId/'}); 
                     })
                 } 
                 else if(name == "userDeleteRequest"){

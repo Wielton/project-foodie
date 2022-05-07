@@ -107,10 +107,7 @@ export default {
                 
                 ...mapActions(useClientStore,['signUpRequest']),
                 
-                handleUserRegistration() {
-                    //Some kind of form validation
-                    this.createUser(this.username, this.firstName, this.lastName, this.email, this.password, this.pictureUrl);
-                    },
+                
                 validate () {
                     this.$refs.form.submit()
                     },

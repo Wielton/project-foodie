@@ -1,10 +1,10 @@
 <template>
-    <v-content>
+    <v-main>
         <v-container fluid fill-height>
             <v-layout align-center justify-center>
                 <v-flex xs12 sm8 md4>
                     <v-card class="elevation-12">
-                        <v-toolbar dark color="primary">
+                        <v-toolbar dark color="#fd7132">
                             <v-toolbar-title>{{title}}</v-toolbar-title>
                         </v-toolbar>
                         <v-card-text>
@@ -37,7 +37,7 @@
                 </v-flex>
             </v-layout>
         </v-container>
-    </v-content>   
+    </v-main>   
 </template>
 
 <script>
@@ -70,7 +70,7 @@ import { mapActions, mapState } from 'pinia';
             // resetValidation () {
             // this.$refs.form.resetValidation()
             },
-        mounted () {
+        mounted() {
             useClientStore().$onAction(({name, after})=>{
                 if (name == "loginFailed"){
                         after(()=>{

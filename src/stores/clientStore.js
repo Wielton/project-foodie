@@ -34,7 +34,7 @@ export const useClientStore = defineStore('client',{
                 console.log(response.data.token)
                 console.log(response.data.clientId);
                 cookies.set('sessionToken', response.data.token);
-                router.push('/restaurants/:clientId');
+                router.push('/restaurants/');
             }).catch((error)=>{
                 console.log(error);
                 this.signUpFailed();
@@ -59,8 +59,9 @@ export const useClientStore = defineStore('client',{
                     }
                 }).then((response)=>{
                     cookies.set('sessionToken', response.data.token);
-                    router.push('/restaurants/');
-                    
+                    router.push('/');
+                    this.user = response.data.clientId;
+                    console.log(this.user.username + "is logged in")
                 }).catch((error)=>{
                     console.log(error);
                     this.loginFailed();
@@ -84,7 +85,8 @@ export const useClientStore = defineStore('client',{
                     },
                 }).then((response)=>{
                     console.log(response.data);
-                    router.push('/user-account/');
+                    this.user = response.data;
+                    router.push('/user-account/:clientId/');
                 }).catch((error)=>{
                     console.log(error);
                 })
@@ -98,7 +100,7 @@ export const useClientStore = defineStore('client',{
             
 // User profile field editing
 
-        accountInfoChangeRequest(username, firstName, lastName, password, pictureUrl){
+        accountInfoChangeRequest(email, username, firstName, lastName, password, pictureUrl){
             axios.request({
                 url: process.env.VUE_APP_API_URL+"client",
                 method: "PATCH",
@@ -106,6 +108,7 @@ export const useClientStore = defineStore('client',{
                     'token': cookies.get('sessionToken'),
                     },
                 data: {
+                    email,
                     username,
                     firstName,
                     lastName,
@@ -139,7 +142,6 @@ export const useClientStore = defineStore('client',{
                 }).then((response)=>{
                     console.log(response);
                     console.log('User was logged out');
-                    cookies.remove('sessionToken');
                     router.push('/');
                 }).catch((error)=>{
                     console.log(error);

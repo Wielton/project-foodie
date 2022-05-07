@@ -1,20 +1,39 @@
 <template>
 <div>
     <v-app-bar app color="#fd7132">
-        <v-app-bar-nav-icon @click="leftDrawer = true" 
-                            class="d-flex d-sm-none">
-                            </v-app-bar-nav-icon>
-                            <v-toolbar-title color="#79031d">Foodie</v-toolbar-title>
+        <v-toolbar 
+            color="#fd7032"
+            rounded>
+            <v-app-bar-nav-icon 
+                @click="leftDrawer = true" 
+                class="d-flex d-sm-none">
+            </v-app-bar-nav-icon>
+            <v-toolbar-title color="#79031d">Foodie</v-toolbar-title>
+        
         <v-spacer></v-spacer>
-
-        <v-btn icon color="#79031d">
-            <v-icon>mdi-magnify</v-icon>
-        </v-btn>
-
-        <v-btn icon color="#79031d" @click="userNavigation = true">
-            <v-icon>mdi-dots-vertical</v-icon>
-        </v-btn>
-
+        
+            <v-btn 
+                icon
+                elevation="2"
+                @click="showLoginForm = !showLoginForm">
+                <v-icon>mdi-login</v-icon>
+            </v-btn>
+        
+            <v-btn 
+                icon
+                elevation="2"
+                @click="logoutRequest">
+                <v-icon>mdi-logout</v-icon>
+            </v-btn>
+        
+            <v-btn 
+                icon
+                elevation="2"
+                @click="showSignupForm = !showSignupForm">
+                <v-icon>mdi-cog</v-icon>
+            </v-btn>
+            
+        </v-toolbar>
         <template v-slot:extension>
             <v-tabs
             v-model="tab"
@@ -62,16 +81,10 @@
             dense>
         <v-list-item-group>
             <v-list-item>
-                <v-btn 
-                    elevation="2"
-                    @click="showLoginForm = !showLoginForm"
-                    >Login</v-btn>
+                
             </v-list-item>
             <v-list-item>
-                <v-btn 
-                    elevation="2"
-                    @click="showSignupForm = !showSignupForm"
-                    >Sign Up</v-btn>
+                
             </v-list-item>
 
             </v-list-item-group>
@@ -79,7 +92,7 @@
     </v-navigation-drawer>
     <v-spacer></v-spacer>
     <v-expand-transition>
-            <SignupComponent v-if="showSignUpForm"/>
+            <SignupComponent v-if="showSignupForm"/>
             <LoginComponent v-if="showLoginForm"/>
     </v-expand-transition>
 </div>
@@ -87,6 +100,9 @@
 <script>
 import SignupComponent from '@/components/SignupComp';
 import LoginComponent from '@/components/LoginComp';
+import {useClientStore} from '@/stores/clientStore';
+import {mapActions} from 'pinia';
+
 export default {
     name: "TopNav",
     components: { LoginComponent, SignupComponent },
@@ -95,12 +111,12 @@ export default {
             leftDrawer: false,
             userNavigation: false,
             showLoginForm: false,
-            showSignUpForm: false,
+            showSignupForm: false,
             tab: null,
             items: [
                 
                 {name: 'Home', path:'/'}, 
-                {name: 'Account', path:'/user-account/'}, 
+                {name: 'Account', path:'/user-account/:clientId/'}, 
                 {name: 'Restaurants', path:'/restaurants/'}, 
                 {name: 'About Us', path:'/about-us/'}, 
                 {name: 'Contact', path:'/contact-us/'},
@@ -110,6 +126,14 @@ export default {
                 {name: 'Logout', path:'/logout/'}
             ]
         }
-    }
+    },
+    computed: {
+        
+        },
+    methods: {
+        ...mapActions(useClientStore,['logoutRequest']),
+        
+        
+        }
 }
 </script>

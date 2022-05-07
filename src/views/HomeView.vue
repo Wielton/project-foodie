@@ -2,8 +2,11 @@
 <v-container app>
       
       <div align="center"> 
-        <v-img src="https://www.creativefabrica.com/wp-content/uploads/2020/04/25/Delivery-Service-vector-illustration-Graphics-3951054-1-1-580x365.jpg">
-        </v-img>
+        <v-img 
+            src="https://www.creativefabrica.com/wp-content/uploads/2020/04/25/Delivery-Service-vector-illustration-Graphics-3951054-1-1-580x365.jpg"
+            max-width="1000px"
+            >
+            </v-img>
         </div>
         <v-spacer></v-spacer>
         <v-card

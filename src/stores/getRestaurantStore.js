@@ -8,9 +8,7 @@ axios.defaults.headers.common['Content-Type'] = "application/json";
 export const useGetRestaurantStore = defineStore('getRestaurant',{
     state : ()=>({
         title: 'Restaurants for you...',
-        restaurants: [{
-            name: '',
-        }]
+        
     }),
     actions: {
         // Restaurant populating upon login or signUp

@@ -1,11 +1,10 @@
 <template>
-<div>
+<div app>
     <h1>{{title}}</h1>
     <v-btn @click="fetchRestaurants">Click</v-btn>
         <ul>
             <li v-for="restaurant in restaurants"
                 :key="restaurant.restaurantId"
-                
                 >
                 <v-card>
                     <v-card-title>{{restaurant.name}}</v-card-title>

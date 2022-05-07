@@ -1,24 +1,17 @@
 <template>
   <v-app id="inspire">
-      <div>
-        <TopNavBar/>
-      </div>
-      <v-spacer></v-spacer>
-        <v-main>
+    <TopNav/>
+      <v-main>
           <router-view/>
-        </v-main>
-      <v-spacer></v-spacer>
-      <div>
-        <FooterComponent/>
-      </div>
+      </v-main>
   </v-app>
 </template>
 
 <script>
-import FooterComponent from './components/FooterComp.vue'
-import TopNavBar from '@/components/TopNav.vue';
+import TopNav from '@/components/TopNavComp'
+
   export default {
-  components: { FooterComponent, TopNavBar },
+  components: { TopNav },
     
   }
 </script>

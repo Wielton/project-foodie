@@ -11,8 +11,7 @@
             <v-icon>mdi-magnify</v-icon>
         </v-btn>
 
-        <v-btn icon color="#79031d" @click="userNavigation = true" 
-                                    class="">
+        <v-btn icon color="#79031d" @click="userNavigation = true">
             <v-icon>mdi-dots-vertical</v-icon>
         </v-btn>
 
@@ -78,9 +77,10 @@
             </v-list-item-group>
         </v-list>
     </v-navigation-drawer>
+    <v-spacer></v-spacer>
     <v-expand-transition>
             <SignupComponent v-if="showSignUpForm"/>
-            <LoginComponent v-else-if="showLoginForm"/>
+            <LoginComponent v-if="showLoginForm"/>
     </v-expand-transition>
 </div>
 </template>

@@ -34,7 +34,7 @@ export const useClientStore = defineStore('client',{
                 console.log(response.data.token)
                 console.log(response.data.clientId);
                 cookies.set('sessionToken', response.data.token);
-                router.push('/restaurants');
+                router.push('/restaurants/:clientId');
             }).catch((error)=>{
                 console.log(error);
                 this.signUpFailed();
@@ -59,7 +59,7 @@ export const useClientStore = defineStore('client',{
                     }
                 }).then((response)=>{
                     cookies.set('sessionToken', response.data.token);
-                    router.push('/restaurants');
+                    router.push('/restaurants/');
                     
                 }).catch((error)=>{
                     console.log(error);

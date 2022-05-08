@@ -1,4 +1,6 @@
 <template>
+<v-container>
+    <v-card>
     <v-form
             ref="form"
             v-model="valid"
@@ -33,6 +35,8 @@
                 Add
             </v-btn>
         </v-form>
+    </v-card>
+</v-container>
 </template>
 
 <script>

@@ -4,10 +4,7 @@
         <h3>Here you can view active orders, 
             update your restaurant profile, 
             and update the menu.</h3>
-            <v-btn
-                @click="restaurantLogoutRequest">
-                Logout
-            </v-btn>
+            
             
             <v-spacer></v-spacer>
             <MenuAddFormComp/>
@@ -16,13 +13,12 @@
 
 <script>
 import MenuAddFormComp from '@/components/MenuAddFormComp.vue'
-import {useRestaurantStore} from '@/stores/restaurantStore';
-import {mapActions} from 'pinia';
+
     export default {
     components: { MenuAddFormComp },
         name: 'RestaurantHome',
         actions: {
-            ...mapActions(useRestaurantStore,['restaurantLogoutRequest'])
+            
         }
     }
 </script>

@@ -48,7 +48,7 @@ const routes = [
     component: RestaurantPortalView
   },
   {
-    path: '/restaurant-home/',
+    path: '/restaurant-home/:restaurantId',
     name: 'restaurant-home',
     component: RestaurantHomeView
   },

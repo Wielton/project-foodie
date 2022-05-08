@@ -129,18 +129,6 @@ import { mapActions } from 'pinia';
             ],            
 }
         },
-        
-        computed: {
-            //Initial 
-            
-            
-            //Getters
-            
-            //Actions
-            
-        },
-        
-        
         methods: {
         ...mapActions(useRestaurantStore,['restaurantSignUpRequest']),
         
@@ -153,10 +141,5 @@ import { mapActions } from 'pinia';
             // resetValidation () {
             // this.$refs.form.resetValidation()
         },
-
-        
-        
-        
-        }
-    
+}
 </script>

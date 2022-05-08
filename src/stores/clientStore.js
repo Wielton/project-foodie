@@ -59,7 +59,7 @@ export const useClientStore = defineStore('client',{
                     }
                 }).then((response)=>{
                     cookies.set('sessionToken', response.data.token);
-                    router.push('/');
+                    router.push('/restaurants/:clientId');
                     this.user = response.data.clientId;
                     console.log(this.user.username + "is logged in")
                 }).catch((error)=>{
@@ -86,6 +86,7 @@ export const useClientStore = defineStore('client',{
                 }).then((response)=>{
                     console.log(response.data);
                     this.user = response.data;
+                    
                     router.push('/user-account/:clientId/');
                 }).catch((error)=>{
                     console.log(error);
@@ -142,7 +143,7 @@ export const useClientStore = defineStore('client',{
                 }).then((response)=>{
                     console.log(response);
                     console.log('User was logged out');
-                    router.push('/');
+                    cookies.remove('sessionToken');
                 }).catch((error)=>{
                     console.log(error);
                 })

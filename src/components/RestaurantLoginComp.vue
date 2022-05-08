@@ -1,6 +1,6 @@
 <template>
     <v-card app>
-        <v-card-title>{{title}}</v-card-title>
+        
         <v-form
             ref="form"
             v-model="valid"
@@ -23,7 +23,7 @@
                 :disabled="!valid"
                 color="success"
                 class="mr-4"
-                @click="loginRequest(email,password)"
+                @click="restaurantLoginRequest(email,password)"
                 >
                 Submit
             </v-btn>
@@ -36,8 +36,8 @@
 </template>
 
 <script>
-import { useClientStore } from '@/stores/clientStore';
-import { mapActions, mapState } from 'pinia';
+import { useRestaurantStore } from '@/stores/restaurantStore';
+import { mapActions} from 'pinia';
 
     export default {
         name: 'LoginComponent',
@@ -51,11 +51,9 @@ import { mapActions, mapState } from 'pinia';
                 v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
                 ],
             }),
-            computed: {
-                ...mapState(useClientStore,['title']),
-            },
+            
         methods: {
-            ...mapActions(useClientStore,['loginRequest']),
+            ...mapActions(useRestaurantStore,['restaurantLoginRequest']),
             validate () {
             this.$refs.form.submit()
             },
@@ -66,7 +64,7 @@ import { mapActions, mapState } from 'pinia';
             // this.$refs.form.resetValidation()
             },
         mounted () {
-            useClientStore().$onAction(({name, after})=>{
+            useRestaurantStore().$onAction(({name, after})=>{
                 if (name == "loginFailed"){
                         after(()=>{
                             this.isAlert = true;

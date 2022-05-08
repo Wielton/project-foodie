@@ -167,15 +167,6 @@ import { mapState,mapActions} from 'pinia';
         beforeMount(){
             this.accountInfoRequest
         },
-        beforeUpdate(email,password,username,firstName,lastName,pictureUrl){
-            email,
-            password,
-            username,
-            firstName,
-            lastName,
-            pictureUrl
-        },
-        
         updated() {
             const router = this.$router;
             this.store = useClientStore();

@@ -18,6 +18,13 @@
                 @click="showLoginForm = !showLoginForm">
                 <v-icon>mdi-login</v-icon>
             </v-btn>
+
+            <v-btn 
+                icon
+                elevation="2"
+                @click="showSignupForm = !showSignupForm">
+                <v-icon>mdi-login</v-icon>
+            </v-btn>
         
             <v-btn 
                 icon
@@ -29,7 +36,7 @@
             <v-btn 
                 icon
                 elevation="2"
-                @click="showSignupForm = !showSignupForm">
+                to="/user-account/:clientId/">
                 <v-icon>mdi-cog</v-icon>
             </v-btn>
             
@@ -115,11 +122,11 @@ export default {
             tab: null,
             items: [
                 
-                {name: 'Home', path:'/'}, 
-                {name: 'Account', path:'/user-account/:clientId/'}, 
+                {name: 'Home', path:'/'},
                 {name: 'Restaurants', path:'/restaurants/'}, 
                 {name: 'About Us', path:'/about-us/'}, 
                 {name: 'Contact', path:'/contact-us/'},
+                {name: 'Restaurant Portal', path:'/restaurant-portal/'},
                 ],
             loginItems: [
                 {name: 'Login', path:'/login/'},

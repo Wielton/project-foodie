@@ -1,7 +1,7 @@
 <template>
 <v-container>
     <v-card>
-    <v-form
+        <v-form
             ref="form"
             v-model="valid"
             lazy-validation
@@ -28,13 +28,12 @@
                 v-model="imageUrl"
                 label="Image URL"
             ></v-text-field>
-
+        </v-form>
             <v-btn
                 @click="addMenuItem(name,description,price,imageUrl)"
                 >
                 Add
             </v-btn>
-        </v-form>
     </v-card>
 </v-container>
 </template>

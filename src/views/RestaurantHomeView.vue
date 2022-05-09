@@ -1,9 +1,9 @@
 <template>
     <div>
         <h1>Welcome to your home page.</h1>
-        <h3>Here you can view active orders, 
+        <p>Here you can view active orders, 
             update your restaurant profile, 
-            and update the menu.</h3>
+            and update the menu.</p>
             
             
             <v-spacer></v-spacer>

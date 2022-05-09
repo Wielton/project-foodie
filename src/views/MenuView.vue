@@ -1,96 +1,77 @@
 <template>
-    <div 
-        app
-        style="max-width:70%">
+    <div app>
         <h1>{{title}}</h1>
-            <v-container>
+
+        
+            <v-container style="width:65%">
                 <v-row>
                 <v-col
-                    v-for="menuItem in menu"
-                    :key="menuItem.menuId">
+                    v-for="item in menu"
+                    :key="item.menuId"
+                    :item="item.menuId">
                     <v-card 
-                        @click.self="addMenuItem()"
-                        >
+                        
+                        :item="item.menuId">
                         <v-img 
-                            :src="menuItem.imageUrl"
+                            :src="item.imageUrl"
                             width="200"
                             height="200"
                             ></v-img>
-                                <v-card-title>{{menuItem.name}}</v-card-title>
-                                <v-card-subtitle>{{menuItem.price}}</v-card-subtitle>
-                                <v-card-text>{{menuItem.description}}</v-card-text>
+                                <v-card-title>{{item.name}}</v-card-title>
+                                <v-card-subtitle>{{item.price}}</v-card-subtitle>
+                                <v-card-text>{{item.description}}</v-card-text>
+                                <v-card-actions>
+                                    <v-btn 
+                                @click="addMenuItem(item.menuId)">Add</v-btn>
+                                </v-card-actions>
                     </v-card>
                 </v-col>
                 </v-row>
             </v-container>
-            <v-navigation-drawer
-                absolute
-                permanent
-                right
-                style="max-width:30%"
-                >
-                <template v-slot:prepend>
-                    <v-list-item two-line>
-                        <v-list-item-avatar>
-                            <img src="https://randomuser.me/api/portraits/women/81.jpg">
-                        </v-list-item-avatar>
-
-                        <v-list-item-content>
-                            <v-list-item-title>Jane Smith</v-list-item-title>
-                            <v-list-item-subtitle>Logged In</v-list-item-subtitle>
-                        </v-list-item-content>
-                    </v-list-item>
-                </template>
-                                        <v-divider></v-divider>
-                <v-list dense>
-                    <v-list-item
-                        v-for="item in items"
-                        :key="item.title"
-                        >
-                        <v-list-item-icon>
-                            <v-icon>{{ item.icon }}</v-icon>
-                        </v-list-item-icon>
-
-                        <v-list-item-content>
-                            <v-list-item-title>{{ item.title }}</v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item>
-                </v-list>
-            </v-navigation-drawer>
-        
+            
+                
+                    <div v-for="item in items"
+                            :key="item"
+                            :cartItem="item">
+                    <v-card>
+                            
+                        <v-card-title>{{item}}</v-card-title>
+                        
+                    </v-card>
+                    </div>
                 
             
-        
-        
-                
-        
-    </div>
+        </div>
 </template>
 
 <script>
 
 import { useGetMenuStore } from '@/stores/getMenuStore';
-import {mapState,mapActions} from 'pinia';
+import {mapActions, mapState} from 'pinia';
+import { useOrderStore } from '@/stores/orderStore';
+
+
+
 
 
 export default {
     components: {  },
-        
         name: 'RestaurantList',
         data: () => ({
-            items: [
-                { title: 'Home', icon: 'mdi-home-city' },
-                { title: 'My Account', icon: 'mdi-account' },
-                { title: 'Users', icon: 'mdi-account-group-outline' },
-        ],
+            
     }),
         computed:{
-            ...mapState(useGetMenuStore,['menu', 'title']),
+            ...mapState(useGetMenuStore,['title']),
+            ...mapState(useGetMenuStore,['menu']),
+            ...mapState(useOrderStore,['items'])
         },
         
         methods:{
-            ...mapActions(useGetMenuStore,['addMenuItem']),
-        }
+            ...mapActions(useOrderStore,['addMenuItem'])
+            
+        // Add item to menu;  This is not an axios call but is imperative for cart/orders initiation
+        
+        },
         
 }
 </script>

@@ -59,9 +59,9 @@ export const useClientStore = defineStore('client',{
                     }
                 }).then((response)=>{
                     cookies.set('sessionToken', response.data.token);
-                    router.push('/restaurants/:clientId');
                     this.user = response.data.clientId;
-                    console.log(this.user.username + "is logged in")
+                    console.log(this.user);
+                    console.log(cookies.get('sessionToken'));
                 }).catch((error)=>{
                     console.log(error);
                     this.loginFailed();

@@ -8,7 +8,6 @@ axios.defaults.headers.common['Content-Type'] = "application/json";
 export const useGetRestaurantStore = defineStore('getRestaurant',{
     state : ()=>({
         title: "Restaurants",
-        restaurants: undefined
     }),
     
     actions: {
@@ -19,7 +18,7 @@ export const useGetRestaurantStore = defineStore('getRestaurant',{
                 method: "GET",
                 headers : {},
             }).then((response)=>{
-                console.log(response);
+                console.log(response.data);
                 this.restaurants = response.data;
                 console.log(this.restaurants);
             }).catch((error)=>{

@@ -34,7 +34,6 @@ export const useRestaurantStore = defineStore('restaurant',{
                     password
                 }  
             }).then((response)=>{
-
                 cookies.set('restaurantToken', response.data.token);
                 router.push('/restaurant-home/:restaurantId');
             }).catch((error)=>{
@@ -124,6 +123,7 @@ export const useRestaurantStore = defineStore('restaurant',{
                     }
                 }).then((response)=>{
                     console.log(response);
+                    
                 }).catch((error)=>{
                     console.log(error);
                 })

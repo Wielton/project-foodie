@@ -1,38 +1,47 @@
 <template>
-    <v-card app>
-        
-        <v-form
-            ref="form"
-            v-model="valid"
-            lazy-validation
-            >
-            
-            <v-text-field
-                v-model="email"
-                :rules="emailRules"
-                label="Email"
-                type="email"
-                required
-            ></v-text-field>
-            <v-text-field
-                v-model="password"
-                label="Password"
-                required
-            ></v-text-field>
-            <v-btn
-                :disabled="!valid"
-                color="success"
-                class="mr-4"
-                @click="restaurantLoginRequest(email,password)"
-                >
-                Submit
-            </v-btn>
-            
-        </v-form>
-            <!-- <v-alert type="error" v-if="isAlert">
+    <v-container fluid fill-height>
+            <v-layout align-center justify-center>
+                <v-flex xs12 sm8 md4>
+                    <v-card class="elevation-12">
+                        <v-toolbar  color="#fd7132">
+                            <v-toolbar-title>Login</v-toolbar-title>
+                        </v-toolbar>
+                        <v-card-text>
+                            <v-form
+                                ref="form"
+                                v-model="valid"
+                                lazy-validation>
+                                <v-text-field
+                                    v-model="email"
+                                    :rules="emailRules"
+                                    label="Email"
+                                    type="email"
+                                    required>
+                                </v-text-field>
+                                <v-text-field
+                                    v-model="password"
+                                    label="Password"
+                                    required>
+                                </v-text-field>
+                            </v-form>
+                        </v-card-text>
+                        <v-card-actions>
+                                <v-btn
+                                    :disabled="!valid"
+                                    color="success"
+                                    class="mr-4"
+                                    @click="restaurantLoginRequest(email,password)"
+                                    >
+                                    Submit
+                                </v-btn>
+                        </v-card-actions>
+                    </v-card>
+            </v-flex>
+        </v-layout>
+    </v-container>  
+        <!-- <v-alert type="error" v-if="isAlert">
                 Login failed.  Please try again.
-            </v-alert> -->
- </v-card>   
+            </v-alert> --> 
 </template>
 
 <script>

@@ -1,6 +1,6 @@
 <template>
-    <v-main>
-        <v-container fluid fill-height>
+    <div app>
+        <v-container fluid>
             <v-layout align-center justify-center>
                 <v-flex xs12 sm8 md4>
                     <v-card class="elevation-12">
@@ -37,7 +37,7 @@
                 </v-flex>
             </v-layout>
         </v-container>
-    </v-main>   
+    </div>   
 </template>
 
 <script>

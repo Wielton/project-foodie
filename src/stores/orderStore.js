@@ -15,8 +15,19 @@ export const useOrderStore = defineStore('cart',{
         
         addMenuItem(item){
             this.items.push(item);
-            console.log(`${{item}} + added to cart`);
+            console.log(item + 'added to cart');
             console.log(this.items);
+            return this.items;
+            
+        },
+        removeCartItem(items, item){
+            let cartItem = items.indexOf(item);
+            if(cartItem > -1){
+                items.splice(cartItem, 1)
+            }
+            console.log(cartItem +"removed");
+            return items;
+            
         },
         // Cart fetch
         getCartItems(orderId){

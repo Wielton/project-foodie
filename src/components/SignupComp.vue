@@ -1,10 +1,10 @@
 <template>
-    <v-content>
-        <v-container fluid fill-height>
+    <div app>
+        <v-container fluid>
             <v-layout align-center justify-center>
                 <v-flex xs12 sm8 md4>
                     <v-card class="elevation-12">
-                        <v-toolbar dark color="primary">
+                        <v-toolbar color="#fd7132">
                             <v-toolbar-title>Sign Up</v-toolbar-title>
                         </v-toolbar>
                         <v-card-text>
@@ -50,8 +50,7 @@
                                         required
                                     ></v-text-field>
                             </v-form>
-                        </v-card-text>
-                        <v-card-actions>
+                            <v-card-actions>
                             <v-btn
                                 :disabled="!valid"
                                 color="success"
@@ -59,11 +58,13 @@
                                 @click="signUpRequest(email, username,firstName,lastName,password,pictureUrl)"
                                 >Submit</v-btn>
                         </v-card-actions>
+                        </v-card-text>
+                        
                     </v-card>
                 </v-flex>
             </v-layout>
         </v-container>
-    </v-content>
+    </div>
 </template>
 
 <script>

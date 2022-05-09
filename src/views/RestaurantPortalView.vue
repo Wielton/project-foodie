@@ -1,14 +1,41 @@
 <template>
-<v-container app>
-    <h1>Restaurant Portal</h1>
-        <v-spacer></v-spacer>
+<div app>
+    <v-container>
+        <v-layout align-center justify-center>
+            <v-flex >
+                <v-card
+                    color="#79031d">
+                    <h1 style="color:#fd7132">Restaurant Portal</h1>
+                <v-spacer></v-spacer>
+                        <v-card-actions>
+                            <v-btn
+                                color="#fd7132"
+                                elevation="2"
+                                @click="showRestaurantLogin = !showRestaurantLogin">
+                                Login
+                            </v-btn>
+                            <v-btn
+                                color="#fd7132"
+                                elevation="2"
+                                @click="showRestaurantSignup = !showRestaurantSignup">
+                                Signup
+                            </v-btn>
+                        </v-card-actions>
+                    </v-card>
+            </v-flex>
+        </v-layout>
 
-        <RestaurantSignupComponent/>
-        
-        
-        <RestaurantLoginComp/>
-        
-    </v-container>
+        </v-container>
+        <v-divider></v-divider>
+        <v-expand-transition>
+            
+            <RestaurantSignupComponent v-if="showRestaurantSignup"/>
+            
+            
+            <RestaurantLoginComp v-if="showRestaurantLogin"/>
+            
+        </v-expand-transition>
+    </div>
 </template>
 
 <script>
@@ -20,6 +47,8 @@ import RestaurantLoginComp from '@/components/RestaurantLoginComp.vue';
         components: {RestaurantSignupComponent,RestaurantLoginComp},
         data() {
             return{
+                showRestaurantSignup: false,
+                showRestaurantLogin: false
             }
         },
         

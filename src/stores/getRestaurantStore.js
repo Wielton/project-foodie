@@ -12,7 +12,7 @@ export const useGetRestaurantStore = defineStore('getRestaurant',{
     
     actions: {
         // Restaurant populating upon login or signUp
-        async fetchRestaurants(){
+        fetchRestaurants(){
             axios.request({
                 url: process.env.VUE_APP_API_URL+"restaurant",
                 method: "GET",
@@ -20,7 +20,12 @@ export const useGetRestaurantStore = defineStore('getRestaurant',{
             }).then((response)=>{
                 console.log(response.data);
                 this.restaurants = response.data;
+                for(let i = 0; i < this.restaurants.length; i++){
+                    this.restaurantId = response.data[i].restaurantId;
+                }
                 console.log(this.restaurants);
+                console.log(this.restaurantId);
+                return this.restaurantId;
             }).catch((error)=>{
                 console.log(error);
                 })

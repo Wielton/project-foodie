@@ -146,7 +146,8 @@ export default {
             items: [
                 
                 {name: 'Home', path:'/'},
-                {name: 'Restaurants', path:'/restaurants/'}, 
+                {name: 'Restaurants', path:'/restaurants/'},
+                {name: 'User Account', path:'/user-account/:clientId?'},
                 {name: 'About Us', path:'/about-us/'}, 
                 {name: 'Contact', path:'/contact-us/'},
                 ],

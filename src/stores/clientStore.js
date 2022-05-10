@@ -34,13 +34,14 @@ export const useClientStore = defineStore('client',{
                 console.log(response.data.token)
                 console.log(response.data.clientId);
                 cookies.set('sessionToken', response.data.token);
-                router.push('/restaurants/');
             }).catch((error)=>{
-                console.log(error);
-                this.signUpFailed();
+                console.log(error.response.data);
+                this.signUpFailed(error.response);
             })
             },
-
+            signUpFailed(error){
+                return (error)
+            },
 
 
 // -------------------------------------------------------------------------------
@@ -59,16 +60,17 @@ export const useClientStore = defineStore('client',{
                     }
                 }).then((response)=>{
                     cookies.set('sessionToken', response.data.token);
-                    this.user = response.data.clientId;
-                    console.log(this.user);
+                    this.userId = response.data.clientId;
+                    this.userName = response.data.name;
+                    console.log(this.userName + ' with the id: ' + this.userId + ' is now logged in.');
                     console.log(cookies.get('sessionToken'));
                 }).catch((error)=>{
-                    console.log(error);
-                    this.loginFailed();
+                    console.log(error.response.data);
+                    this.loginFailed(error.response);
                 })
             },
-            loginFailed(){
-                
+            loginFailed(error){
+                return (error)
             },
 
 
@@ -86,8 +88,7 @@ export const useClientStore = defineStore('client',{
                 }).then((response)=>{
                     console.log(response.data);
                     this.user = response.data;
-                    
-                    router.push('/user-account/:clientId/');
+                    router.push('/user-account/:clientId');
                 }).catch((error)=>{
                     console.log(error);
                 })
@@ -124,7 +125,7 @@ export const useClientStore = defineStore('client',{
                 })
             },
             accountInfoChangedSuccess(){
-
+                return alert(this.username +"'s info successfully updated." );
             },
 
 
@@ -144,6 +145,7 @@ export const useClientStore = defineStore('client',{
                     console.log(response);
                     console.log('User was logged out');
                     cookies.remove('sessionToken');
+                    router.push('/');
                 }).catch((error)=>{
                     console.log(error);
                 })

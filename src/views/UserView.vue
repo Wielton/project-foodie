@@ -119,7 +119,7 @@ import { mapState,mapActions} from 'pinia';
 
     export default {
         
-        name: 'SignupComponent',
+        name: 'UserView',
         data: ()=>({
             store: undefined,
             

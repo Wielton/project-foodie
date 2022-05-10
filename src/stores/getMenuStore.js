@@ -5,6 +5,7 @@ import { router } from '@/router';
 axios.defaults.headers.common['x-api-key'] = process.env.VUE_APP_API_KEY;
 axios.defaults.headers.common['Content-Type'] = "application/json";
 
+
 export const useGetMenuStore = defineStore('getMenu',{
     state : ()=>({
         title: 'Menu',
@@ -19,7 +20,7 @@ export const useGetMenuStore = defineStore('getMenu',{
                 headers : {
 
                 },
-                params : {
+                data : {
                     restaurantId
                 }
             }).then((response)=>{
@@ -29,7 +30,8 @@ export const useGetMenuStore = defineStore('getMenu',{
                 console.log(this.menu);
                 console.log(this.item);
                 cookies.set('menuSession');
-                router.push('/menu/:restaurantId');
+                console.log(cookies.get('menuSession'))
+                router.push('/menu/:restaurantId?');
             }).catch((error)=>{
                 console.log(error);
                 })

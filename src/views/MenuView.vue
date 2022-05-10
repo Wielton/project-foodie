@@ -47,7 +47,7 @@
                 <v-divider></v-divider>
                 <v-card>
                     <v-card-actions>
-                        <v-btn @click="placeOrder(restaurantId, items)" color="success">
+                        <v-btn  @click="placeOrder(this.restaurantId, this.items)" color="success">
                             Checkout
                         </v-btn>
                         <v-btn @click="cancelOrder" color="red">
@@ -70,6 +70,7 @@
 import { useGetMenuStore } from '@/stores/getMenuStore';
 import {mapActions, mapState} from 'pinia';
 import { useOrderStore } from '@/stores/orderStore';
+import { useGetRestaurantStore } from '@/stores/getRestaurantStore';
 
 
 
@@ -84,7 +85,8 @@ export default {
         computed:{
             ...mapState(useGetMenuStore,['title']),
             ...mapState(useGetMenuStore,['menu']),
-            ...mapState(useOrderStore,['items'])
+            ...mapState(useOrderStore,['items']),
+            ...mapState(useGetRestaurantStore,['restaurants'])
         },
         
         methods:{

@@ -2,7 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import UserView from '../views/UserView.vue'
-import CartView from '../views/CartView.vue'
 import AboutUsView from  '../views/AboutUsView.vue'
 import RestaurantListView from '../views/RestaurantListView.vue'
 import RestaurantPortalView from '../views/RestaurantPortalView.vue'
@@ -15,45 +14,42 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: HomeView,
   },
   {
-    path: '/user-account/:clientId/',
+    path: '/user-account/:clientId?',
     name: 'user',
-    component: UserView
+    component: UserView,
   },
-  {
-    path: '/cart/',
-    name: 'cart',
-    component: CartView
-  },
+  
+  
   {
     path: '/about-us/',
     name: 'about',
-    component: AboutUsView
+    component: AboutUsView,
   },
   {
     path: '/restaurants/',
     name: 'restaurants',
-    component: RestaurantListView
+    component: RestaurantListView,
   },
   {
     path: '/contact-us/',
     name: 'contact',
-    component: ContactUsView
+    component: ContactUsView,
   },
   {
     path: '/restaurant-portal/',
     name: 'restaurant-portal',
-    component: RestaurantPortalView
+    component: RestaurantPortalView,
   },
   {
-    path: '/restaurant-home/:restaurantId',
+    path: '/restaurant-home/:restaurantId?',
     name: 'restaurant-home',
-    component: RestaurantHomeView
+    component: RestaurantHomeView,
   },
   {
-    path: '/menu/:restaurantId/',
+    path: '/menu/:restaurantId?',
     name: 'menu',
     component: MenuView
   },

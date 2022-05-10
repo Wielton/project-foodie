@@ -1,9 +1,10 @@
 <template>
-    <div app>
-        <h1 class="mx-auto">{{title}}</h1>
-            <v-container style="width:65%">
-                <v-row>
-                <v-col
+<div app>
+    <h1 class="mx-auto">{{title}}</h1>
+    <v-spacer></v-spacer>
+    <v-container>
+        <v-row>
+            <v-col
                     v-for="item in menu"
                     :key="item.menuId"
                     :item="item.name">
@@ -22,32 +23,45 @@
                                 </v-card-actions>
                     </v-card>
                 </v-col>
-                </v-row>
-            </v-container>
-            <v-container
+            <v-col>
+            <v-navigation-drawer
                 permanent
                 right
-                max-width="250"
-                class="pa-4 ma-4"
                 >
-                <h1>Cart</h1>
-                <v-card v-for="(item, index) in items"
-                :key="index"
-                :name="item.name"
-                >    
-                    <v-card-title>{{item.name}}</v-card-title>
-                    <v-card-subtitle>{{item.price}}</v-card-subtitle>
-                    <v-spacer></v-spacer>
+                    <h1>Cart</h1>
+                
+                        <v-card v-for="(item, index) in items"
+                                :key="index"
+                                :name="item.name">    
+                                    <v-card-title>{{item.name}}</v-card-title>
+                                    <v-card-subtitle>{{item.price}}</v-card-subtitle>
+                                    <v-spacer></v-spacer>
+                                    <v-card-actions>
+                                        <v-btn 
+                                            icon
+                                            @click="removeCartItem(items, item)">
+                                            <v-icon>mdi-delete</v-icon>
+                                        </v-btn>
+                                    </v-card-actions>
+                        </v-card>
+                <v-divider></v-divider>
+                <v-card>
                     <v-card-actions>
-                        <v-btn icon
-                    @click="removeCartItem(items, item)">
-                    <v-icon>mdi-delete</v-icon>
-                </v-btn>
+                        <v-btn @click="placeOrder(restaurantId, items)" color="success">
+                            Checkout
+                        </v-btn>
+                        <v-btn @click="cancelOrder" color="red">
+                            Cancel Order
+                        </v-btn>
                     </v-card-actions>
                 </v-card>
-                <v-divider></v-divider>
+            
+        </v-navigation-drawer>
+            </v-col>
                 
+                </v-row>
             </v-container>
+            
     </div>
 </template>
 
@@ -62,9 +76,10 @@ import { useOrderStore } from '@/stores/orderStore';
 
 
 export default {
-    components: {  },
+        components: {  },
         name: 'RestaurantList',
         data: () => ({
+            showCartDrawer: false,
     }),
         computed:{
             ...mapState(useGetMenuStore,['title']),
@@ -73,7 +88,7 @@ export default {
         },
         
         methods:{
-            ...mapActions(useOrderStore,['addMenuItem','removeCartItem'])
+            ...mapActions(useOrderStore,['addMenuItem','removeCartItem','placeOrder','cancelOrder'])
             
         // Add item to menu;  This is not an axios call but is imperative for cart/orders initiation
         

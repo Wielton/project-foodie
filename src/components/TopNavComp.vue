@@ -138,9 +138,9 @@ export default {
         return {
             leftDrawer: false,
             rightDrawer: false,
+            showRightDrawer: false,
             showLoginForm: false,
             showSignupForm: false,
-            showRightDrawer: false,
             tab: null,
             navs: null,
             items: [

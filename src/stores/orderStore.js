@@ -15,6 +15,13 @@ export const useOrderStore = defineStore('cart',{
         
         addMenuItem(item){
             this.items.push(item);
+            for(let i = 0; i < this.items.length; i++){
+                if(this.items < 1){
+                    cookies.set('cartCookie');
+                }else {
+                    cookies.get('cartCookie');
+                }
+            }
             console.log(item + 'added to cart');
             console.log(this.items);
             return this.items;
@@ -61,6 +68,7 @@ export const useOrderStore = defineStore('cart',{
                         }
                 }).then((response)=>{
                     console.log(response);
+                    console.log('order placed');
                 }).catch((error)=>{
                     console.log(error);
                     

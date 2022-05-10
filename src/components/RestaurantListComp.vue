@@ -9,7 +9,7 @@
                     :restaurant="restaurant.restaurantId">
                         <v-card max-width="300"
                             @click="fetchMenu(restaurant.restaurantId)"
-                            :restaurant="restaurant.restaurantId">
+                            >
                                 <v-img>{{restaurant.bannerUrl}}</v-img>
                                 <v-card-title>{{restaurant.name}}</v-card-title>
                                 <v-card-subtitle>{{restaurant.bio}}</v-card-subtitle>

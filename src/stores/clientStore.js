@@ -2,8 +2,6 @@ import { defineStore } from "pinia";
 import axios from 'axios';
 import cookies from 'vue-cookies';
 import { router } from '@/router'
-axios.defaults.headers.common['x-api-key'] = process.env.VUE_APP_API_KEY;
-axios.defaults.headers.common['Content-Type'] = "application/json";
 
 export const useClientStore = defineStore('client',{
     state : ()=>{
@@ -31,17 +29,12 @@ export const useClientStore = defineStore('client',{
                     pictureUrl
                 }
             }).then((response)=>{
-                console.log(response.data.token)
-                console.log(response.data.clientId);
-                cookies.set('sessionToken', response.data.token);
+                console.log(response)
             }).catch((error)=>{
                 console.log(error.response.data);
-                this.signUpFailed(error.response);
             })
             },
-            signUpFailed(error){
-                return (error)
-            },
+            
 
 
 // -------------------------------------------------------------------------------

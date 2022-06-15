@@ -49,13 +49,24 @@
                                         type="password"
                                         required
                                     ></v-text-field>
+                                    <v-text-field
+                                        v-model="passwordConfirm"
+                                        label="Password Confirm"
+                                        type="password"
+                                        required
+                                    ></v-text-field>
+                                    <v-text-field
+                                        v-model="pictureUrl"
+                                        label="Picture Url"
+                                        type="text"
+                                    ></v-text-field>
                             </v-form>
                             <v-card-actions>
                             <v-btn
                                 :disabled="!valid"
                                 color="success"
                                 class="mr-4"
-                                @click="signUpRequest(email, username,firstName,lastName,password,pictureUrl)"
+                                @click="signUpRequest"
                                 >Submit</v-btn>
                         </v-card-actions>
                         </v-card-text>
@@ -68,8 +79,7 @@
 </template>
 
 <script>
-import { useClientStore } from '@/stores/clientStore';
-import { mapActions } from 'pinia';
+import axios from 'axios'
 
 export default {
             name: 'SignupComponent',
@@ -82,7 +92,8 @@ export default {
                     username: '',
                     email: '',
                     password: '',
-                    pictureUrl: undefined,
+                    passwordConfirm: '',
+                    pictureUrl: '',
                     emailRules: [
                         v => !!v || 'E-mail is required...',
                         v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
@@ -106,7 +117,26 @@ export default {
                 },
             methods: {
                 
-                ...mapActions(useClientStore,['signUpRequest']),
+                signUpRequest() {
+                axios.request({ 
+                url: process.env.VUE_APP_API_URL+"client",
+                method: "POST",
+                headers : {
+                    },
+                data : {
+                    email: this.email,
+                    username: this.username,
+                    firstName: this.firstName,
+                    lastName: this.lastName,
+                    password: this.password,
+                    pictureUrl: this.pictureUrl
+                }
+            }).then((response)=>{
+                console.log(response)
+            }).catch((error)=>{
+                console.log(error);
+            })
+            },
                 
                 
                 validate () {
@@ -118,16 +148,7 @@ export default {
                 // resetValidation () {
                 // this.$refs.form.resetValidation()
                     },
-            mounted () {
-                
-                useClientStore().$onAction(({name, after})=>{
-                if (name == "signUpFailed"){
-                    after(()=>{
-                        this.isAlert = true;
-                    })
-                } 
-            })
-        },
+            
 }
     
 </script>

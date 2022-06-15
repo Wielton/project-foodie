@@ -1,6 +1,7 @@
 <template>
 <v-container app>
-      
+  <v-row>
+    <v-col>    
       <div align="center"> 
         <v-img 
             src="https://www.creativefabrica.com/wp-content/uploads/2020/04/25/Delivery-Service-vector-illustration-Graphics-3951054-1-1-580x365.jpg"
@@ -8,18 +9,41 @@
             >
             </v-img>
         </div>
-        <v-spacer></v-spacer>
+    </v-col>
+  </v-row>
+  <v-row>
+    <v-col>
         <v-card
             class="mx-auto my-12"
             max-width="500px"
+            style="background-color:#fec112"
+            outlined
             >
             <v-text-field
               label="City search..."
               append-icon="mdi-magnify"
             ></v-text-field>
         </v-card>
-        <v-spacer></v-spacer>
-        
+    </v-col>
+  </v-row>
+  <v-row>
+    <v-col>
+      <v-img
+        :src="require('@/assets/mainpage1.png')"
+        ></v-img>
+    </v-col>
+  </v-row>
+  <v-row>
+    <v-col cols="6">
+      <p>
+        At Foodie, we've implemented a "green" approach to how we conduct our business.  
+        <br>
+        With our fleet of E-vehicles and drones, 
+        <br>
+        Foodie is revolutionizing the food delivery design. 
+      </p>
+    </v-col>
+  </v-row>        
   </v-container>
 </template>
 

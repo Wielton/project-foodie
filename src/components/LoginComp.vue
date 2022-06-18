@@ -12,10 +12,9 @@
                                     v-model="valid"
                                     lazy-validation>
                                     <v-text-field
-                                        v-model="email"
-                                        :rules="emailRules"
-                                        label="Email"
-                                        type="email"
+                                        v-model="username"
+                                        label="Username"
+                                        type="text"
                                         required
                                     ></v-text-field>
                                     <v-text-field
@@ -30,7 +29,7 @@
                                 :disabled="!valid"
                                 color="success"
                                 class="mr-4"
-                                @click="loginRequest(email,password)"
+                                @click="loginRequest(username,password)"
                                 >Submit</v-btn>
                         </v-card-actions>
                     </v-card>
@@ -49,12 +48,12 @@ import { mapActions, mapState } from 'pinia';
         data: ()=>({
             isAlert : false,
             valid: true,
-            email: '',
+            username: '',
             password: '',
-            emailRules: [
-                v => !!v || 'E-mail is required...',
-                v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-                ],
+            // emailRules: [
+            //     v => !!v || 'E-mail is required...',
+            //     v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+            //     ],
             }),
             computed: {
                 ...mapState(useClientStore,['title']),

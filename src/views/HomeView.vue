@@ -34,9 +34,9 @@
     </v-col>
   </v-row>
   <v-row>
-    <v-col cols="6">
+    <v-col>
       <p>
-        At Foodie, we've implemented a "green" approach to how we conduct our business.  
+        A 'Green' approach  
         <br>
         With our fleet of E-vehicles and drones, 
         <br>
@@ -72,13 +72,6 @@ export default {
             right: null,
             show: false,
             marker: true,
-            cityIndex: 0,
-            validCities: [
-                "Calgary", 'Edmonton', 'Vancouver', 'Surrey', 'Winnipeg', 'Brandon', 'Moncton', 'Fredericton', "St. John's", "Mount Pearl",
-                "Yellowknife", "Inuvik", "Halifax", "Sydney", "Iqaluit", "Arviat", "Toronto", "Ottawa", "Charlottetown", "Summerside", "Montreal",
-                "Quebec City", "Saskatoon", "Regina", "Whitehorse", "Dawson City"
-                ],
-            select: 'Select a city to search from...',
               }},
             
             methods: {

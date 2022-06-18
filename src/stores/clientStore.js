@@ -16,7 +16,7 @@ export const useClientStore = defineStore('client',{
         
         signUpRequest(email, username, firstName, lastName, password, pictureUrl) {
             axios.request({ 
-                url: process.env.VUE_APP_API_URL+"client",
+                url: process.env.VUE_APP_API_URL+"client-login",
                 method: "POST",
                 headers : {
                     },
@@ -41,20 +41,20 @@ export const useClientStore = defineStore('client',{
             
 // User login
             
-        loginRequest(email, password){
+        loginRequest(username, password){
             axios.request({
                 url: process.env.VUE_APP_API_URL+"client-login",
                 method: "POST",
                 headers : {
                     },
                 data: {
-                    email,
+                    username,
                     password,
                     }
                 }).then((response)=>{
                     cookies.set('sessionToken', response.data.token);
-                    this.userId = response.data.clientId;
-                    this.userName = response.data.name;
+                    this.userId = response.data.id;
+                    this.userName = response.data.username;
                     console.log(this.userName + ' with the id: ' + this.userId + ' is now logged in.');
                     console.log(cookies.get('sessionToken'));
                 }).catch((error)=>{

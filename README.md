@@ -1,24 +1,13 @@
-# foodie-app
+# Backend folder found here: https://github.com/Wielton/foodie-backend
 
-## Project setup
-```
-npm install
-```
+# Foodie is SkipTheDishes/GrubHub/UberEats clone.
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+Restaurants signup and create a profile and add their menu items. 
+Restaurants have a seperate portal providing a different UI/UX experience.
 
-### Compiles and minifies for production
-```
-npm run build
-```
+Clients can search restaurants and their corresponding menu without being a registered site member
+If client wants to order they must be registered.  Clients can signup, create their profile, add/delete menu items to an order and place that order.
 
-### Lints and fixes files
-```
-npm run lint
-```
+Restaurants can accept the order and handle the order status ie. isConfirmed, isComplete
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Project was halted due to school project submission requirements, but can now proceed.

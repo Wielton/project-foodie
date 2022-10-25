@@ -79,8 +79,8 @@
 </template>
 
 <script>
-import axios from 'axios'
-
+import { useClientStore } from '@/stores/clientStore'
+import { mapActions } from 'pinia';
 export default {
             name: 'SignupComponent',
             data: ()=>({
@@ -116,29 +116,7 @@ export default {
             computed: {
                 },
             methods: {
-                
-                signUpRequest() {
-                axios.request({ 
-                url: process.env.VUE_APP_API_URL+"client",
-                method: "POST",
-                headers : {
-                    },
-                data : {
-                    email: this.email,
-                    username: this.username,
-                    firstName: this.firstName,
-                    lastName: this.lastName,
-                    password: this.password,
-                    pictureUrl: this.pictureUrl
-                }
-            }).then((response)=>{
-                console.log(response)
-            }).catch((error)=>{
-                console.log(error);
-            })
-            },
-                
-                
+                ...mapActions(useClientStore, ['signUpRequest']),
                 validate () {
                     this.$refs.form.submit()
                     },

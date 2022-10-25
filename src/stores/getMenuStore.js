@@ -18,7 +18,7 @@ export const useGetMenuStore = defineStore('getMenu',{
                 url: process.env.VUE_APP_API_URL+"menu",
                 method: "GET",
                 headers : {
-
+                    
                 },
                 data : {
                     restaurantId

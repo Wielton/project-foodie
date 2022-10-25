@@ -1,65 +1,48 @@
 <template>
 <div app>
-    <v-app-bar color="#fd7132">
-        <v-toolbar 
-            color="#fd7032"
-            rounded>
+    <v-app-bar color="#fd7132" elevation="0">
+        <v-app-bar-title style="color:#79031d" align-center>
+            <h1>Foodie</h1>
+        </v-app-bar-title>
+        
+            
+            
+            <v-spacer></v-spacer>
+            <v-tabs
+                v-model="tab"
+                class="hidden-sm-and-down"
+                color="#79031d"
+                right
+                max-width="600px"
+                >
+            <v-tabs-slider color="#79031d" max-width="600"></v-tabs-slider>
+
+            <v-tab
+                v-for="(link, index) in links"
+                :key="index"
+                :to="link.path"
+                >
+                {{ link.name }}
+            </v-tab>
+            </v-tabs>
             <v-app-bar-nav-icon 
                 @click="leftDrawer = true" 
-                class="d-flex d-sm-none">
-            </v-app-bar-nav-icon>
-            <v-toolbar-title style="color:#79031d">Foodie</v-toolbar-title>
-        
-            <v-spacer></v-spacer>
+                class="hidden-md-and-up">
             
             <v-btn
                 icon
-                elevation="2"
+                elevation="0"
                 @click="showRightDrawer = !showRightDrawer" 
-                class="d-flex d-sm-none">
-                <v-icon>mdi-cog</v-icon>
+                class="hidden-md-and-up">
+                <v-icon>mdi-menu</v-icon>
             </v-btn>
-            <v-card
-                    v-model="navs"
-                    color="#fd7132"
-                    class="d-none d-sm-flex">
-                    <v-btn @click.stop="showLoginForm = !showLoginForm" color="#fd7132">
-                    Login
-                    </v-btn>
-
-                    <v-btn @click.stop="showSignupForm = !showSignupForm" color="#fd7132">
-                    Signup
-                    </v-btn>
-                
-                    <v-btn @click.stop="logoutRequest" color="#fd7132">
-                    Logout
-                    </v-btn>
-                </v-card>
-        </v-toolbar>
-        <template v-slot:extension>
-            <v-tabs
-            v-model="tab"
-            align-with-title
-            class="d-none d-sm-flex"
-            color="#79031d"
-            >
-            <v-tabs-slider color="#79031d"></v-tabs-slider>
-
-            <v-tab
-                v-for="(item, index) in items"
-                :key="index"
-                :to="item.path"
-                >
-                {{ item.name }}
-            </v-tab>
-            </v-tabs>
-            <v-spacer></v-spacer>
-            <v-tab to="/restaurant-portal/"
+        </v-app-bar-nav-icon>
+            <!-- <v-spacer></v-spacer>
+            <v-tab to="/restaurant-portal"
                     class="d-none d-sm-flex"
                     style="color:#79031d; font-size: 0.75em">
-                    Restaurant Portal
-            </v-tab>
-        </template>
+                    Restaurant Login
+            </v-tab> -->
         
     </v-app-bar>
     <!-- Add a navigation bar -->
@@ -72,8 +55,8 @@
                 nav
                 dense>
                 <v-list-item-group>
-                    <v-list-item v-for="(item, index) in items" :key="index" :to="item.path">
-                    <v-list-item-title @click="tab = index">{{ item.name }}</v-list-item-title>
+                    <v-list-item v-for="(link, index) in links" :key="index" :to="link.path">
+                    <v-list-item-title @click="tab = index">{{ link.name }}</v-list-item-title>
                     </v-list-item>
                 </v-list-item-group>
                                 <v-divider></v-divider>
@@ -118,22 +101,14 @@
                 </v-card>
         </v-layout>
     </v-container>
-    <v-spacer></v-spacer>
-    <v-expand-transition>
-            <SignupComponent v-if="showSignupForm"/>
-            <LoginComponent v-if="showLoginForm"/>
-    </v-expand-transition>
 </div>
 </template>
 <script>
-import SignupComponent from '@/components/SignupComp';
-import LoginComponent from '@/components/LoginComp';
 import {useClientStore} from '@/stores/clientStore';
 import {mapActions} from 'pinia';
 
 export default {
     name: "TopNav",
-    components: { LoginComponent, SignupComponent },
     data () {
         return {
             leftDrawer: false,
@@ -142,14 +117,13 @@ export default {
             showLoginForm: false,
             showSignupForm: false,
             tab: null,
-            navs: null,
-            items: [
+            links: [
                 
                 {name: 'Home', path:'/'},
-                {name: 'Restaurants', path:'/restaurants/'},
-                {name: 'User Account', path:'/user-account/:clientId?'},
-                {name: 'About Us', path:'/about-us/'}, 
-                {name: 'Contact', path:'/contact-us/'},
+                {name: 'Restaurants', path:'/restaurants'},
+                {name: 'User Account', path:'/user-account'},
+                {name: 'About Us', path:'/about-us'}, 
+                {name: 'Contact', path:'/contact-us'},
                 ],
             loginItems: [
                 {name: 'Login', path:'/login/'},

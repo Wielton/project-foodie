@@ -5,6 +5,7 @@ import axios from 'axios';
 export const useGetRestaurantStore = defineStore('getRestaurant',{
     state : ()=>({
         title: "Restaurants",
+        restaurants: []
     }),
     
     actions: {

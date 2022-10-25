@@ -16,7 +16,7 @@ export const useClientStore = defineStore('client',{
         
         signUpRequest(email, username, firstName, lastName, password, pictureUrl) {
             axios.request({ 
-                url: process.env.VUE_APP_API_URL+"client-login",
+                url: process.env.VUE_APP_API_URL+"client",
                 method: "POST",
                 headers : {
                     },
@@ -37,38 +37,6 @@ export const useClientStore = defineStore('client',{
             
 
 
-// -------------------------------------------------------------------------------
-            
-// User login
-            
-        loginRequest(username, password){
-            axios.request({
-                url: process.env.VUE_APP_API_URL+"client-login",
-                method: "POST",
-                headers : {
-                    },
-                data: {
-                    username,
-                    password,
-                    }
-                }).then((response)=>{
-                    cookies.set('sessionToken', response.data.token);
-                    this.userId = response.data.id;
-                    this.userName = response.data.username;
-                    console.log(this.userName + ' with the id: ' + this.userId + ' is now logged in.');
-                    console.log(cookies.get('sessionToken'));
-                }).catch((error)=>{
-                    console.log(error.response.data);
-                    this.loginFailed(error.response);
-                })
-            },
-            loginFailed(error){
-                return (error)
-            },
-
-
-// -------------------------------------------------------------------------------
-            
 // user profile/account info
             
         accountInfoRequest(){
@@ -87,12 +55,6 @@ export const useClientStore = defineStore('client',{
                 })
             },
 
-
-
-
-
-// -------------------------------------------------------------------------------
-            
 // User profile field editing
 
         accountInfoChangeRequest(email, username, firstName, lastName, password, pictureUrl){
@@ -121,31 +83,6 @@ export const useClientStore = defineStore('client',{
                 return alert(this.username +"'s info successfully updated." );
             },
 
-
-
-// -------------------------------------------------------------------------------
-            
-// User logout 
-        
-        logoutRequest(){
-            axios.request({
-                url: process.env.VUE_APP_API_URL+"client-login",
-                method: "DELETE",
-                headers: {
-                    'token': cookies.get('sessionToken'),
-                    }
-                }).then((response)=>{
-                    console.log(response);
-                    console.log('User was logged out');
-                    cookies.remove('sessionToken');
-                    router.push('/');
-                }).catch((error)=>{
-                    console.log(error);
-                })
-            },
-
-// -------------------------------------------------------------------------------
-
 //  User delete
             
         userDeleteRequest(){
@@ -167,5 +104,49 @@ export const useClientStore = defineStore('client',{
 
 
 
+// -------------------------------------------------------------------------------
+
+// User login
+            
+        loginRequest(email, password){
+            axios.request({
+                url: process.env.VUE_APP_API_URL+"client-login",
+                method: "POST",
+                data: {
+                    email,
+                    password,
+                    }
+                }).then((response)=>{
+                    cookies.set('sessionToken', response.data.sessionToken);
+                    router.push('/restaurants/');
+                    console.log(cookies.get('sessionToken'));
+                }).catch((error)=>{
+                    console.log(error.response.data);
+                    this.loginFailed(error.response);
+                })
+            },
+            loginFailed(error){
+                return (error)
+            },
+
+
+// User logout 
+        
+        logoutRequest(){
+            axios.request({
+                url: process.env.VUE_APP_API_URL+"client-login",
+                method: "DELETE",
+                params: {
+                    sessionToken : cookies.get('sessionToken'),
+                    }
+                }).then((response)=>{
+                    console.log(response);
+                    console.log('User was logged out');
+                    cookies.remove('sessionToken');
+                    router.push('/');
+                }).catch((error)=>{
+                    console.log(error);
+                })
+            },
         },
 })

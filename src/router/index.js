@@ -17,7 +17,7 @@ const routes = [
     component: HomeView,
   },
   {
-    path: '/user-account/:clientId?',
+    path: '/user-account/',
     name: 'user',
     component: UserView,
   },

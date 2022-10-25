@@ -47,7 +47,7 @@
                 <v-divider></v-divider>
                 <v-card>
                     <v-card-actions>
-                        <v-btn  @click="placeOrder(this.restaurantId, this.items)" color="success">
+                        <v-btn  @click="placeOrder(item.restaurantId, items)" color="success">
                             Checkout
                         </v-btn>
                         <v-btn @click="cancelOrder" color="red">

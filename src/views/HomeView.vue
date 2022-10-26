@@ -1,17 +1,23 @@
 <template>
 <v-container app>
   <v-row>
-    <v-col>    
-      <div align="center"> 
+    <v-col>
+      <v-img
+        :src="require('@/assets/mainpage1.png')"
+        ></v-img>
+    </v-col>
+  </v-row>
+  <v-row>
+    <v-col> 
         <v-img 
             src="https://www.creativefabrica.com/wp-content/uploads/2020/04/25/Delivery-Service-vector-illustration-Graphics-3951054-1-1-580x365.jpg"
             max-width="1000px"
             >
             </v-img>
-        </div>
+        
     </v-col>
   </v-row>
-  <v-row>
+  <!-- <v-row>
     <v-col>
         <v-card
             class="mx-auto my-12"
@@ -25,23 +31,17 @@
             ></v-text-field>
         </v-card>
     </v-col>
-  </v-row>
-  <v-row>
-    <v-col>
-      <v-img
-        :src="require('@/assets/mainpage1.png')"
-        ></v-img>
-    </v-col>
-  </v-row>
-  <v-row>
-    <v-col>
-      <p>
+  </v-row> -->
+  
+  <v-row class="pa-6">
+    <v-col cols="12">
+      <h2 class="display-1 font-weight-bold grey--text">
         A 'Green' approach  
         <br>
         With our fleet of E-vehicles and drones, 
         <br>
         Foodie is revolutionizing the food delivery design. 
-      </p>
+      </h2>
     </v-col>
   </v-row>        
   </v-container>

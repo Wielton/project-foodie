@@ -4,9 +4,6 @@
         <v-app-bar-title style="color:#79031d" align-center>
             <h1>Foodie</h1>
         </v-app-bar-title>
-        
-            
-            
             <v-spacer></v-spacer>
             <v-tabs
                 v-model="tab"

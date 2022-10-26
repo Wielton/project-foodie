@@ -1,12 +1,9 @@
 <template>
-    <div app>
-        <v-container fluid>
-            <v-layout align-center justify-center>
-                <v-flex xs12 sm8 md4>
+        <v-container app fluid>
+            <v-row>
+                <v-col cols="12">
                     <v-card class="elevation-12">
-                        <v-toolbar dark color="#fd7132">
-                            <v-toolbar-title>{{title}}</v-toolbar-title>
-                        </v-toolbar>
+                        <v-card-title>{{title}}</v-card-title>
                         <v-card-text>
                             <v-form ref="form"
                                     v-model="valid"
@@ -34,10 +31,9 @@
                                 >Submit</v-btn>
                         </v-card-actions>
                     </v-card>
-                </v-flex>
-            </v-layout>
-        </v-container>
-    </div>   
+                </v-col>
+            </v-row>
+        </v-container> 
 </template>
 
 <script>

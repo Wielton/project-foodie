@@ -1,7 +1,7 @@
 <template>
     <v-card app>
         <v-container>
-                <v-row>
+            <v-row>
                 <v-col
                     v-for="item in items"
                     :key="item.menuId">
@@ -10,8 +10,8 @@
                         <v-card-subtitle>{{item.price}}</v-card-subtitle>
                     </v-card>
                 </v-col>
-                </v-row>
-            </v-container>
+            </v-row>
+        </v-container>
     </v-card>
 </template>
 

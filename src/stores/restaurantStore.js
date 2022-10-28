@@ -2,8 +2,6 @@ import { defineStore } from "pinia";
 import axios from 'axios';
 import cookies from 'vue-cookies';
 import {router} from '@/router';
-axios.defaults.headers.common['x-api-key'] = process.env.VUE_APP_API_KEY;
-axios.defaults.headers.common['Content-Type'] = "application/json";
 
 export const useRestaurantStore = defineStore('restaurant',{
     state : ()=>{
@@ -19,9 +17,6 @@ export const useRestaurantStore = defineStore('restaurant',{
             axios.request({
                 url: process.env.VUE_APP_API_URL+"restaurant",
                 method: "POST",
-                headers : {
-                    
-                    },
                 data : {
                     name,
                     address,
@@ -70,8 +65,8 @@ export const useRestaurantStore = defineStore('restaurant',{
                 axios.request({
                     url: process.env.VUE_APP_API_URL+"restaurant",
                     method: "PATCH",
-                    headers : {
-                        token: cookies.get('restaurantToken'),
+                    params : {
+                        restaurantToken: cookies.get('restaurantToken'),
                         
                         },
                     data: {
@@ -95,9 +90,9 @@ export const useRestaurantStore = defineStore('restaurant',{
                 axios.request({
                     url: process.env.VUE_APP_API_URL+"restaurant-login",
                     method: "DELETE",
-                    headers: {
+                    params: {
                         
-                        token: cookies.get('restaurantToken')
+                        restaurantToken: cookies.get('restaurantToken')
                     }
                 }).then((response)=>{
                     console.log(response);
@@ -113,7 +108,7 @@ export const useRestaurantStore = defineStore('restaurant',{
                     url: process.env.VUE_APP_API_URL+"menu",
                     method: "POST",
                     headers: {
-                        token: cookies.get('restaurantToken')
+                        restaurantToken: cookies.get('restaurantToken')
                     },
                     data: {
                         name,

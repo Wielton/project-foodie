@@ -1,7 +1,7 @@
 <template>
   <v-app id="inspire">
-    <TopNav/>
-      <v-main>
+    <TopNav app/>
+      <v-main app>
           <router-view/>
       </v-main>
   </v-app>

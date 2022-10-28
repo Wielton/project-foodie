@@ -1,8 +1,7 @@
 <template>
-    <div app>
         <v-container fluid>
-            <v-layout align-center justify-center>
-                <v-flex xs12 sm8 md4>
+            <v-row align-center justify-center>
+                <v-col xs12 sm8 md4>
                     <v-card class="elevation-12">
                         <v-toolbar color="#fd7132">
                             <v-toolbar-title>Sign Up</v-toolbar-title>
@@ -72,10 +71,9 @@
                         </v-card-text>
                         
                     </v-card>
-                </v-flex>
-            </v-layout>
+                </v-col>
+            </v-row>
         </v-container>
-    </div>
 </template>
 
 <script>

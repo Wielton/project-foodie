@@ -113,7 +113,7 @@
 </template>
 
 <script>
-import { useClientStore } from '@/stores/clientStore';
+import { useClientSignupStore } from '@/stores/clientSignupStore';
 import { mapState,mapActions} from 'pinia';
 
 
@@ -143,7 +143,7 @@ import { mapState,mapActions} from 'pinia';
             }),
         computed: {
             //Initial 
-            ...mapState(useClientStore,['username','password','email','firstName','lastName','pictureUrl'])
+            ...mapState(useClientSignupStore,['username','password','email','firstName','lastName','pictureUrl'])
             //Getters
             
             
@@ -153,7 +153,7 @@ import { mapState,mapActions} from 'pinia';
         
         methods: {
         //Actions
-            ...mapActions(useClientStore,['userDeleteRequest', 'accountInfoChangeRequest', 'logoutRequest','accountInfoRequest']),
+            ...mapActions(useClientSignupStore,['userDeleteRequest', 'accountInfoChangeRequest', 'logoutRequest','accountInfoRequest']),
         
         validate () {
             this.$refs.form.submit()
@@ -169,8 +169,8 @@ import { mapState,mapActions} from 'pinia';
         },
         updated() {
             const router = this.$router;
-            this.store = useClientStore();
-            useClientStore().$onAction(({name, after})=>{
+            this.store = useClientSignupStore();
+            useClientSignupStore().$onAction(({name, after})=>{
                 if (name == "accountInfoChangedSuccess"){
                     after(()=>{
                         router.push({path: '/user-account/:clientId/'}); 

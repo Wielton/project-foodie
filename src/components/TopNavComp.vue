@@ -34,6 +34,17 @@
                 <v-icon>mdi-menu</v-icon>
             </v-btn>
         </v-app-bar-nav-icon>
+        <v-app-bar-nav-icon 
+                @click="logoutRequest" 
+                class="hidden-md-and-up">
+            
+            <v-btn
+                icon
+                elevation="0"
+                class="hidden-md-and-up">
+                <v-icon>mdi-logout</v-icon>
+            </v-btn>
+        </v-app-bar-nav-icon>
             <!-- <v-spacer></v-spacer>
             <v-tab to="/restaurant-portal"
                     class="d-none d-sm-flex"
@@ -65,43 +76,10 @@
                     </v-list-item>
             </v-list>
     </v-navigation-drawer>
-
-    <v-container>
-        <v-layout align-center justify-center>
-    <v-card
-        
-        v-if="showRightDrawer"
-        v-model="rightDrawer"
-        absolute
-        temporary>
-        
-                    <v-btn 
-                        icon
-                        elevation="2"
-                        @click="showLoginForm = !showLoginForm">
-                    <v-icon>mdi-login</v-icon>
-                    </v-btn>
-                
-                    <v-btn 
-                        icon
-                        elevation="2"
-                        @click="showSignupForm = !showSignupForm">
-                        <v-icon>mdi-login</v-icon>
-                    </v-btn>
-                
-                    <v-btn 
-                        icon
-                        elevation="2"
-                        @click="logoutRequest">
-                        <v-icon>mdi-logout</v-icon>
-                    </v-btn>
-                </v-card>
-        </v-layout>
-    </v-container>
 </div>
 </template>
 <script>
-import {useClientStore} from '@/stores/clientStore';
+import {useClientLoginStore} from '@/stores/clientStore';
 import {mapActions} from 'pinia';
 
 export default {
@@ -118,21 +96,22 @@ export default {
                 
                 {name: 'Home', path:'/'},
                 {name: 'Restaurants', path:'/restaurants'},
-                {name: 'User Account', path:'/user-account'},
+                // {name: 'User Account', path:'/user-account'},
                 {name: 'About Us', path:'/about-us'}, 
-                {name: 'Contact', path:'/contact-us'},
+                // {name: 'Contact', path:'/contact-us'},
+                {name: 'Login', path:'/login'},
                 ],
-            loginItems: [
-                {name: 'Login', path:'/login/'},
-                {name: 'Logout', path:'/logout/'}
-            ]
+            
+                
+                
+            
         }
     },
     computed: {
         
         },
     methods: {
-        ...mapActions(useClientStore,['logoutRequest']),
+        ...mapActions(useClientLoginStore,['logoutRequest']),
         
         
         }

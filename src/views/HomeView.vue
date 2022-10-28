@@ -34,13 +34,22 @@
   </v-row> -->
   
   <v-row class="pa-6">
-    <v-col cols="12">
+    <v-col cols="12" md="6" lg="6">
       <h2 class="display-1 font-weight-bold grey--text">
         A 'Green' approach  
         <br>
         With our fleet of E-vehicles and drones, 
         <br>
         Foodie is revolutionizing the food delivery design. 
+      </h2>
+    </v-col>
+    <v-col cols="12" md="6" lg="6">
+      <h2 class="display-1 font-weight-bold grey--text">
+        
+        <br>
+        
+        <br>
+        
       </h2>
     </v-col>
   </v-row>        
@@ -50,8 +59,7 @@
 <script>
 
 
-import { useClientStore } from '@/stores/clientStore';
-import { mapState } from 'pinia';
+
 export default {
     name: 'HomeView',
     components: {
@@ -59,11 +67,10 @@ export default {
         
       },
       computed: {
-              ...mapState(useClientStore, ['title'])
               },
     data(){
             return{
-            
+            title: 'Are You In The Moodie For Foodie?',
             items: [
                   { title: 'Dashboard', icon: 'mdi-view-dashboard' },
                   { title: 'Photos', icon: 'mdi-image' },

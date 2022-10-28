@@ -1,8 +1,8 @@
 <template>
         <v-container app fluid>
-            <v-row>
-                <v-col cols="12">
-                    <v-card class="elevation-12">
+            <v-row justify="center">
+                <v-col cols="12" md="6" lg="6">
+                    <v-card class="elevation-0">
                         <v-card-title>{{title}}</v-card-title>
                         <v-card-text>
                             <v-form ref="form"
@@ -37,13 +37,20 @@
 </template>
 
 <script>
-import { useClientStore } from '@/stores/clientStore';
-import { mapActions, mapState } from 'pinia';
+import { useLoginStore } from '@/stores/clientStore';
+import { mapActions } from 'pinia';
 
     export default {
         name: 'LoginComponent',
+        setup(){
+            const store = useLoginStore()
+            return {
+                store
+            }
+        },
         data: ()=>({
-            isAlert : false,
+            // isAlert : false,
+            title: 'Login',
             valid: true,
             email: '',
             password: '',
@@ -53,28 +60,42 @@ import { mapActions, mapState } from 'pinia';
                 ],
             }),
             computed: {
-                ...mapState(useClientStore,['title']),
+                
             },
         methods: {
-            ...mapActions(useClientStore,['loginRequest']),
-            validate () {
-            this.$refs.form.submit()
-            },
+            ...mapActions(useLoginStore,['loginRequest']),
+            // validate () {
+            // this.$refs.form.submit()
+            // },
             // reset () {
             // this.$refs.form.reset()
             // },
             // resetValidation () {
             // this.$refs.form.resetValidation()
             },
-        mounted() {
-            useClientStore().$onAction(({name, after})=>{
-                if (name == "loginFailed"){
-                        after(()=>{
-                            this.isAlert = true;
-                        })
-                    } 
-                })
-            },
+            // mounted(){
+            //     this.setLoggedIn();
+            // }
+        // updated() {
+        //     const router = this.$router;
+        //     this.store = useClientStore();
+        //     useClientStore().$onAction(({name, after})=>{
+        //         if (name == "loginSuccess"){
+        //             after(()=>{
+        //                 router.push({path: '/user-account/:clientId/'}); 
+        //             })
+        //         } 
+        //         else if(name == "userDeleteRequest"){
+        //             after(()=> {
+        //                 router.push({path: '/'})
+        //             })
+                    
+        //         }else {
+        //             this.isAlert = true;
+        //         }
+        //     })
+            
+        // },
 }
     
 </script>

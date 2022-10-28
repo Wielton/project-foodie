@@ -8,6 +8,9 @@ import RestaurantPortalView from '../views/RestaurantPortalView.vue'
 import RestaurantHomeView from '../views/RestaurantHomeView.vue'
 import ContactUsView from '../views/ContactUsView.vue'
 import MenuView from '../views/MenuView.vue'
+import LoginView from '../views/LoginView.vue'
+import SignUpView from '../views/SignUpView.vue'
+import OrdersView from '../views/OrdersView.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -39,19 +42,34 @@ const routes = [
     component: ContactUsView,
   },
   {
+    path: '/restaurant-home/',
+    name: 'restaurant-home',
+    component: RestaurantHomeView,
+  },
+  {
+    path: '/menu/',
+    name: 'menu',
+    component: MenuView
+  },
+  {
     path: '/restaurant-portal/',
     name: 'restaurant-portal',
     component: RestaurantPortalView,
   },
   {
-    path: '/restaurant-home/:restaurantId?',
-    name: 'restaurant-home',
-    component: RestaurantHomeView,
+    path: '/login',
+    name: 'login',
+    component: LoginView,
   },
   {
-    path: '/menu/:restaurantId?',
-    name: 'menu',
-    component: MenuView
+    path: '/signup',
+    name: 'signup',
+    component: SignUpView
+  },
+  {
+    path: '/orders',
+    name: 'orders',
+    component: OrdersView
   },
 ]
 

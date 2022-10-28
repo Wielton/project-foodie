@@ -1,12 +1,12 @@
 <template>
     <div>
-        <SignupComp />
+
     </div>
 </template>
 
 <script>
     export default {
-    
+        
     }
 </script>
 

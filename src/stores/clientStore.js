@@ -1,112 +1,17 @@
-import { defineStore } from "pinia";
+import { defineStore } from "pinia"
 import axios from 'axios';
 import cookies from 'vue-cookies';
 import { router } from '@/router'
 
-export const useClientStore = defineStore('client',{
-    state : ()=>{
-        return {
-            title: 'Are you in the moodie for Foodie?',
-            }
-    },
+
+// Use Options API as this is Server-side rendered
+export const useLoginStore = defineStore('login',{
+    state : ()=>({
+        title: 'Login'
+    }),
     actions: {
 
-
-// User sign up
-        
-        signUpRequest(email, username, firstName, lastName, password, pictureUrl) {
-            axios.request({ 
-                url: process.env.VUE_APP_API_URL+"client",
-                method: "POST",
-                headers : {
-                    },
-                data : {
-                    email,
-                    username,
-                    firstName,
-                    lastName,
-                    password,
-                    pictureUrl
-                }
-            }).then((response)=>{
-                console.log(response)
-            }).catch((error)=>{
-                console.log(error.response.data);
-            })
-            },
-            
-
-
-// user profile/account info
-            
-        accountInfoRequest(){
-            axios.request({
-                url: process.env.VUE_APP_API_URL+"client",
-                method: "GET",
-                headers : {
-                    'token': cookies.get('sessionToken'),
-                    },
-                }).then((response)=>{
-                    console.log(response.data);
-                    this.user = response.data;
-                    router.push('/user-account/:clientId');
-                }).catch((error)=>{
-                    console.log(error);
-                })
-            },
-
-// User profile field editing
-
-        accountInfoChangeRequest(email, username, firstName, lastName, password, pictureUrl){
-            axios.request({
-                url: process.env.VUE_APP_API_URL+"client",
-                method: "PATCH",
-                headers : {
-                    'token': cookies.get('sessionToken'),
-                    },
-                data: {
-                    email,
-                    username,
-                    firstName,
-                    lastName,
-                    password,
-                    pictureUrl
-                    }
-                }).then((response)=>{
-                    console.log(response);
-                    this.accountInfoChangedSuccess();
-                }).catch((error)=>{
-                    console.log(error);
-                })
-            },
-            accountInfoChangedSuccess(){
-                return alert(this.username +"'s info successfully updated." );
-            },
-
-//  User delete
-            
-        userDeleteRequest(){
-            axios.request({
-                url: process.env.VUE_APP_API_URL+"client",
-                method: "DELETE",
-                headers: {
-                    token: cookies.get('session'),
-                    },
-                }).then((response)=>{
-                    console.log(response);
-                    console.log('User has been deleted');
-                    cookies.remove('sessionToken');
-                    router.push('/');
-                }).catch((error)=>{
-                    console.log(error);
-                })
-            },
-
-
-
-// -------------------------------------------------------------------------------
-
-// User login
+        // User login
             
         loginRequest(email, password){
             axios.request({
@@ -118,19 +23,29 @@ export const useClientStore = defineStore('client',{
                     }
                 }).then((response)=>{
                     cookies.set('sessionToken', response.data.sessionToken);
-                    router.push('/restaurants/');
-                    console.log(cookies.get('sessionToken'));
+                    router.push('/restaurants');
                 }).catch((error)=>{
                     console.log(error.response.data);
+                    console.log('Something is going wrong')
                     this.loginFailed(error.response);
                 })
             },
             loginFailed(error){
                 return (error)
             },
+            // setLoggedIn(){
+            //     const cookie = cookies.get('sessionToken');
+            //     if (cookie){
+            //         this.isLoggedIn = true;
+            //         console.log('User is logged in', this.isLoggedIn)
+            //     }else{
+            //         this.isLoggedIn = false;
+            //         console.log('Reroute to login', this.isLoggedIn)
+            //     }
+            // },
 
 
-// User logout 
+        // User logout 
         
         logoutRequest(){
             axios.request({

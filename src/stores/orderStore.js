@@ -1,31 +1,30 @@
 import { defineStore } from "pinia";
 import axios from 'axios';
 import cookies from 'vue-cookies';
-axios.defaults.headers.common['x-api-key'] = process.env.VUE_APP_API_KEY;
-axios.defaults.headers.common['Content-Type'] = "application/json";
+import { router} from '@/router'
 
 export const useOrderStore = defineStore('cart',{
     state : ()=>{
         return {
             title: 'Your cart',
-            items: []
+            items: [],
+            itemIds: [],
+            restaurantId: Number
         }
     },
     actions: {
         
         addMenuItem(item){
-            this.items.push(item);
-            for(let i = 0; i < this.items.length; i++){
-                if(this.items < 1){
-                    cookies.set('cartCookie');
-                }else {
-                    cookies.get('cartCookie');
-                }
-            }
-            console.log(item + 'added to cart');
-            console.log(this.items);
-            return this.items;
-            
+            // Also take the restaurantId as an argument to make sure the items are all from the same restaurant
+            // Orders can't have more than one restaurant.  
+            // Each restaurant needs its own order form.
+            let itemMenuId = item.menuId
+            this.restaurantId = item.restaurantId
+            console.log(itemMenuId, this.restaurantId)
+            this.items.push(item)
+            this.itemIds.push(itemMenuId)
+            console.log(this.itemIds, this.restaurantId)
+            this.updateCookie();
         },
         removeCartItem(items, item){
             let cartItem = items.indexOf(item);
@@ -33,17 +32,44 @@ export const useOrderStore = defineStore('cart',{
                 items.splice(cartItem, 1)
             }
             console.log(cartItem +"removed");
+            this.updateCookie();
             return items;
             
         },
-        // Cart fetch
+        updateCookie(){
+            // Get the current cookie
+            // if cookie doesn't exist, return nothing
+            let currentItems = this.items
+            console.log('current items: ', currentItems)
+            let currentCookie = cookies.get('cartSession')
+            console.log('current cookie: ', currentCookie)
+            if (currentCookie == null){
+                cookies.set('cartSession', currentItems)
+                console.log('cartSession cookie created with: ', currentItems)
+            }else{
+                // else get the current items in cart 
+                // then remove cart cookie
+                // set new cartSession cookie with currentItems in cart
+                cookies.remove('cartSession')
+                console.log('Cart Cookie removed')
+                cookies.set('cartSession',currentItems)
+                console.log('New Cart Cookie created with these items: ', currentItems)
+            }
+        },
+        fetchCookie(){
+            let currentCookie = cookies.get('cartSession')
+            if (currentCookie == null){
+                return
+            }else{
+                console.log('The current cart cookie: ', currentCookie)
+            }
+        },
+        // Fetch the cart items when the component is loaded/reloaded
         getCartItems(orderId){
             axios.request({
                 url: process.env.VUE_APP_API_URL+"order",
                 method: "GET",
-                headers : {
-                    token: cookies.get('sessionToken')
-                    },
+                
                 data : {
                     orderId
                 }  
@@ -55,19 +81,22 @@ export const useOrderStore = defineStore('cart',{
             },
         
             // Place order
-        placeOrder(restaurantId, items){
+        placeOrder(itemIds,restaurantId){
                 axios.request({
                     url: process.env.VUE_APP_API_URL+"order",
                     method: "POST",
-                    headers : {
-                        token: cookies.get('sessionToken')
-                        },
-                        data: {
-                            restaurantId,
-                            items
-                        }
+                    params: {
+                        sessionToken: cookies.get('sessionToken')
+                    },
+                    data: {
+                        itemIds,
+                        restaurantId
+                    }
                 }).then((response)=>{
                     console.log(response);
+                    router.push(
+                        '/orders'    
+                    )
                     console.log('order placed');
                 }).catch((error)=>{
                     console.log(error);
@@ -80,8 +109,8 @@ export const useOrderStore = defineStore('cart',{
                 axios.request({
                     url: process.env.VUE_APP_API_URL+"order",
                     method: "PATCH",
-                    headers : {
-                        token: cookies.get('sessionToken'),
+                    params : {
+                        sessionToken: cookies.get('sessionToken'),
                         },
                     data: {
                         orderId,

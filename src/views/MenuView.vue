@@ -5,9 +5,9 @@
     <v-container>
         <v-row>
             <v-col
-                    v-for="item in menu"
+                    v-for="item in menuItems"
                     :key="item.menuId"
-                    :item="item.name">
+                    :item="item">
                     <v-card>
                         <v-img 
                             :src="item.imageUrl"
@@ -47,7 +47,7 @@
                 <v-divider></v-divider>
                 <v-card>
                     <v-card-actions>
-                        <v-btn  @click="placeOrder(item.restaurantId, items)" color="success">
+                        <v-btn  @click="placeOrder(itemIds, restaurantId)" color="success">
                             Checkout
                         </v-btn>
                         <v-btn @click="cancelOrder" color="red">
@@ -75,7 +75,6 @@ import { useGetRestaurantStore } from '@/stores/getRestaurantStore';
 
 
 
-
 export default {
         components: {  },
         name: 'RestaurantList',
@@ -84,8 +83,8 @@ export default {
     }),
         computed:{
             ...mapState(useGetMenuStore,['title']),
-            ...mapState(useGetMenuStore,['menu']),
-            ...mapState(useOrderStore,['items']),
+            ...mapState(useGetMenuStore,['menuItems']),
+            ...mapState(useOrderStore,['items', 'itemIds', 'restaurantId']),
             ...mapState(useGetRestaurantStore,['restaurants'])
         },
         

@@ -62,28 +62,27 @@
 
 export default {
     name: 'HomeView',
-    components: {
-        
-        
-      },
-      computed: {
-              },
+    components: {},
+    computed: {
+        username(){
+          return this.$route.params.username
+        }
+    },
     data(){
-            return{
-            title: 'Are You In The Moodie For Foodie?',
-            items: [
+      return{
+        title: 'Are You In The Moodie For Foodie?',
+        items: [
                   { title: 'Dashboard', icon: 'mdi-view-dashboard' },
                   { title: 'Photos', icon: 'mdi-image' },
                   { title: 'About', icon: 'mdi-help-box' },
-                ],
-            right: null,
-            show: false,
-            marker: true,
+              ],
+        right: null,
+        show: false,
+        marker: true,
               }},
+    methods: {
             
-            methods: {
-              
-              },
+    },
             
           
   }

@@ -60,7 +60,7 @@ import { mapActions } from 'pinia';
                 ],
             }),
             computed: {
-                
+                // ...mapState(useLoginStore, ['isAuthenticated'])
             },
         methods: {
             ...mapActions(useLoginStore,['loginRequest']),

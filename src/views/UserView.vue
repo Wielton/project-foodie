@@ -1,7 +1,7 @@
 <template>
 <div>
-    
-    <v-card class="elevation-12">
+    <h3 :key="user.clientId">Hello {{ user.username }}</h3>
+    <!-- <v-card class="elevation-12">
         <v-spacer></v-spacer>
         <v-card-actions>
             <v-btn
@@ -108,20 +108,19 @@
                     ></v-text-field>
             </v-col>
         </v-row>
-    </v-container>
+    </v-container> -->
 </div>
 </template>
 
 <script>
 import { useClientSignupStore } from '@/stores/clientSignupStore';
-import { mapState,mapActions} from 'pinia';
+import { mapState, mapActions} from 'pinia';
 
 
     export default {
         
         name: 'UserView',
         data: ()=>({
-            store: undefined,
             
             emailRules: [
                 v => !!v || 'E-mail is required...',
@@ -142,8 +141,9 @@ import { mapState,mapActions} from 'pinia';
                 ],
             }),
         computed: {
+            ...mapState(useClientSignupStore, ['user', 'isAuthorized'])
             //Initial 
-            ...mapState(useClientSignupStore,['username','password','email','firstName','lastName','pictureUrl'])
+            // ...mapWritableState(useClientSignupStore,['username','password','email','firstName','lastName','pictureUrl'])
             //Getters
             
             
@@ -153,40 +153,40 @@ import { mapState,mapActions} from 'pinia';
         
         methods: {
         //Actions
-            ...mapActions(useClientSignupStore,['userDeleteRequest', 'accountInfoChangeRequest', 'logoutRequest','accountInfoRequest']),
+            ...mapActions(useClientSignupStore,['accountInfoRequest']),
         
-        validate () {
-            this.$refs.form.submit()
-            },
+        // validate () {
+        //     this.$refs.form.submit()
+        //     },
             // reset () {
             // this.$refs.form.reset()
             // },
             // resetValidation () {
             // this.$refs.form.resetValidation()
         },
-        beforeMount(){
-            this.accountInfoRequest
+        mounted(){
+            this.accountInfoRequest();
         },
-        updated() {
-            const router = this.$router;
-            this.store = useClientSignupStore();
-            useClientSignupStore().$onAction(({name, after})=>{
-                if (name == "accountInfoChangedSuccess"){
-                    after(()=>{
-                        router.push({path: '/user-account/:clientId/'}); 
-                    })
-                } 
-                else if(name == "userDeleteRequest"){
-                    after(()=> {
-                        router.push({path: '/'})
-                    })
+        // updated() {
+        //     const router = this.$router;
+        //     this.store = useClientSignupStore();
+        //     useClientSignupStore().$onAction(({name, after})=>{
+        //         if (name == "accountInfoChangedSuccess"){
+        //             after(()=>{
+        //                 router.push({name: 'user-account'}); 
+        //             })
+        //         } 
+        //         else if(name == "userDeleteRequest"){
+        //             after(()=> {
+        //                 router.push({name: 'home'})
+        //             })
                     
-                }else {
-                    this.isAlert = true;
-                }
-            })
+        //         }else {
+        //             this.isAlert = true;
+        //         }
+        //     })
             
-        },
+        // },
         
         }
     

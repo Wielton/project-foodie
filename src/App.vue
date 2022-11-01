@@ -11,7 +11,15 @@
 import TopNav from '@/components/TopNavComp'
 
   export default {
+    data: ()=>({
+      
+    }),
   components: { TopNav },
+  computed: {
+  },
+  actions: {
     
-  }
+  },
+  
+}
 </script>

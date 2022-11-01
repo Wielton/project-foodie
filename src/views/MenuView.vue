@@ -28,7 +28,7 @@
                 permanent
                 right
                 >
-                    <h1>Cart</h1>
+                    <h1 :key="user.clientId">{{ user.username }}'s Cart</h1>
                 
                         <v-card v-for="(item, index) in items"
                                 :key="index"
@@ -71,6 +71,7 @@ import { useGetMenuStore } from '@/stores/getMenuStore';
 import {mapActions, mapState} from 'pinia';
 import { useOrderStore } from '@/stores/orderStore';
 import { useGetRestaurantStore } from '@/stores/getRestaurantStore';
+import { useClientSignupStore } from '@/stores/clientSignupStore';
 
 
 
@@ -85,15 +86,19 @@ export default {
             ...mapState(useGetMenuStore,['title']),
             ...mapState(useGetMenuStore,['menuItems']),
             ...mapState(useOrderStore,['items', 'itemIds', 'restaurantId']),
-            ...mapState(useGetRestaurantStore,['restaurants'])
+            ...mapState(useGetRestaurantStore,['restaurants']),
+            ...mapState(useClientSignupStore, ['user', 'isAuthorized'])
         },
         
         methods:{
+            ...mapActions(useClientSignupStore,['accountInfoRequest']),
             ...mapActions(useOrderStore,['addMenuItem','removeCartItem','placeOrder','cancelOrder'])
             
         // Add item to menu;  This is not an axios call but is imperative for cart/orders initiation
         
         },
-        
+        mounted(){
+            this.accountInfoRequest();
+        },
 }
 </script>

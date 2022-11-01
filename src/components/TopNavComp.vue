@@ -5,7 +5,7 @@
             <h1>Foodie</h1>
         </v-app-bar-title>
             <v-spacer></v-spacer>
-            <v-tabs
+            <!-- <v-tabs
                 v-model="tab"
                 class="hidden-sm-and-down"
                 color="#79031d"
@@ -21,30 +21,38 @@
                 >
                 {{ link.name }}
             </v-tab>
-            </v-tabs>
+            </v-tabs> -->
             <v-app-bar-nav-icon 
                 @click="leftDrawer = true" 
-                class="hidden-md-and-up">
+                >
             
             <v-btn
                 icon
                 elevation="0"
                 @click="showRightDrawer = !showRightDrawer" 
-                class="hidden-md-and-up">
+                >
                 <v-icon>mdi-menu</v-icon>
             </v-btn>
         </v-app-bar-nav-icon>
-        <v-app-bar-nav-icon 
-                @click="logoutRequest" 
-                class="hidden-md-and-up">
-            
-            <v-btn
-                icon
+            <!-- <router-link
+            :to="{name: 'user.show', params:{id: user.clientId}}"
+            >
+            Profile
+            </router-link> -->
+            <router-link
+                v-if="!isAuthorized"
+                to="/login"
+                text
                 elevation="0"
-                class="hidden-md-and-up">
-                <v-icon>mdi-logout</v-icon>
+                >
+                Login
+            </router-link>
+            <v-btn 
+                v-else-if="isAuthorized"
+                @click="logoutRequest">
+                Logout
             </v-btn>
-        </v-app-bar-nav-icon>
+        
             <!-- <v-spacer></v-spacer>
             <v-tab to="/restaurant-portal"
                     class="d-none d-sm-flex"
@@ -63,27 +71,32 @@
                 nav
                 dense>
                 <v-list-item-group>
-                    <v-list-item v-for="(link, index) in links" :key="index" :to="link.path">
-                    <v-list-item-title @click="tab = index">{{ link.name }}</v-list-item-title>
-                    </v-list-item>
+                    <router-link v-if="!isAuthorized" :to="({name: 'home'})">Home</router-link>
+                    <router-link v-if="isAuthorized" :to="({name: 'user'})">Profile</router-link>
+                    <router-link v-if="!isAuthorized" :to="({name: 'login'})">Login</router-link>
+                    <router-link :to="({name: 'restaurants'})">Restaurants</router-link>
+                    <router-link :to="({name: 'about'})">About</router-link>
                 </v-list-item-group>
-                                <v-divider></v-divider>
-                                <v-spacer></v-spacer>
-                    <v-list-item bottom>
-                        <v-list-item-title to="/restaurant-portal/">
-                            Restaurant Portal
-                        </v-list-item-title>
-                    </v-list-item>
             </v-list>
     </v-navigation-drawer>
 </div>
 </template>
 <script>
-import {useClientLoginStore} from '@/stores/clientStore';
-import {mapActions} from 'pinia';
-
+import {useLoginStore} from '@/stores/clientStore';
+import { useClientSignupStore } from '@/stores/clientSignupStore';
+import {mapActions, mapState} from 'pinia';
+// import cookies from 'vue-cookies'
 export default {
     name: "TopNav",
+    setup(){
+            const store = useLoginStore()
+            return {
+                store
+            }
+        },
+        components: {
+            
+        },
     data () {
         return {
             leftDrawer: false,
@@ -92,15 +105,7 @@ export default {
             showLoginForm: false,
             showSignupForm: false,
             tab: null,
-            links: [
-                
-                {name: 'Home', path:'/'},
-                {name: 'Restaurants', path:'/restaurants'},
-                // {name: 'User Account', path:'/user-account'},
-                {name: 'About Us', path:'/about-us'}, 
-                // {name: 'Contact', path:'/contact-us'},
-                {name: 'Login', path:'/login'},
-                ],
+            
             
                 
                 
@@ -108,12 +113,26 @@ export default {
         }
     },
     computed: {
-        
+        ...mapState(useClientSignupStore, ['user', 'isAuthorized'])
         },
     methods: {
-        ...mapActions(useClientLoginStore,['logoutRequest']),
-        
-        
+        ...mapActions(useLoginStore,['logoutRequest']),
+        ...mapActions(useClientSignupStore, ['accountInfoRequest'])
+        // async getAuthentication(){
+        //     let cookie = cookies.get('sessionToken')
+        //     if (cookie === null ){
+        //         this.$router.push('/login')
+        //     }else{
+        //         console.log('You are logged in')
+        //     }
+        // }
+        },
+        mounted(){
+            this.accountInfoRequest();
         }
+        
 }
 </script>
+<style lang="scss" scoped>
+    
+</style>

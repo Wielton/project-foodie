@@ -6,10 +6,14 @@ import { router } from '@/router'
 export const useClientSignupStore = defineStore('clientSignup',{
     state : ()=>{
         return {
-            signupTitle: 'Signup'
+            isAuthorized: false,
+            user: null,
             }
     },
     actions: {
+
+// sessionToken GET userInfo for global use
+
 
 
 // User sign up
@@ -29,6 +33,7 @@ export const useClientSignupStore = defineStore('clientSignup',{
                     pictureUrl
                 }
             }).then((response)=>{
+                // get the sessionToken and userInfo from response
                 console.log(response)
             }).catch((error)=>{
                 console.log(error.response.data);
@@ -43,13 +48,13 @@ export const useClientSignupStore = defineStore('clientSignup',{
             axios.request({
                 url: process.env.VUE_APP_API_URL+"client",
                 method: "GET",
-                headers : {
-                    'token': cookies.get('sessionToken'),
+                params : {
+                    'sessionToken': cookies.get('sessionToken'),
                     },
                 }).then((response)=>{
-                    console.log(response.data);
-                    this.user = response.data;
-                    router.push('/user-account/:clientId');
+                    console.log(response.data[0]);
+                    this.user = response.data[0];
+                    this.isAuthorized = true;
                 }).catch((error)=>{
                     console.log(error);
                 })

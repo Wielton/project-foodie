@@ -95,7 +95,7 @@ export const useOrderStore = defineStore('cart',{
                 }).then((response)=>{
                     console.log(response);
                     router.push(
-                        '/orders'    
+                        '/orders/:clientId'    
                     )
                     console.log('order placed');
                 }).catch((error)=>{

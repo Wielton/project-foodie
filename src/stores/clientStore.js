@@ -7,12 +7,25 @@ import { router } from '@/router'
 // Use Options API as this is Server-side rendered
 export const useLoginStore = defineStore('login',{
     state : ()=>({
-        title: 'Login'
+        
     }),
+    getters: {
+        // getIsAuthorized(state){
+        //     return state.isAuthorized;
+        // },
+        // getUser(state){
+        //     return state.user;
+        // }
+    },
     actions: {
-
+        // setUser(user){
+        //     this.user = user;
+        // },
+        // setAuthorized(boolean){
+        //     this.isAuthorized = boolean;
+        // },
         // User login
-            
+        
         loginRequest(email, password){
             axios.request({
                 url: process.env.VUE_APP_API_URL+"client-login",
@@ -23,7 +36,8 @@ export const useLoginStore = defineStore('login',{
                     }
                 }).then((response)=>{
                     cookies.set('sessionToken', response.data.sessionToken);
-                    router.push('/restaurants');
+                    router.push({name: 'restaurants'});
+
                 }).catch((error)=>{
                     console.log(error.response.data);
                     console.log('Something is going wrong')
@@ -33,16 +47,7 @@ export const useLoginStore = defineStore('login',{
             loginFailed(error){
                 return (error)
             },
-            // setLoggedIn(){
-            //     const cookie = cookies.get('sessionToken');
-            //     if (cookie){
-            //         this.isLoggedIn = true;
-            //         console.log('User is logged in', this.isLoggedIn)
-            //     }else{
-            //         this.isLoggedIn = false;
-            //         console.log('Reroute to login', this.isLoggedIn)
-            //     }
-            // },
+            
 
 
         // User logout 
@@ -58,10 +63,11 @@ export const useLoginStore = defineStore('login',{
                     console.log(response);
                     console.log('User was logged out');
                     cookies.remove('sessionToken');
-                    router.push('/');
+                    router.push({name: 'home'})
                 }).catch((error)=>{
                     console.log(error);
                 })
             },
+            
         },
 })

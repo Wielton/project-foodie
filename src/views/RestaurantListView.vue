@@ -2,7 +2,6 @@
     <v-container app>
         <h1 v-if="isAuthorized" :key="user.clientId">Welcome, {{user.username}}</h1>
         <RestaurantList />
-        
     </v-container>
 </template>
 

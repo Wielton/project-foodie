@@ -2,13 +2,15 @@
 <div app>
     <h1 class="mx-auto">{{title}}</h1>
     <v-spacer></v-spacer>
-    <v-container>
-        <v-row>
+    <v-container fluid>
+        <v-row class="pa-6">
             <v-col
-                    v-for="item in menuItems"
-                    :key="item.menuId"
-                    :item="item">
-                    <v-card>
+            v-for="item in menuItems"
+            :key="item.menuId"
+            :item="item"
+                >
+                    <v-card
+                        >
                         <v-img 
                             :src="item.imageUrl"
                             width="200"

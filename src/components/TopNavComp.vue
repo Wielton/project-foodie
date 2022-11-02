@@ -22,17 +22,11 @@
                 {{ link.name }}
             </v-tab>
             </v-tabs> -->
-            <v-app-bar-nav-icon 
-                @click="leftDrawer = true" 
-                >
-            
-            <v-btn
-                icon
-                elevation="0"
-                @click="showRightDrawer = !showRightDrawer" 
+            <v-app-bar-nav-icon
+                
+                @click="rightDrawer = !rightDrawer" 
                 >
                 <v-icon>mdi-menu</v-icon>
-            </v-btn>
         </v-app-bar-nav-icon>
             <!-- <router-link
             :to="{name: 'user.show', params:{id: user.clientId}}"
@@ -41,7 +35,7 @@
             </router-link> -->
             <router-link
                 v-if="!isAuthorized"
-                to="/login"
+                :to="({name: 'login'})"
                 text
                 elevation="0"
                 >
@@ -63,19 +57,20 @@
     </v-app-bar>
     <!-- Add a navigation bar -->
     <v-navigation-drawer
-        v-model="leftDrawer"
+        v-model="rightDrawer"
         height="250"
         absolute
-        temporary>
+        temporary
+        right>
             <v-list
                 nav
                 dense>
                 <v-list-item-group>
-                    <router-link v-if="!isAuthorized" :to="({name: 'home'})">Home</router-link>
-                    <router-link v-if="isAuthorized" :to="({name: 'user'})">Profile</router-link>
-                    <router-link v-if="!isAuthorized" :to="({name: 'login'})">Login</router-link>
-                    <router-link :to="({name: 'restaurants'})">Restaurants</router-link>
-                    <router-link :to="({name: 'about'})">About</router-link>
+                    <v-list-item v-if="!isAuthorized"><router-link :to="({name: 'home'})">Home</router-link></v-list-item>
+                    <v-list-item v-if="isAuthorized"><router-link :to="({name: 'user'})">Profile</router-link></v-list-item>
+                    <v-list-item v-if="!isAuthorized"><router-link :to="({name: 'login'})">Login</router-link></v-list-item>
+                    <v-list-item><router-link :to="({name: 'restaurants'})">Restaurants</router-link></v-list-item>
+                    <v-list-item><router-link :to="({name: 'about'})">About</router-link></v-list-item>
                 </v-list-item-group>
             </v-list>
     </v-navigation-drawer>
@@ -99,7 +94,6 @@ export default {
         },
     data () {
         return {
-            leftDrawer: false,
             rightDrawer: false,
             showRightDrawer: false,
             showLoginForm: false,
@@ -118,19 +112,10 @@ export default {
     methods: {
         ...mapActions(useLoginStore,['logoutRequest']),
         ...mapActions(useClientSignupStore, ['accountInfoRequest'])
-        // async getAuthentication(){
-        //     let cookie = cookies.get('sessionToken')
-        //     if (cookie === null ){
-        //         this.$router.push('/login')
-        //     }else{
-        //         console.log('You are logged in')
-        //     }
-        // }
         },
         mounted(){
             this.accountInfoRequest();
         }
-        
 }
 </script>
 <style lang="scss" scoped>

@@ -9,6 +9,7 @@
                 :key="restaurant.restaurantId"
                 :restaurant="restaurant"
                 >
+                
                 <v-card 
                     max-width="300"
                     @click="fetchMenu(restaurant.restaurantId)"

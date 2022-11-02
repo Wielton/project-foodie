@@ -7,9 +7,13 @@ export const useOrderStore = defineStore('cart',{
     state : ()=>{
         return {
             title: 'Your cart',
+            itemMenuId: Number,
             items: [],
-            itemIds: [],
-            restaurantId: Number
+            finalOrder: {
+                restaurantId: null,
+                itemIds: [],
+            },
+            orders: [],
         }
     },
     actions: {
@@ -18,12 +22,17 @@ export const useOrderStore = defineStore('cart',{
             // Also take the restaurantId as an argument to make sure the items are all from the same restaurant
             // Orders can't have more than one restaurant.  
             // Each restaurant needs its own order form.
-            let itemMenuId = item.menuId
-            this.restaurantId = item.restaurantId
-            console.log(itemMenuId, this.restaurantId)
+            console.log(item.restaurantId)
+            console.log(this.finalOrder.restaurantId)
+            if (this.finalOrder.restaurantId === null){
+                this.finalOrder.restaurantId = item.restaurantId
+            }else if(this.finalOrder.restaurantId !== item.restaurantId){
+                return
+            }
+            this.itemMenuId = item.menuId
             this.items.push(item)
-            this.itemIds.push(itemMenuId)
-            console.log(this.itemIds, this.restaurantId)
+            this.finalOrder.itemIds.push(this.itemMenuId)
+            console.log(this.finalOrder, this.menuItemId, this.finalOrder.restaurantId)
             this.updateCookie();
         },
         removeCartItem(items, item){
@@ -58,30 +67,35 @@ export const useOrderStore = defineStore('cart',{
         },
         fetchCookie(){
             let currentCookie = cookies.get('cartSession')
-            if (currentCookie == null){
+            if (currentCookie === null){
                 return
             }else{
                 console.log('The current cart cookie: ', currentCookie)
             }
         },
         // Fetch the cart items when the component is loaded/reloaded
-        getCartItems(orderId){
+        getOrders(){
             axios.request({
                 url: process.env.VUE_APP_API_URL+"order",
                 method: "GET",
                 
-                data : {
-                    orderId
+                params: {
+                    'sessionToken': cookies.get('sessionToken')
                 }  
             }).then((response)=>{
-                console.log(response);
+                this.orders = response.data;
+                
+                
+                
             }).catch((error)=>{
                 console.log(error);
                 })
             },
         
             // Place order
-        placeOrder(itemIds,restaurantId){
+        placeOrder(){
+                let itemIds = this.finalOrder.itemIds
+                let restaurantId = this.finalOrder.restaurantId
                 axios.request({
                     url: process.env.VUE_APP_API_URL+"order",
                     method: "POST",
@@ -95,7 +109,7 @@ export const useOrderStore = defineStore('cart',{
                 }).then((response)=>{
                     console.log(response);
                     router.push(
-                        '/orders/:clientId'    
+                        {name: 'orders'}
                     )
                     console.log('order placed');
                 }).catch((error)=>{

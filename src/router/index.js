@@ -6,13 +6,7 @@ Vue.use(VueRouter)
 
 
 
-// router.beforeEach(async (to, from, next) => {
-//   const user = useUser();
-//   await user.get();
 
-//   console.log(user) // user is defined
-
-//   if (to.meta.requiresAuth && !user.isLoggedIn) next({ name: "home" }); // this will work
 // code split and use lazy-loading of components
 // There are Webpack Magic Comments within the component import statement
 // Home page will always render
@@ -35,6 +29,11 @@ const routes = [
     component: ()=>import(/* webpackChunkName: "restaurants" */'@/views/RestaurantListView.vue'),
   },
   {
+    path: '/menu/',
+    name: 'menu',
+    component: ()=>import(/* webpackChunkName: "menu" */ '@/views/MenuView.vue')
+  },
+  {
     path: '/about/',
     name: 'about',
     component: ()=>import(/* webpackChunkName: "about" */'@/views/AboutUsView.vue'),
@@ -43,60 +42,36 @@ const routes = [
   //   path: '/contact/',
   //   component: ContactUsView,
   // },
-  
-  
-  // {
-  //   path: '/restaurant-home/:restaurantId',
-  //   component: RestaurantHomeView,
-  //   params: true,
-  //   beforeEnter: (to, from, next) => {
-  //     let access_token = cookies.get('restaurantSessionToken')
-  //     if (access_token == null) {
-  //         // user doesn't have access token, redirect to login
-  //         next({ name: 'login' })
-  //     }
-  //     else {
-  //         // user has access token, user can open the page
-  //         next()
-  //     }
-  //   },
-  // },
-  {
-    path: '/menu/',
-    component: ()=>import(/* webpackChunkName: "menu" */ '@/views/MenuView.vue')
-  },
   // {
   //   path: '/restaurant-portal/',
   //   component: RestaurantPortalView,
   // },
-  {
-    path: '/login',
-    name: 'login',
-    component: ()=>import(/* webpackChunkName: "login" */ '@/views/LoginView.vue'),
-  },
+  // {
+  //   path: '/restaurant-home/:restaurantId',
+  //   component: RestaurantHomeView,
+  //   params: true,
+  // },
+  
   // {
   //   path: '/signup',
   //   component: SignUpView
   // },
   {
     path: '/orders/:clientId',
+    name: 'orders',
     component: ()=>import(/* webpackChunkName: "orders" */ '@/views/OrdersView.vue'),
     params: true,
-    // beforeEnter: (to, from, next) => {
-    //   store.checkAuthorization();
-    //   if (!store.isAuthorized ) {
-    //       // user doesn't have access token, redirect to login
-    //       next({ name: 'login' })
-    //   }
-    //   else {
-    //       // user has access token, user can open the page
-    //       next()
-    //   }
-    // },
+  
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: ()=>import(/* webpackChunkName: "login" */ '@/views/LoginView.vue'),
   },
 ]
 
 export const router = new VueRouter({
+  mode: 'history',
   routes,
 })
 

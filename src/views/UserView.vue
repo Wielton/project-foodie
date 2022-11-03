@@ -1,71 +1,50 @@
 <template>
 <div>
     <h3 :key="user.clientId">Hello {{ user.username }}</h3>
-    <!-- <v-card class="elevation-12">
-        <v-spacer></v-spacer>
-        <v-card-actions>
-            <v-btn
-                color="success"
-                class="mr-4"
-                @click="userDeleteRequest">
-                Delete
-            </v-btn>
-            <v-btn
-                color="success"
-                class="mr-4"
-                @click="accountInfoChangeRequest">
-                Change Info
-            </v-btn>
-            <v-btn
-                color="success"
-                class="mr-4"
-                @click="logoutRequest">
-                Logout
-            </v-btn>
-        </v-card-actions>
-    </v-card>
-<v-divider></v-divider>
+    
+            
     <v-container fluid>
         <v-row>
-            <v-col cols="4">
+            <v-col cols="12" sm="6" md="2">
                 <v-subheader>Email</v-subheader>
                 
             </v-col>
-            <v-col cols="8">
+            <v-col cols="12" sm="6" md="6">
                 <v-text-field
-                    v-model="email"
-                    :rules="emailRules"
+                    :placeholder="user.email"
+                    v-model="formData.email"
                     type="email"
                     :append-icon="'mdi-pencil'"
-                    @click:append="accountInfoChangeRequest(email)"
+                    clearable
                     ></v-text-field>
             </v-col>
         </v-row>
-        <v-row>
+        <!-- <v-row>
             <v-col cols="4">
                 <v-subheader>Password</v-subheader>
             </v-col>
             <v-col cols="8">
                 <v-text-field
-                    v-model="password"
-                    :counter="10"
+
+                    v-model="formData.password"
+                    :counter="20"
                     :rules="passwordRules"
                     type="password"
                     :append-icon="'mdi-pencil'"
-                    @click:append="accountInfoChangeRequest(password)"
+                    clearable
                     ></v-text-field>
             </v-col>
-        </v-row>
+        </v-row> -->
         <v-row>
             <v-col cols="4">
                 <v-subheader>Username</v-subheader>
             </v-col>
             <v-col cols="8">
                 <v-text-field
-                    v-model="username"
-                    :rules="usernameRules"
+                    :placeholder="user.username"
+                    v-model="formData.username"
                     :append-icon="'mdi-pencil'"
-                    @click:append="accountInfoChangeRequest(username)"
+                    clearable
                     ></v-text-field>
             </v-col>
         </v-row>
@@ -75,10 +54,10 @@
             </v-col>
             <v-col cols="8">
                 <v-text-field
-                    v-model="firstName"
-                    :rules="firstNameRules"
+                    :placeholder="user.firstName"
+                    v-model="formData.firstName"
                     :append-icon="'mdi-pencil'"
-                    @click:append="accountInfoChangeRequest(firstName)"
+                    clearable
                 ></v-text-field>
             </v-col>
         </v-row>
@@ -88,14 +67,13 @@
             </v-col>
             <v-col cols="8">
                 <v-text-field
-                    v-model="lastName"
-                    :rules="lastNameRules"
+                    :placeholder="user.lastName"
+                    v-model="formData.lastName"
                     :append-icon="'mdi-pencil'"
-                    @click:append="accountInfoChangeRequest(lastName)"
                     ></v-text-field>
             </v-col>
         </v-row>
-        <v-row>
+        <!-- <v-row>
             <v-col cols="4">
                 <v-subheader>Profile Picture</v-subheader>
             </v-col>
@@ -107,14 +85,31 @@
                     @click:append="accountInfoChangeRequest(pictureUrl)"
                     ></v-text-field>
             </v-col>
+        </v-row> -->
+        <v-row>
+            <v-col>
+                <v-btn
+                    color="success"
+                    class="mr-4"
+                    @click="accountInfoChangeRequest(formData)">
+                    Change Info
+                </v-btn>
+                <v-btn
+                    color="success"
+                    class="mr-4"
+                    @click="userDeleteRequest">
+                    Delete Account
+                </v-btn>
+                
+            </v-col>
         </v-row>
-    </v-container> -->
+    </v-container>
 </div>
 </template>
 
 <script>
 import { useClientSignupStore } from '@/stores/clientSignupStore';
-import { mapState, mapActions} from 'pinia';
+import { mapState, mapActions,mapWritableState} from 'pinia';
 
 
     export default {
@@ -122,28 +117,12 @@ import { mapState, mapActions} from 'pinia';
         name: 'UserView',
         data: ()=>({
             
-            emailRules: [
-                v => !!v || 'E-mail is required...',
-                v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-                ],
-            firstNameRules: [
-                v => !!v || 'First name is required...',
-                ],
-            lastNameRules: [
-                v => !!v || 'Last name is required...',
-                ],
-            usernameRules: [
-                v => !!v || 'Username name is required...',
-                ],
-            passwordRules: [
-                v => !!v || 'Password is required...',
-                v => (v && v.length <= 10) || 'Password must be less than 10 characters',
-                ],
+            
             }),
         computed: {
-            ...mapState(useClientSignupStore, ['user', 'isAuthorized'])
+            ...mapState(useClientSignupStore, ['user', 'isAuthorized']),
             //Initial 
-            // ...mapWritableState(useClientSignupStore,['username','password','email','firstName','lastName','pictureUrl'])
+            ...mapWritableState(useClientSignupStore,['formData'])
             //Getters
             
             
@@ -153,7 +132,7 @@ import { mapState, mapActions} from 'pinia';
         
         methods: {
         //Actions
-            ...mapActions(useClientSignupStore,['accountInfoRequest']),
+            ...mapActions(useClientSignupStore,['accountInfoRequest','accountInfoChangeRequest','userDeleteRequest']),
         
         // validate () {
         //     this.$refs.form.submit()
@@ -167,26 +146,27 @@ import { mapState, mapActions} from 'pinia';
         mounted(){
             this.accountInfoRequest();
         },
-        // updated() {
-        //     const router = this.$router;
-        //     this.store = useClientSignupStore();
-        //     useClientSignupStore().$onAction(({name, after})=>{
-        //         if (name == "accountInfoChangedSuccess"){
-        //             after(()=>{
-        //                 router.push({name: 'user-account'}); 
-        //             })
-        //         } 
-        //         else if(name == "userDeleteRequest"){
-        //             after(()=> {
-        //                 router.push({name: 'home'})
-        //             })
+        updated() {
+            const router = this.$router;
+            this.store = useClientSignupStore();
+            useClientSignupStore().$onAction(({name, after})=>{
+                if (name == "accountInfoChangedSuccess"){
+                    after(()=>{
+                        
+                        router.back
+                    })
+                } 
+                else if(name == "userDeleteRequest"){
+                    after(()=> {
+                        router.push({name: 'home'})
+                    })
                     
-        //         }else {
-        //             this.isAlert = true;
-        //         }
-        //     })
+                }else {
+                    this.isAlert = true;
+                }
+            })
             
-        // },
+        },
         
         }
     

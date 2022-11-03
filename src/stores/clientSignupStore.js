@@ -3,11 +3,18 @@ import axios from 'axios';
 import cookies from 'vue-cookies';
 import { router } from '@/router'
 
+
 export const useClientSignupStore = defineStore('clientSignup',{
     state : ()=>{
         return {
             isAuthorized: false,
             user: null,
+            formData: {
+                email: null,
+                username: null,
+                firstName: null,
+                lastName: null
+            }
             }
     },
     actions: {
@@ -18,7 +25,7 @@ export const useClientSignupStore = defineStore('clientSignup',{
 
 // User sign up
         
-        signUpRequest(email, username, firstName, lastName, password, pictureUrl) {
+        signUpRequest(email, username, firstName, lastName, password) {
             axios.request({ 
                 url: process.env.VUE_APP_API_URL+"client",
                 method: "POST",
@@ -29,8 +36,7 @@ export const useClientSignupStore = defineStore('clientSignup',{
                     username,
                     firstName,
                     lastName,
-                    password,
-                    pictureUrl
+                    password
                 }
             }).then((response)=>{
                 // get the sessionToken and userInfo from response
@@ -62,20 +68,38 @@ export const useClientSignupStore = defineStore('clientSignup',{
 
 // User profile field editing
 
-        accountInfoChangeRequest(email, username, firstName, lastName, password, pictureUrl){
+        accountInfoChangeRequest(formData){
+            this.accountInfoRequest();
+            console.log(this.user)
+            console.log(formData)
+            if(formData.email !== null){
+                formData.email
+            }else{
+                formData.email = this.user.email
+            }
+            if(formData.username !== null){
+                formData.username
+            }else{
+                formData.username = this.user.username
+            }
+            if(formData.firstName !== null){
+                formData.firstName
+            }else{
+                formData.firstName = this.user.firstName
+            }
+            if(formData.lastName !== null){
+                formData.lastName
+            }else{
+                formData.lastName = this.user.lastName
+            }
             axios.request({
                 url: process.env.VUE_APP_API_URL+"client",
                 method: "PATCH",
-                headers : {
-                    'token': cookies.get('sessionToken'),
+                params : {
+                    'sessionToken': cookies.get('sessionToken'),
                     },
                 data: {
-                    email,
-                    username,
-                    firstName,
-                    lastName,
-                    password,
-                    pictureUrl
+                    formData
                     }
                 }).then((response)=>{
                     console.log(response);

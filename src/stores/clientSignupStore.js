@@ -8,7 +8,7 @@ export const useClientSignupStore = defineStore('clientSignup',{
     state : ()=>{
         return {
             isAuthorized: false,
-            user: null,
+            user: {},
             formData: {
                 email: null,
                 username: null,
@@ -17,10 +17,11 @@ export const useClientSignupStore = defineStore('clientSignup',{
             }
             }
     },
+    getters: {
+        
+    },
     actions: {
-
-// sessionToken GET userInfo for global use
-
+        
 
 
 // User sign up
@@ -40,7 +41,11 @@ export const useClientSignupStore = defineStore('clientSignup',{
                 }
             }).then((response)=>{
                 // get the sessionToken and userInfo from response
-                console.log(response)
+                // console.log(response)
+                this.isAuthorized = true
+                // response will be the sessionToken
+                cookies.set('sessionToken', response.data.sessionToken);
+                router.push({name: 'restaurants'})
             }).catch((error)=>{
                 console.log(error.response.data);
             })
@@ -58,8 +63,8 @@ export const useClientSignupStore = defineStore('clientSignup',{
                     'sessionToken': cookies.get('sessionToken'),
                     },
                 }).then((response)=>{
-                    console.log(response.data[0]);
-                    this.user = response.data[0];
+                    console.log(response.data[0])
+                    this.user = response.data[0]
                     this.isAuthorized = true;
                 }).catch((error)=>{
                     console.log(error);
@@ -70,8 +75,6 @@ export const useClientSignupStore = defineStore('clientSignup',{
 
         accountInfoChangeRequest(formData){
             this.accountInfoRequest();
-            console.log(this.user)
-            console.log(formData)
             if(formData.email !== null){
                 formData.email
             }else{
@@ -101,15 +104,15 @@ export const useClientSignupStore = defineStore('clientSignup',{
                 data: {
                     formData
                     }
-                }).then((response)=>{
-                    console.log(response);
+                }).then(()=>{
+                    
                     this.accountInfoChangedSuccess();
                 }).catch((error)=>{
                     console.log(error);
                 })
             },
             accountInfoChangedSuccess(){
-                return alert(this.username +"'s info successfully updated." );
+                return alert(this.user.firstName +"'s info successfully updated." );
             },
 
 //  User delete
@@ -121,8 +124,7 @@ export const useClientSignupStore = defineStore('clientSignup',{
                 headers: {
                     token: cookies.get('session'),
                     },
-                }).then((response)=>{
-                    console.log(response);
+                }).then(()=>{
                     console.log('User has been deleted');
                     cookies.remove('sessionToken');
                     router.push('/');

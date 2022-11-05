@@ -54,18 +54,13 @@
                                         type="password"
                                         required
                                     ></v-text-field>
-                                    <v-text-field
-                                        v-model="pictureUrl"
-                                        label="Picture Url"
-                                        type="text"
-                                    ></v-text-field>
                             </v-form>
                             <v-card-actions>
                             <v-btn
                                 :disabled="!valid"
                                 color="success"
                                 class="mr-4"
-                                @click="signUpRequest"
+                                @click="signUpRequest(email,username,firstName,lastName,password)"
                                 >Submit</v-btn>
                         </v-card-actions>
                         </v-card-text>
@@ -77,7 +72,7 @@
 </template>
 
 <script>
-import { useClientStore } from '@/stores/clientStore'
+import { useClientSignupStore } from '@/stores/clientSignupStore'
 import { mapActions } from 'pinia';
 export default {
             name: 'SignupComponent',
@@ -114,7 +109,7 @@ export default {
             computed: {
                 },
             methods: {
-                ...mapActions(useClientStore, ['signUpRequest']),
+                ...mapActions(useClientSignupStore, ['signUpRequest']),
                 validate () {
                     this.$refs.form.submit()
                     },

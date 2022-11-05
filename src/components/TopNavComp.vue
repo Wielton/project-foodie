@@ -2,7 +2,7 @@
 <div app>
     <v-app-bar color="#fd7132" elevation="0">
         <v-app-bar-title style="color:#79031d" align-center>
-            <h1>Foodie</h1>
+            <h1>Moody4Foody</h1>
         </v-app-bar-title>
             <v-spacer></v-spacer>
             <!-- <v-tabs
@@ -39,11 +39,14 @@
                 text
                 elevation="0"
                 >
-                Login
+                <v-btn>
+                    Login
+                </v-btn>
             </router-link>
-            <v-btn 
-                v-else-if="isAuthorized"
-                @click="logoutRequest">
+            <v-btn
+                v-else
+                @click="logoutRequest"
+                >
                 Logout
             </v-btn>
         
@@ -66,11 +69,11 @@
                 nav
                 dense>
                 <v-list-item-group>
-                    <v-list-item v-if="!isAuthorized"><router-link :to="({name: 'home'})">Home</router-link></v-list-item>
-                    <v-list-item v-if="isAuthorized"><router-link :to="({name: 'user'})">Profile</router-link></v-list-item>
-                    <v-list-item v-if="!isAuthorized"><router-link :to="({name: 'login'})">Login</router-link></v-list-item>
-                    <v-list-item><router-link :to="({name: 'restaurants'})">Restaurants</router-link></v-list-item>
-                    <v-list-item><router-link :to="({name: 'about'})">About</router-link></v-list-item>
+                    <router-link :to="({name: 'home'})"><v-list-item>Home</v-list-item></router-link>
+                    <router-link :to="({name: 'user.show', params:{clientId: user.username, slug: user.slug}})" v-if="isAuthorized"><v-list-item>Profile</v-list-item></router-link>
+                    <router-link :to="({name: 'login'})" v-if="!isAuthorized"><v-list-item>Login</v-list-item></router-link>
+                    <router-link :to="({name: 'restaurants'})"><v-list-item>Restaurants</v-list-item></router-link>
+                    <router-link :to="({name: 'about'})"><v-list-item>About</v-list-item></router-link>
                 </v-list-item-group>
             </v-list>
     </v-navigation-drawer>
@@ -83,12 +86,7 @@ import {mapActions, mapState} from 'pinia';
 // import cookies from 'vue-cookies'
 export default {
     name: "TopNav",
-    setup(){
-            const store = useLoginStore()
-            return {
-                store
-            }
-        },
+    
         components: {
             
         },
@@ -108,16 +106,17 @@ export default {
     },
     computed: {
         ...mapState(useClientSignupStore, ['user', 'isAuthorized'])
-        },
+    },
     methods: {
         ...mapActions(useLoginStore,['logoutRequest']),
         ...mapActions(useClientSignupStore, ['accountInfoRequest'])
-        },
-        mounted(){
-            this.accountInfoRequest();
-        }
+    },
+    
+    
 }
 </script>
 <style lang="scss" scoped>
-    
+    *a {
+        text-decoration: none;
+    }
 </style>

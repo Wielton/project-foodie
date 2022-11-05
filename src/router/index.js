@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import cookies from 'vue-cookies'
 import HomeView from '../views/HomeView.vue'
+import {useClientSignupStore} from '../stores/clientSignupStore'
 Vue.use(VueRouter)
 
 
@@ -17,11 +18,21 @@ const routes = [
     component: HomeView,
   },
   {
-    path: '/user/:clientId',
-    name: 'user',
+    path: '/user/:clientId/:slug',
+    name: 'user.show',
     component: ()=>import(/* webpackChunkName: "user" */  '@/views/UserView.vue'),
-    params: true,
     
+    beforeEnter: (to, from, next) => {
+      // ...
+      const store = useClientSignupStore
+      const user = store(user)
+      const cookie = cookies.get('sessionToken')
+      // const user = store
+      console.log(cookie, user.isAuthorized)
+      if (!user.isAuthorized && !cookie) next({name: 'login'})
+      else next()
+    }
+
   },
   {
     path: '/restaurants/',
@@ -29,38 +40,27 @@ const routes = [
     component: ()=>import(/* webpackChunkName: "restaurants" */'@/views/RestaurantListView.vue'),
   },
   {
-    path: '/menu/',
+    path: 'restaurants/menu/',
     name: 'menu',
     component: ()=>import(/* webpackChunkName: "menu" */ '@/views/MenuView.vue')
   },
   {
     path: '/about/',
     name: 'about',
-    component: ()=>import(/* webpackChunkName: "about" */'@/views/AboutUsView.vue'),
+    component: ()=>import(/* webpackChunkName: "about" */ '@/views/AboutUsView.vue'),
   },
-  // {
-  //   path: '/contact/',
-  //   component: ContactUsView,
-  // },
-  // {
-  //   path: '/restaurant-portal/',
-  //   component: RestaurantPortalView,
-  // },
-  // {
-  //   path: '/restaurant-home/:restaurantId',
-  //   component: RestaurantHomeView,
-  //   params: true,
-  // },
   
-  // {
-  //   path: '/signup',
-  //   component: SignUpView
-  // },
+  
   {
-    path: '/orders/:clientId',
+    path: '/signup',
+    name: 'signup',
+    component: ()=>import(/* webpackChunkName: "signup" */ '@/views/SignUpView.vue'),
+  },
+  {
+    path: '/orders/',
     name: 'orders',
     component: ()=>import(/* webpackChunkName: "orders" */ '@/views/OrdersView.vue'),
-    params: true,
+    
   
   },
   {
@@ -68,6 +68,12 @@ const routes = [
     name: 'login',
     component: ()=>import(/* webpackChunkName: "login" */ '@/views/LoginView.vue'),
   },
+  {
+    path: '/restaurant-portal/',
+    name: 'restaurant-portal',
+    component: ()=>import(/* webpackChunkName: "restaurant portal" */ '@/views/RestaurantPortalView.vue')
+  },
+  
 ]
 
 export const router = new VueRouter({
@@ -75,12 +81,5 @@ export const router = new VueRouter({
   routes,
 })
 
-router.beforeEach((to,from,next) => {
-  let cookie = cookies.get('sessionToken')
-  console.log(cookie)
-  if (to.name === 'home' || to.name === 'contact' || to.name === 'about' || to.name === 'restaurants' && cookie === null) next()
-  else if (to.name === 'user' && cookie === null) next({name: 'login'})
-  else next()
-})
 
 export default router

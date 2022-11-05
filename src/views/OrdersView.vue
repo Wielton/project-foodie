@@ -4,12 +4,16 @@
             v-for="order in orders" 
             :key="order.orderId"
             :order="order"
-            three-line
+            two-line
             >
-            <v-list-item-title>Order #: {{order.orderId}}  Restaurant: {{order.restaurantName}}</v-list-item-title>
+            <v-list-item-title>Order #: {{order.orderId}}</v-list-item-title>
+            <v-list-item-subtitle>Restaurant: {{order.restaurantName}}</v-list-item-subtitle>
             <v-list-item-subtitle v-if="order.isConfirmed === 1">Order is confirmed</v-list-item-subtitle>
             <v-list-item-subtitle v-if="order.isCompleted === 1">Order is completed</v-list-item-subtitle>
             <v-list-item-subtitle v-if="order.isCancelled === 1">Order is cancelled</v-list-item-subtitle>
+            <v-list-item-action>
+                <v-btn :to="({name: 'order'})">VIEW</v-btn>
+            </v-list-item-action>
         </v-list-item>
     </v-list>
 </template>

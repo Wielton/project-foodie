@@ -15,7 +15,6 @@ export const useGetRestaurantStore = defineStore('getRestaurant',{
                 url: process.env.VUE_APP_API_URL+"restaurant",
                 method: "GET",
             }).then((response)=>{
-                console.log(response.data);
                 this.restaurants = response.data;
             }).catch((error)=>{
                 console.log(error);

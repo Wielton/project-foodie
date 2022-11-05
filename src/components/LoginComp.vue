@@ -1,39 +1,38 @@
 <template>
-        <v-container app fluid>
-            <v-row justify="center">
-                <v-col cols="12" md="6" lg="6">
-                    <v-card class="elevation-0">
-                        <v-card-title>{{title}}</v-card-title>
-                        <v-card-text>
-                            <v-form ref="form"
-                                    v-model="valid"
-                                    lazy-validation>
-                                    <v-text-field
-                                        v-model="email"
-                                        label="Email"
-                                        type="email"
-                                        :rules="emailRules"
-                                        required
-                                    ></v-text-field>
-                                    <v-text-field
-                                        v-model="password"
-                                        label="Password"
-                                        required
-                                    ></v-text-field>
-                            </v-form>
-                        </v-card-text>
-                        <v-card-actions>
-                            <v-btn
-                                :disabled="!valid"
-                                color="success"
-                                class="mr-4"
-                                @click="loginRequest(email,password)"
-                                >Submit</v-btn>
-                        </v-card-actions>
-                    </v-card>
-                </v-col>
-            </v-row>
-        </v-container> 
+    <v-container app fluid>
+        <v-row justify="center">
+            <v-col cols="12" md="6" lg="6">
+                <v-form 
+                    ref="form"
+                    v-model="valid"
+                    lazy-validation>
+                    <v-text-field
+                        v-model="email"
+                        label="Email"
+                        type="email"
+                        :rules="emailRules"
+                        required
+                    ></v-text-field>
+                    <v-text-field
+                        :counter="10"
+                        :rules="passwordRules"
+                        v-model="password"
+                        label="Password"
+                        required
+                    ></v-text-field>
+                    <v-btn
+                        :disabled="!valid"
+                        color="success"
+                        class="mr-4"
+                        @click="loginRequest(email,password)"
+                        >Submit</v-btn>
+                        <p>Not registered yet? <router-link :to="({name: 'signup'})">Signup Here</router-link></p>
+                
+                </v-form>
+                <p>Are you a restaurant? <router-link :to="{name: 'restaurant-portal'}">Restaurant Portal</router-link></p>
+            </v-col>
+        </v-row>
+    </v-container> 
 </template>
 
 <script>
@@ -57,6 +56,10 @@ import { mapActions } from 'pinia';
             emailRules: [
                 v => !!v || 'E-mail is required...',
                 v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+                ],
+            passwordRules: [
+                v => !!v || 'Password is required...',
+                v => (v && v.length <= 10) || 'Password must be less than 10 characters',
                 ],
             }),
             computed: {

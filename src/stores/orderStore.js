@@ -106,8 +106,7 @@ export const useOrderStore = defineStore('cart',{
                         itemIds,
                         restaurantId
                     }
-                }).then((response)=>{
-                    console.log(response);
+                }).then(()=>{
                     router.push(
                         {name: 'orders'}
                     )

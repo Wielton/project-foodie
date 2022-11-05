@@ -1,10 +1,28 @@
 <template>
-<v-container app>
-  <v-row>
-    <v-col>
-      <v-img
-        :src="require('@/assets/mainpage1.png')"
-        ></v-img>
+<v-container app fluid>
+  <v-row class="pa-6" align="center" justify="center">
+    <v-col cols="12" md="4" lg="8">
+      <h4>Welcome to 
+        <br />
+        <span><h1>Moody4Foody</h1></span>
+      </h4>
+    </v-col>
+    <v-col cols="12" md="4" lg="8">
+      <h3>This is my own production of Skip The Dishes.  The frontend was a 2-week final project for the 1st semester.
+      I used Vue2, Vuetify, Pinia, Vue-cookies, and Composition API for state management, while Axios communicates with the backend.
+      During the frontend implementation, we used the professors' database and followed their API documentation, for both the learning curve and to provide consistency for grading.
+      <br />
+      The final backend product 
+
+      <br />
+        Feel free to browse the restaurants and their respective menus.  
+        <br />
+        Register to get authentication and then have access to place an order!
+        But please be respectful, it is for demo purposes only. 
+        <br />
+        The site is far from finished though!
+
+      </h3>
     </v-col>
   </v-row>
   <v-row>

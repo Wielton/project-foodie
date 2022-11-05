@@ -59,9 +59,8 @@ export const useLoginStore = defineStore('login',{
                 params: {
                     sessionToken : cookies.get('sessionToken'),
                     }
-                }).then((response)=>{
-                    console.log(response);
-                    console.log('User was logged out');
+                }).then(()=>{
+                    
                     cookies.remove('sessionToken');
                     router.push({name: 'home'})
                 }).catch((error)=>{

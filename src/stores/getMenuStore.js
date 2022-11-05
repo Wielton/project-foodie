@@ -20,10 +20,8 @@ export const useGetMenuStore = defineStore('getMenu',{
                     restaurantId
                 }
             }).then((response)=>{
-                console.log(response);
                 this.menuItems = response.data;
-                
-                router.push('/menu');
+                router.push({name: 'menu'});
             }).catch((error)=>{
                 console.log(error);
                 })

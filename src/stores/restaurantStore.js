@@ -8,7 +8,9 @@ export const useRestaurantStore = defineStore('restaurant',{
         return {
             title: 'Restaurants',
             restaurantHomeTitle: 'Welcome',
-            isLoggedIn : false
+            isAuthorized: false,
+            restaurantUser: {},
+            restaurantId: null
         }
     },
     actions: {
@@ -29,8 +31,10 @@ export const useRestaurantStore = defineStore('restaurant',{
                     password
                 }  
             }).then((response)=>{
-                cookies.set('restaurantToken', response.data.token);
-                router.push('/restaurant-home/:restaurantId');
+                cookies.set('restaurantSessionToken', response.data.restaurantSessionToken);
+                this.isAuthorized = true
+                this.restaurantId = response.data.restaurantId
+                router.push({name: 'restaurant-home', params: {restaurantId: this.restaurantId}});
             }).catch((error)=>{
                 console.log(error);
                 })
@@ -40,16 +44,13 @@ export const useRestaurantStore = defineStore('restaurant',{
                 axios.request({
                     url: process.env.VUE_APP_API_URL+"restaurant-login",
                     method: "POST",
-                    headers : {
-                        
-                        },
-                        data: {
-                            email,
-                            password
-                        }
+                    data: {
+                        email,
+                        password
+                    }
                 }).then((response)=>{
                     console.log(response)
-                    cookies.set('restaurantToken', response.data.token);
+                    cookies.set('restaurantSessionToken', response.data.restaurantSessionToken);
                     this.restaurantId = response.data.restaurantId;
                     console.log(this.restaurantId);
                     console.log('Logged in as restaurant');
@@ -66,9 +67,8 @@ export const useRestaurantStore = defineStore('restaurant',{
                     url: process.env.VUE_APP_API_URL+"restaurant",
                     method: "PATCH",
                     params : {
-                        restaurantToken: cookies.get('restaurantToken'),
-                        
-                        },
+                        restaurantSessionToken: cookies.get('restaurantSessionToken'),
+                    },
                     data: {
                         name,
                         address,
@@ -91,8 +91,7 @@ export const useRestaurantStore = defineStore('restaurant',{
                     url: process.env.VUE_APP_API_URL+"restaurant-login",
                     method: "DELETE",
                     params: {
-                        
-                        restaurantToken: cookies.get('restaurantToken')
+                        restaurantSessionToken: cookies.get('restaurantSessionToken')
                     }
                 }).then((response)=>{
                     console.log(response);
@@ -107,8 +106,8 @@ export const useRestaurantStore = defineStore('restaurant',{
                 axios.request({
                     url: process.env.VUE_APP_API_URL+"menu",
                     method: "POST",
-                    headers: {
-                        restaurantToken: cookies.get('restaurantToken')
+                    params: {
+                        restaurantSessionToken: cookies.get('restaurantSessionToken')
                     },
                     data: {
                         name,

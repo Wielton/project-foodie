@@ -1,6 +1,6 @@
 <template>
-  <v-app id="inspire">
-    <TopNav app/>
+  <v-app app>
+    <TopNav />
       <v-main app>
           <router-view/>
       </v-main>
@@ -28,3 +28,8 @@ import TopNav from '@/components/TopNavComp'
   
 }
 </script>
+<style lang="scss" scoped>
+  html {
+    width: 100vw;
+  }
+</style>

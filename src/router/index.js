@@ -21,7 +21,6 @@ const routes = [
     path: '/user/:clientId/:slug',
     name: 'user.show',
     component: ()=>import(/* webpackChunkName: "user" */  '@/views/UserView.vue'),
-    
     beforeEnter: (to, from, next) => {
       // ...
       const store = useClientSignupStore
@@ -73,6 +72,26 @@ const routes = [
     name: 'restaurant-portal',
     component: ()=>import(/* webpackChunkName: "restaurant portal" */ '@/views/RestaurantPortalView.vue')
   },
+  {
+    path: '/restaurant-portal/restaurant-home/:restaurantId',
+    name: 'restaurant-home',
+    component: ()=>import(/* webpackChunkName: "restaurant home" */ '@/views/RestaurantHomeView.vue'),
+    // beforeEnter: (to, from, next) => {
+    //   // ...
+    //   const store = useClientSignupStore
+    //   const user = store(user)
+    //   const cookie = cookies.get('sessionToken')
+    //   // const user = store
+    //   console.log(cookie, user.isAuthorized)
+    //   if (!user.isAuthorized && !cookie) next({name: 'login'})
+    //   else next()
+    // }
+  },
+  {
+    path: '/user/:clientId/cart',
+    name: 'cart',
+    component: ()=>import(/* webpackChunkName: "cart" */ '@/views/CartView.vue'),
+  }
   
 ]
 

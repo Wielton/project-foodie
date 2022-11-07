@@ -9,12 +9,15 @@ export const useOrderStore = defineStore('cart',{
             title: 'Your cart',
             itemMenuId: Number,
             items: [],
+            cartItems: 0,
             finalOrder: {
                 restaurantId: null,
                 itemIds: [],
             },
             orders: [],
         }
+    },getters: {
+        
     },
     actions: {
         
@@ -33,6 +36,7 @@ export const useOrderStore = defineStore('cart',{
             this.items.push(item)
             this.finalOrder.itemIds.push(this.itemMenuId)
             console.log(this.finalOrder, this.menuItemId, this.finalOrder.restaurantId)
+            this.cartItems++
             this.updateCookie();
         },
         removeCartItem(items, item){
@@ -41,6 +45,7 @@ export const useOrderStore = defineStore('cart',{
                 items.splice(cartItem, 1)
             }
             console.log(cartItem +"removed");
+            this.cartItems--
             this.updateCookie();
             return items;
             
@@ -49,29 +54,25 @@ export const useOrderStore = defineStore('cart',{
             // Get the current cookie
             // if cookie doesn't exist, return nothing
             let currentItems = this.items
-            console.log('current items: ', currentItems)
+            console.log(currentItems)
             let currentCookie = cookies.get('cartSession')
-            console.log('current cookie: ', currentCookie)
-            if (currentCookie == null){
+            if (!currentCookie){
                 cookies.set('cartSession', currentItems)
-                console.log('cartSession cookie created with: ', currentItems)
+                console.log('cartSession cookie created with: ',currentItems)
             }else{
                 // else get the current items in cart 
                 // then remove cart cookie
                 // set new cartSession cookie with currentItems in cart
                 cookies.remove('cartSession')
                 console.log('Cart Cookie removed')
-                cookies.set('cartSession',currentItems)
+                cookies.set('cartSession', currentItems)
                 console.log('New Cart Cookie created with these items: ', currentItems)
             }
         },
         fetchCookie(){
-            let currentCookie = cookies.get('cartSession')
-            if (currentCookie === null){
-                return
-            }else{
-                console.log('The current cart cookie: ', currentCookie)
-            }
+            
+
+            
         },
         // Fetch the cart items when the component is loaded/reloaded
         getOrders(){

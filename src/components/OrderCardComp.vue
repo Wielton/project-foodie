@@ -10,6 +10,7 @@
                         <v-card-title>{{item.itemName}}</v-card-title>
                         <v-card-subtitle>{{item.itemPrice}}</v-card-subtitle>
                     </v-card>
+                    
                 </v-col>
             </v-row>
         </v-container>

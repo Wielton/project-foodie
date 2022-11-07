@@ -12,7 +12,7 @@
             <v-list-item-subtitle v-if="order.isCompleted === 1">Order is completed</v-list-item-subtitle>
             <v-list-item-subtitle v-if="order.isCancelled === 1">Order is cancelled</v-list-item-subtitle>
             <v-list-item-action>
-                <v-btn :to="({name: 'order'})">VIEW</v-btn>
+                <v-btn :to="({name: 'order', params: {user: user.username}})">VIEW</v-btn>
             </v-list-item-action>
         </v-list-item>
     </v-list>
@@ -20,6 +20,8 @@
 
 <script>
 import { useOrderStore } from '@/stores/orderStore';
+import { useClientSignupStore } from '@/stores/clientSignupStore';
+
 import {mapActions, mapState} from 'pinia'
     export default {
         name: 'OrdersComponentView',
@@ -29,7 +31,9 @@ import {mapActions, mapState} from 'pinia'
             }
         },
         computed: {
-            ...mapState(useOrderStore,['orders'])
+            ...mapState(useOrderStore,['orders']),
+            ...mapState(useClientSignupStore, ['user', 'isAuthorized'])
+
         },
         methods: {
             ...mapActions(useOrderStore,['getOrders'])

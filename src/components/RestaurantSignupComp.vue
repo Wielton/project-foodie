@@ -30,12 +30,12 @@
                                     label="Bio"
                                     required>
                                 </v-text-field>
-                                <v-text-field
+                                <v-autocomplete
                                     v-model="city"
-                                    :rules="cityRules"
+                                    :items="validCities"
                                     label="City"
                                     required>
-                                </v-text-field>
+                                </v-autocomplete>
 
                                 <v-text-field
                                     v-model="email"
@@ -47,7 +47,6 @@
                         
                                 <v-text-field
                                     v-model="phoneNum"
-                                    :rules="phoneNumRules"
                                     label="Phone Number"
                                     required
                                 ></v-text-field>

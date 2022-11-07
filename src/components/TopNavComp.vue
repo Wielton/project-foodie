@@ -1,9 +1,13 @@
 <template>
 <div app>
     <v-app-bar color="#fd7132" elevation="0">
-        <v-app-bar-title style="color:#79031d" align-center>
-            <h1>Moody4Foody</h1>
-        </v-app-bar-title>
+        
+            <v-toolbar-title align-center>
+                <router-link style="color:#79031d" :to="({name: 'home'})">
+                    Moody4Foody
+                </router-link>
+            </v-toolbar-title>
+        
             <v-spacer></v-spacer>
             <!-- <v-tabs
                 v-model="tab"
@@ -23,32 +27,17 @@
             </v-tab>
             </v-tabs> -->
             <v-app-bar-nav-icon
-                
                 @click="rightDrawer = !rightDrawer" 
                 >
                 <v-icon>mdi-menu</v-icon>
-        </v-app-bar-nav-icon>
-            <!-- <router-link
-            :to="{name: 'user.show', params:{id: user.clientId}}"
-            >
-            Profile
-            </router-link> -->
-            <router-link
-                v-if="!isAuthorized"
-                :to="({name: 'login'})"
-                text
-                elevation="0"
-                >
-                <v-btn>
-                    Login
-                </v-btn>
-            </router-link>
-            <v-btn
-                v-else
+            </v-app-bar-nav-icon>
+            
+            <!-- <v-btn
+                v-if="isAuthorized"
                 @click="logoutRequest"
                 >
                 Logout
-            </v-btn>
+            </v-btn> -->
         
             <!-- <v-spacer></v-spacer>
             <v-tab to="/restaurant-portal"
@@ -56,32 +45,29 @@
                     style="color:#79031d; font-size: 0.75em">
                     Restaurant Login
             </v-tab> -->
-        
+            
     </v-app-bar>
-    <!-- Add a navigation bar -->
     <v-navigation-drawer
-        v-model="rightDrawer"
-        height="250"
-        absolute
-        temporary
-        right>
-            <v-list
-                nav
-                dense>
-                <v-list-item-group>
+            v-model="rightDrawer"
+            fixed
+            right>
+                <v-list
+                    nav
+                    dense>
                     <router-link :to="({name: 'home'})"><v-list-item>Home</v-list-item></router-link>
                     <router-link :to="({name: 'user.show', params:{clientId: user.username, slug: user.slug}})" v-if="isAuthorized"><v-list-item>Profile</v-list-item></router-link>
                     <router-link :to="({name: 'login'})" v-if="!isAuthorized"><v-list-item>Login</v-list-item></router-link>
                     <router-link :to="({name: 'restaurants'})"><v-list-item>Restaurants</v-list-item></router-link>
                     <router-link :to="({name: 'about'})"><v-list-item>About</v-list-item></router-link>
-                </v-list-item-group>
-            </v-list>
-    </v-navigation-drawer>
-</div>
+                    <v-list-item v-if="isAuthorized"><v-btn @click="logoutRequest">Logout</v-btn></v-list-item>
+                </v-list>
+        </v-navigation-drawer>
+    </div>
 </template>
 <script>
 import {useLoginStore} from '@/stores/clientStore';
 import { useClientSignupStore } from '@/stores/clientSignupStore';
+import { useOrderStore } from '@/stores/orderStore'
 import {mapActions, mapState} from 'pinia';
 // import cookies from 'vue-cookies'
 export default {
@@ -105,12 +91,14 @@ export default {
         }
     },
     computed: {
-        ...mapState(useClientSignupStore, ['user', 'isAuthorized'])
+        ...mapState(useClientSignupStore, ['user', 'isAuthorized']),
+        ...mapState(useOrderStore, ['cartItems'])
     },
     methods: {
         ...mapActions(useLoginStore,['logoutRequest']),
         ...mapActions(useClientSignupStore, ['accountInfoRequest'])
     },
+    
     
     
 }

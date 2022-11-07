@@ -19,7 +19,7 @@ const routes = [
   },
   {
     path: '/user/:clientId/:slug',
-    name: 'user.show',
+    name: 'user', // Add a 'slug' with user.show
     component: ()=>import(/* webpackChunkName: "user" */  '@/views/UserView.vue'),
     beforeEnter: (to, from, next) => {
       // ...

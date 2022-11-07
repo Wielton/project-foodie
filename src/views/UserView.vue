@@ -5,7 +5,7 @@
             
     <v-container fluid>
         <v-row>
-            <v-col cols="12" sm="6" md="2">
+            <v-col cols="12" sm="6" md="6" lg="6">
                 <v-form @submit.prevent="handleSubmit">
                     <v-text-field
                         autocomplete

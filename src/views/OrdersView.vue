@@ -9,8 +9,9 @@
             <v-list-item-title>Order #: {{order.orderId}}</v-list-item-title>
             <v-list-item-subtitle>Restaurant: {{order.restaurantName}}</v-list-item-subtitle>
             <v-list-item-subtitle v-if="order.isConfirmed === 1">Order is confirmed</v-list-item-subtitle>
-            <v-list-item-subtitle v-if="order.isCompleted === 1">Order is completed</v-list-item-subtitle>
-            <v-list-item-subtitle v-if="order.isCancelled === 1">Order is cancelled</v-list-item-subtitle>
+            <v-list-item-subtitle v-else-if="order.isCompleted === 1">Order is completed</v-list-item-subtitle>
+            <v-list-item-subtitle v-else-if="order.isCancelled === 1">Order is cancelled</v-list-item-subtitle>
+            <v-list-item-subtitle v-else>Waiting for the restaurant to confirm your order</v-list-item-subtitle>
             <v-list-item-action>
                 <v-btn :to="({name: 'order', params: {user: user.username}})">VIEW</v-btn>
             </v-list-item-action>

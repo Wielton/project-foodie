@@ -63,7 +63,7 @@ export const useClientSignupStore = defineStore('clientSignup',{
                     'sessionToken': cookies.get('sessionToken'),
                     },
                 }).then((response)=>{
-                    console.log(response.data[0])
+                    // console.log(response.data[0])
                     this.user = response.data[0]
                     this.isAuthorized = true;
                 }).catch((error)=>{
@@ -125,9 +125,9 @@ export const useClientSignupStore = defineStore('clientSignup',{
                     token: cookies.get('session'),
                     },
                 }).then(()=>{
-                    console.log('User has been deleted');
+                    // console.log('User has been deleted');
                     cookies.remove('sessionToken');
-                    router.push('/');
+                    router.push({name: 'home'});
                 }).catch((error)=>{
                     console.log(error);
                 })

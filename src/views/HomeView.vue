@@ -1,5 +1,5 @@
 <template>
-<v-container fluid>
+<v-container fluid app>
   <v-row align="center" justify="center">
     <v-col cols="12"> 
       <v-img 
@@ -41,15 +41,17 @@
     </v-col>
   </v-row> -->
   
-  <v-row class="pa-6 ma-0">
-    <v-col cols="12" md="6" lg="6">
-      <h2>
-        A 'Green' approach  
-        <br>
+  <v-row class="pa-6 ma-0" align="center">
+    <v-col cols="12">
+      <h1>
+        A <span class="green--text">'Green'</span> approach
+      </h1>  
+      <v-divider></v-divider>
+      <p class="grey--text">
         With our fleet of E-vehicles and drones, 
-        <br>
         Foodie is revolutionizing the food delivery design. 
-      </h2>
+      </p>
+      
     </v-col>
   </v-row>        
   </v-container>

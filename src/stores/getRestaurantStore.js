@@ -5,7 +5,8 @@ import axios from 'axios';
 export const useGetRestaurantStore = defineStore('getRestaurant',{
     state : ()=>({
         title: "Restaurants",
-        restaurants: []
+        restaurants: [],
+        errorMessage: null
     }),
     
     actions: {
@@ -17,7 +18,7 @@ export const useGetRestaurantStore = defineStore('getRestaurant',{
             }).then((response)=>{
                 this.restaurants = response.data;
             }).catch((error)=>{
-                console.log(error);
+                this.errorMessage = error
                 })
         }
     },

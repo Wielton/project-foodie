@@ -7,7 +7,8 @@ import { router } from '@/router'
 // Use Options API as this is Server-side rendered
 export const useLoginStore = defineStore('login',{
     state : ()=>({
-        
+        successMessage: null,
+        errorMessage: null
     }),
     getters: {
         // getIsAuthorized(state){
@@ -39,8 +40,8 @@ export const useLoginStore = defineStore('login',{
                     router.push({name: 'restaurants'});
 
                 }).catch((error)=>{
-                    console.log(error.response.data);
-                    console.log('Something is going wrong')
+                    // console.log(error.response.data);
+                    // console.log('Something is going wrong')
                     this.loginFailed(error.response);
                 })
             },
@@ -64,7 +65,7 @@ export const useLoginStore = defineStore('login',{
                     cookies.remove('sessionToken');
                     router.push({name: 'home'})
                 }).catch((error)=>{
-                    console.log(error);
+                    this.errorMessage = error
                 })
             },
             

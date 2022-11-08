@@ -7,7 +7,8 @@ import { router } from '@/router';
 export const useGetMenuStore = defineStore('getMenu',{
     state : ()=>({
         title: 'Menu',
-        menuItems: []
+        menuItems: [],
+        errorResponse: null,
     }),
     
     actions: {
@@ -23,7 +24,7 @@ export const useGetMenuStore = defineStore('getMenu',{
                 this.menuItems = response.data;
                 router.push({name: 'menu'});
             }).catch((error)=>{
-                console.log(error);
+                this.errorResponse = error;
                 })
         },
         

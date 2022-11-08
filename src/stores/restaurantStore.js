@@ -10,7 +10,9 @@ export const useRestaurantStore = defineStore('restaurant',{
             restaurantHomeTitle: 'Welcome',
             isAuthorized: false,
             restaurantUser: {},
-            restaurantId: null
+            restaurantId: null,
+            errorMessage: null,
+            successMessage: null
         }
     },
     actions: {
@@ -36,7 +38,7 @@ export const useRestaurantStore = defineStore('restaurant',{
                 this.restaurantId = response.data.restaurantId
                 router.push({name: 'restaurant-home', params: {restaurantId: this.restaurantId}});
             }).catch((error)=>{
-                console.log(error);
+                this.errorMessage = error;
                 })
             },
         // Restaurant login
@@ -49,14 +51,11 @@ export const useRestaurantStore = defineStore('restaurant',{
                         password
                     }
                 }).then((response)=>{
-                    console.log(response)
                     cookies.set('restaurantSessionToken', response.data.restaurantSessionToken);
                     this.restaurantId = response.data.restaurantId;
-                    console.log(this.restaurantId);
-                    console.log('Logged in as restaurant');
-                    router.push('/restaurant-home/:restaurantId');
+                    router.push({name: 'restaurant-home', params: {restaurantId: this.restaurantId}});
                 }).catch((error)=>{
-                    console.log(error);
+                    this.errorMessage = error;
                     
                 })
             },
@@ -81,9 +80,9 @@ export const useRestaurantStore = defineStore('restaurant',{
                         profileUrl
                     }
                 }).then((response)=>{
-                    console.log(response);
+                    this.successMessage = response;
                 }).catch((error)=>{
-                    console.log(error);
+                    this.errorMessage = error;
                 })
             },
             restaurantLogoutRequest(){
@@ -94,10 +93,10 @@ export const useRestaurantStore = defineStore('restaurant',{
                         restaurantSessionToken: cookies.get('restaurantSessionToken')
                     }
                 }).then((response)=>{
-                    console.log(response);
-                    router.push('/');
+                    this.successMessage = response;
+                    router.push({name: 'home'});
                 }).catch((error)=>{
-                    console.log(error);
+                    this.errorMessage = error;
                 })
                 
             },
@@ -116,10 +115,10 @@ export const useRestaurantStore = defineStore('restaurant',{
                         imageUrl
                     }
                 }).then((response)=>{
-                    console.log(response);
+                    this.successMessage = response;
                     
                 }).catch((error)=>{
-                    console.log(error);
+                    this.errorMessage = error;
                 })
             }
         },

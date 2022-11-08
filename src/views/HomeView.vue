@@ -1,13 +1,17 @@
 <template>
 <v-container fluid app>
-  <v-row align="center" justify="center">
-    <v-col cols="12"> 
-      <v-img 
+  <v-row class="pa-6">
+    <v-col cols="12" align="center" justify="center">
+      <h4 class="grey--text display-3 pa-3 ma-0">Are you in the</h4>
+      <h1 style="color:#fd7132" class="display-4 pa-3 ma-0">Moody 4 Foody?</h1>
+    </v-col>
+    <v-col cols="12" align="center" justify="center"> 
+      <v-img
+          class="mx-4"
           src="https://www.creativefabrica.com/wp-content/uploads/2020/04/25/Delivery-Service-vector-illustration-Graphics-3951054-1-1-580x365.jpg"
           max-width="1000px"
           >
-          </v-img>
-      
+      </v-img>
   </v-col>
     <!-- <v-col cols="12" md="6" lg="8">
       <p class="pa-6 display-1 font-weight-bold grey--text">This is my own production of Skip The Dishes. I used Vue2, Vuetify, Vue-cookies, Pinia, and Composition API for state management, with Axios communicating with the backend.
@@ -41,17 +45,20 @@
     </v-col>
   </v-row> -->
   
-  <v-row class="pa-6 ma-0" align="center">
-    <v-col cols="12">
-      <h1>
+  <v-row class="pa-6 ma-0">
+    <v-col cols="12" align="center" justify="center">
+      <h1 class="grey--text display-3 pa-3 ma-0">
         A <span class="green--text">'Green'</span> approach
       </h1>  
       <v-divider></v-divider>
-      <p class="grey--text">
-        With our fleet of E-vehicles and drones, 
-        Foodie is revolutionizing the food delivery design. 
+      <p class="grey--text display-1 pa-6 ma-0">
+        With our fleet of EV's and drones, 
+        Foody is revolutionizing the food delivery design. 
+      <br>
+        More and more people are ordering delivery, which increases motor vehicle traffic
+      <br>
+        Let's decrease the harsh affects on our climate.
       </p>
-      
     </v-col>
   </v-row>        
   </v-container>
@@ -71,15 +78,7 @@ export default {
     },
     data(){
       return{
-        title: 'Are You In The Moodie For Foodie?',
-        items: [
-                  { title: 'Dashboard', icon: 'mdi-view-dashboard' },
-                  { title: 'Photos', icon: 'mdi-image' },
-                  { title: 'About', icon: 'mdi-help-box' },
-              ],
-        right: null,
-        show: false,
-        marker: true,
+        
               }},
     methods: {
             
@@ -88,3 +87,6 @@ export default {
           
   }
 </script>
+<style lang="scss" scoped>
+
+</style>

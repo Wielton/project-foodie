@@ -7,6 +7,7 @@ import { router } from '@/router'
 export const useClientSignupStore = defineStore('clientSignup',{
     state : ()=>{
         return {
+            errorResponse: null,
             isAuthorized: false,
             user: {},
             formData: {
@@ -47,7 +48,7 @@ export const useClientSignupStore = defineStore('clientSignup',{
                 cookies.set('sessionToken', response.data.sessionToken);
                 router.push({name: 'restaurants'})
             }).catch((error)=>{
-                console.log(error.response.data);
+                this.errorResponse = error;
             })
             },
             
@@ -108,7 +109,7 @@ export const useClientSignupStore = defineStore('clientSignup',{
                     
                     this.accountInfoChangedSuccess();
                 }).catch((error)=>{
-                    console.log(error);
+                    this.errorResponse = error;
                 })
             },
             accountInfoChangedSuccess(){
@@ -129,7 +130,7 @@ export const useClientSignupStore = defineStore('clientSignup',{
                     cookies.remove('sessionToken');
                     router.push({name: 'home'});
                 }).catch((error)=>{
-                    console.log(error);
+                    this.errorResponse = error;
                 })
             },
         },

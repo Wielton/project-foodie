@@ -28,8 +28,9 @@ import TopNav from '@/components/TopNavComp'
   
 }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
   html {
     width: 100vw;
   }
+  
 </style>

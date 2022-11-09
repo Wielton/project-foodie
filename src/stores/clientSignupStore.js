@@ -68,7 +68,7 @@ export const useClientSignupStore = defineStore('clientSignup',{
                     this.user = response.data[0]
                     this.isAuthorized = true;
                 }).catch((error)=>{
-                    console.log(error);
+                    this.errorResponse = error;
                 })
             },
 

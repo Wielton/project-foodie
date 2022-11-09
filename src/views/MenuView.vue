@@ -75,15 +75,10 @@ export default {
         
         methods:{
             ...mapActions(useClientSignupStore,['accountInfoRequest']),
-            ...mapActions(useOrderStore,['addMenuItem','removeCartItem','fetchCookie']),
+            ...mapActions(useOrderStore,['addMenuItem','removeCartItem']),
         
         // Add item to menu;  This is not an axios call but is imperative for cart/orders initiation
         
-        },
-        
-        beforeMount(){
-            this.fetchCookie();
-            
         },
         mounted(){
             

@@ -13,20 +13,7 @@
           >
       </v-img>
   </v-col>
-    <!-- <v-col cols="12" md="6" lg="8">
-      <p class="pa-6 display-1 font-weight-bold grey--text">This is my own production of Skip The Dishes. I used Vue2, Vuetify, Vue-cookies, Pinia, and Composition API for state management, with Axios communicating with the backend.
-      <br /> 
-        The backend utilizes Python and Flask to create the database endpoints, with MySQL/MariaDB handling the queries.  
-      <br />
-        Feel free to browse the restaurants and their respective menus.  
-      <br />
-        Register to get authentication and then have access to place an order!
-      <br />
-        Features currently in the works include the frontend for the restaurants' side where they can join, create menu items, add a profile, and handle orders.  The backend has been implemented.
-      <br />
-        These features will be added shortly.  Until then, have fun exploring!
-      </p>
-    </v-col> -->
+    
   </v-row>
   
   <!-- <v-row>

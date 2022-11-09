@@ -9,42 +9,12 @@
             </v-toolbar-title>
         
             <v-spacer></v-spacer>
-            <!-- <v-tabs
-                v-model="tab"
-                class="hidden-sm-and-down"
-                color="#79031d"
-                right
-                max-width="600px"
-                >
-            <v-tabs-slider color="#79031d" max-width="600"></v-tabs-slider>
-
-            <v-tab
-                v-for="(link, index) in links"
-                :key="index"
-                :to="link.path"
-                >
-                {{ link.name }}
-            </v-tab>
-            </v-tabs> -->
+            
             <v-app-bar-nav-icon
                 @click="rightDrawer = !rightDrawer" 
                 >
                 <v-icon>mdi-menu</v-icon>
             </v-app-bar-nav-icon>
-            
-            <!-- <v-btn
-                v-if="isAuthorized"
-                @click="logoutRequest"
-                >
-                Logout
-            </v-btn> -->
-        
-            <!-- <v-spacer></v-spacer>
-            <v-tab to="/restaurant-portal"
-                    class="d-none d-sm-flex"
-                    style="color:#79031d; font-size: 0.75em">
-                    Restaurant Login
-            </v-tab> -->
             
     </v-app-bar>
     <v-navigation-drawer
@@ -55,7 +25,7 @@
                     nav
                     dense>
                     <router-link :to="({name: 'home'})"><v-list-item>Home</v-list-item></router-link>
-                    <router-link :to="({name: 'user.show', params:{clientId: user.username, slug: user.slug}})" v-if="isAuthorized"><v-list-item>Profile</v-list-item></router-link>
+                    <router-link :to="({name: 'user', params:{clientId: user.clientId}})" v-if="isAuthorized"><v-list-item>Profile</v-list-item></router-link>
                     <router-link :to="({name: 'login'})" v-if="!isAuthorized"><v-list-item>Login</v-list-item></router-link>
                     <router-link :to="({name: 'restaurants'})"><v-list-item>Restaurants</v-list-item></router-link>
                     <router-link :to="({name: 'about'})"><v-list-item>About</v-list-item></router-link>

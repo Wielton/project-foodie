@@ -3,7 +3,7 @@
         <h1 v-if="isAuthorized" :key="user.clientId">Welcome, {{user.username}}</h1>
         <v-list>
             <v-list-item><router-link :to="({name: 'orders'})">Orders</router-link></v-list-item>
-            <v-list-item><router-link :to="({name: 'user.show', params: {clientId: user.clientId}})">Profile</router-link></v-list-item>
+            <v-list-item><router-link :to="({name: 'user', params:{clientId: user.clientId}})">Profile</router-link></v-list-item>
         </v-list>
         <RestaurantList />
     </v-container>
